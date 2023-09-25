@@ -1149,7 +1149,7 @@ class PlotSteppable(SteppableBasePy):
         if self.thicknessPlot and mcs % 10 == 0:
             
             thickness_dict = self.compute_thickness_for_all_columns(self.WING)
-            left_thicknesses = [thickness for x, thickness in thickness_dict.items() if x < 110]
+            left_thicknesses = [thickness for x, thickness in thickness_dict.items() if x <= 110]
             right_thicknesses = [thickness for x, thickness in thickness_dict.items() if x > 110]
 
             if left_thicknesses:  # Prevent division by zero
@@ -1157,15 +1157,25 @@ class PlotSteppable(SteppableBasePy):
                 self.data_points['thickness']['Limbus Avg Thickness'].append(np.mean(left_thicknesses))
                 self.data_points['thickness']['Limbus Left Thickness'].append(left_thicknesses[0])
                 self.data_points['thickness']['Limbus Right Thickness'].append(left_thicknesses[-1])
-                
+            else:               
+                # CSV
+                self.data_points['thickness']['Periphery Avg Thickness'].append(0)                
+                self.data_points['thickness']['Periphery Left Thickness'].append(0)
+                self.data_points['thickness']['Periphery Right Thickness'].append(0)                
 
             if right_thicknesses:               
                 # CSV
                 self.data_points['thickness']['Periphery Avg Thickness'].append(np.mean(right_thicknesses))
                 self.data_points['thickness']['Periphery Left Thickness'].append(right_thicknesses[0])
                 self.data_points['thickness']['Periphery Right Thickness'].append(right_thicknesses[-1])
+            else:
+                # CSV
+                self.data_points['thickness']['Periphery Avg Thickness'].append(0)
+                self.data_points['thickness']['Periphery Left Thickness'].append(0)
+                self.data_points['thickness']['Periphery Right Thickness'].append(0)
 
             self.data_points['thickness']['Time'].append(HOURtoMCS_factor)
+
 
             if self.CC3D_PLOT:
                 # for cell_type, count in self.data_points['thickness'].items():
