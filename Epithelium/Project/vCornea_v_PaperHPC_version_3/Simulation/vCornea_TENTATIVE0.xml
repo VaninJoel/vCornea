@@ -430,7 +430,7 @@
     <Steppable Type="PIFInitializer">
    
         <!-- Initial layout of cells using PIFF file. Piff files can be generated using PIFGEnerator -->
-        <PIFName>Homeostasis with Stroma without change in Limbus.piff</PIFName>
+        <PIFName>Homeostasis.piff</PIFName>
     </Steppable>
    <Steppable Type="UniformInitializer">
       <!-- <Region>
