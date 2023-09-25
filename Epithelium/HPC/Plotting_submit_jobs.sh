@@ -31,7 +31,7 @@ for ((i=0; i<$num_jobs; i++)); do
 OUTPUT_FILE="comb_data_out_${SLURM_JOBID}.txt"
 ERROR_FILE="comb_data_err_${SLURM_JOBID}.err"
 
-# Run the Python script (CHANCE THIS TO YOUR PYTHON SCRIPT)
+# Run the Python script (CHANGE THIS TO YOUR PYTHON SCRIPT)
 python Plotting_Classifying_HPC_Parallel_v2.py $job_folders
 
 # After Python script runs, send email
