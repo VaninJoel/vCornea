@@ -281,7 +281,7 @@ class Plotter(DataGatherer):
                         for ax, params in zip(axs, [y_columns, limbus_params, periphery_params]):
                             for col in params:
                                 if col in y_colors:
-                                    ax.plot(x, data[col], color=y_colors[col], alpha=0.2)
+                                    ax.plot(x, data[col], color=y_colors[col], alpha=0.2)                                    
 
                     # Plotting for growth data
                     elif 'growth' in file_basename:
