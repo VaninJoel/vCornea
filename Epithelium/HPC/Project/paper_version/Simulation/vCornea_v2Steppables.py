@@ -262,9 +262,9 @@ class ConstraintInitializerSteppable(SteppableBasePy):
         for cell in self.cell_list_by_type(self.MEMB):            
             
             cell.targetVolume = 1
-            cell.lambdaVolume = 1000.0
+            cell.lambdaVolume = 100000.0
             cell.lambdaSurface = 1.0
-            cell.targetSurface = 100.0
+            cell.targetSurface = 100000.0
             # if cell.xCOM >= 150 and cell.xCOM < 151:
             #     self.delete_cell(cell)
 
@@ -283,12 +283,11 @@ class ConstraintInitializerSteppable(SteppableBasePy):
         # print("This is the membrane height", self.membrane_height)
 
         # LIMB    
-        for cell in self.cell_list_by_type(self.LIMB):
-            
+        for cell in self.cell_list_by_type(self.LIMB):            
             cell.targetVolume = 1
-            cell.lambdaVolume = 1000.0
+            cell.lambdaVolume = 100000.0
             cell.lambdaSurface = 1.0
-            cell.targetSurface = 100.0
+            cell.targetSurface = 100000.0
 
         # KERATO
         # Creating a uniform distribution of the KERATO cells
