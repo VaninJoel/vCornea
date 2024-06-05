@@ -1,7 +1,5 @@
-
-
 # Name of the environment
-ENV_NAME="cc3d_450_310"
+ENV_NAME="vCornea"
 
 # Ensure mamba is installed
 conda install -c conda-forge mamba -y
@@ -16,4 +14,4 @@ conda activate $ENV_NAME
 mamba install -c conda-forge -c compucell3d compucell3d=4.5.0 -y
 
 # Install additional libraries from requirements.txt
-while read requirement; do conda install --yes $requirement || pip install $requirement; done < requirements.txt
+while read requirement; do conda install --yes $requirement; done < requirements.txt

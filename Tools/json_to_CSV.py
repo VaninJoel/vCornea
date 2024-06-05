@@ -1,34 +1,3 @@
-# import json
-# import csv
-
-# # Load the JSON data
-# json_file_path = '/u/jvanin/vCornea/Processed_Data/Output_Version_6/9000/Filtered/parameters_data.json'  # Update this path as needed
-# with open(json_file_path, 'r') as json_file:
-#     data = json.load(json_file)
-
-# # Extract all unique parameter names, excluding 'rep_folder'
-# all_parameters = set()
-# for comb_data in data.values():
-#     params = set(comb_data.keys()) - {'rep_folder'}
-#     all_parameters.update(params)
-
-# # Sort parameters for consistent column ordering
-# sorted_parameters = sorted(all_parameters)
-
-# # Write the CSV file
-# csv_file_path = '/u/jvanin/vCornea/Processed_Data/Output_Version_6/9000/Filtered/parameters_data.csv'  # Update this path as needed
-# with open(csv_file_path, 'w', newline='') as csv_file:
-#     writer = csv.writer(csv_file)
-#     # Write the header row
-#     writer.writerow(sorted_parameters)
-#     # Write each row for the Combs, excluding the Comb# column
-#     for parameters in data.values():
-#         # Exclude 'rep_folder' from the row data
-#         row = [parameters.get(param, 'NA') for param in sorted_parameters if param != 'rep_folder']
-#         writer.writerow(row)
-
-# print(f"CSV file '{csv_file_path}' has been created.")
-
 import json
 import csv
 

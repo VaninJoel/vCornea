@@ -8,7 +8,6 @@ central_thickness="/u/jvanin/vCornea/Processed_Data/Output_Version_4/Output_vers
 find "$tobe_copied"/ -type f -name "cell_count_*.png" -exec cp {} "$central_location"/ \;
 find "$tobe_copied"/ -type f -name "thickness_*.png" -exec cp {} "$central_thickness"/ \;
 
-
 # Directories for columns and rows
 columns_dir="$central_location/columns"
 rows_dir="$central_location/rows"

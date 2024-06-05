@@ -1,16 +1,17 @@
 #!/bin/bash
 
-#(CHANCE THIS TO YOUR PYTHON SCRIPT)
-base_folder="/u/jvanin/Output_vCornea_Paper_version2/Output_20230920-164340"
-num_jobs=103  # adjust as necessary Tatooine has 103 cores
+#(CHANGE THIS TO YOUR PYTHON SCRIPT)
+base_folder="/u/jvanin/vCornea/Processed_Data/Output_Version_6/Long_year"
+num_jobs=100  # adjust as necessary Tatooine has 103 cores
 
 # Find all Comb# folders
 folders=( $(ls $base_folder | grep 'Comb') )
-
+echo "Identified folders: ${folders[@]}"
 # Count the number of folders and calculate the number of folders each job should process
 total_folders=${#folders[@]}
 folders_per_job=$(( (total_folders + num_jobs - 1) / num_jobs ))  # ceiling division
-
+echo "Folders per job: $folders_per_job"
+echo "Total folders: $total_folders"
 # Submit jobs
 for ((i=0; i<$num_jobs; i++)); do
     start_idx=$(( i * folders_per_job ))
@@ -18,7 +19,7 @@ for ((i=0; i<$num_jobs; i++)); do
 
     # Extract the specific folders this job should process
     job_folders="${folders[@]:$start_idx:$folders_per_job}"
-
+    echo "Job folders for job $i: $job_folders"
     sbatch --job-name=process_comb_data_$i <<EOL
 #!/bin/bash
 #SBATCH --nodes=1
@@ -32,13 +33,14 @@ OUTPUT_FILE="comb_data_out_${SLURM_JOBID}.txt"
 ERROR_FILE="comb_data_err_${SLURM_JOBID}.err"
 
 # Run the Python script (CHANGE THIS TO YOUR PYTHON SCRIPT)
-python Plotting_Classifying_HPC_Parallel_v2.py $job_folders
+python Plotting_Classifying_HPC_Parallel_Paper_version.py $job_folders
 
 # After Python script runs, send email
 TEMP_FILE=\$(mktemp)
 
 # Append output and errors to the temporary file
 echo "----- OUTPUT -----" >> \$TEMP_FILE
+echo "Processing folders: $job_folders" >> \$TEMP_FILE
 cat "\$OUTPUT_FILE" >> \$TEMP_FILE
 echo -e "\n\n----- ERRORS -----" >> \$TEMP_FILE
 cat "\$ERROR_FILE" >> \$TEMP_FILE

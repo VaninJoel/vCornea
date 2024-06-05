@@ -130,31 +130,26 @@ class ConstraintInitializerSteppable(SteppableBasePy):
     SLS_Concentration           = SLS_Concentration
 
 # LINKS
-
+    #---SUPER-WALL---
     LINKWALL_lambda_distance    = LINKWALL_lambda_distance
     LINKWALL_target_distance    = 8
     LINKWALL_max_distance       = LINKWALL_max_distance
-
-#---SUPER-SUPER---
+    #---SUPER-SUPER---
     LINKSUPER_lambda_distance   = LINKSUPER_lambda_distance
     LINKSUPER_target_distance   = LINKSUPER_target_distance
     LINKSUPER_max_distance      = LINKSUPER_max_distance  
-
     L_max_links_SS              = L_max_links_SS 
     F_max_links_SS              = F_max_links_SS
     AutoAdjustLinks             = AutoAdjustLinks
-    Lambda_link_adjustment      = True # If True, the lambda will be adjusted, if False, the target distance will be adjusted
-    
+    Lambda_link_adjustment      = True # If True, the lambda will be adjusted, if False, the target distance will be adjusted    
     Tension_link_SS             = 50
 
-
-#   WOUND
+# WOUND
     InjuryType                  = InjuryType
     IsInjury                    = IsInjury
     InjuryTime                  = InjuryTime
     SLS_Injury                  = SLS_Injury
-    SLS_Threshold_Method        = SLS_Threshold_Method
-    
+    SLS_Threshold_Method        = SLS_Threshold_Method    
     #---INJURY AREA---
     InjuryX_Center              = InjuryX_Center 
     InjuryY_Center              = InjuryY_Center
@@ -166,7 +161,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
     DeathControl                = DeathControl
     DifferentiationControl      = DifferentiationControl
 
-#   PLOTS
+# PLOTS
     CC3D_PLOT                   = False
     CellCount                   = CellCount
     XHypTracker                 = XHypTracker 
@@ -211,8 +206,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             self.track_cell_level_scalar_attribute(field_name='CenterBias', attribute_name='CenterBias')
         if self.DivisionTracker:
             self.track_cell_level_scalar_attribute(field_name='DivisionCount', attribute_name='DivisionCount')
-        if self.IL1Tracker:
-            self.track_cell_level_scalar_attribute(field_name='IL1_Seen', attribute_name='IL1')
+       
      
     def start(self):         
         """ Inintializing agents and fields at MCS 0"""  
@@ -486,21 +480,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
         if (link.getLambdaDistance()) != 0:
             link.setTargetDistance(link.length - (self.Tension_link_SS / (2 * link.getLambdaDistance())))
         # return 0 # TODO check this out contituuento and define the formula
-    
-# print(dir(link)) # ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__',
-#'__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__',
-# '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__sbml__', '__setattr__',
-# '__sizeof__', '__str__', '__subclasshook__', '__swig_destroy__', '__weakref__', 'cellPair',
-# 'constitutiveLaw', 'derived_property_getcellPair', 'derived_property_getlength',
-# 'derived_property_gettension', 'derived_property_setcellPair', 'derived_property_setlength',
-# 'derived_property_settension', 'dict', 'getActivationEnergy', 'getCellPair', 'getDistance',
-# 'getFPPTrackerData', 'getId0', 'getId1', 'getInitMCS', 'getLambdaDistance', 'getMaxDistance',
-# 'getMaxNumberOfJunctions', 'getNeighborOrder', 'getObj0', 'getObj1', 'getOtherCell',
-# 'getPyAttrib', 'getTargetDistance', 'getTension', 'getType', 'get_dict', 'getsbml',
-# 'hasLocalLaw', 'isAnchor', 'isInitiator', 'length', 'pyAttrib', 'sbml', 'setActivationEnergy',
-# 'setConstitutiveLaw', 'setLambdaDistance', 'setMaxDistance', 'setMaxNumberOfJunctions',
-# 'setNeighborOrder', 'setTargetDistance', 'set_dict', 'setsbml', 'tension', 'this', 'thisown']
-            
+                
 class GrowthSteppable(SteppableBasePy):
    
     event_data = []
@@ -713,14 +693,12 @@ class DeathSteppable(SteppableBasePy):
         self.SLS_Field = self.get_field_secretor("SLS")        
         self.SLS_initialField = self.field.SLS
         self.SLS = self.field.SLS
-        # self.IL1_Field = self.get_field_secretor("IL1")
-        # self.PDGF_Field = self.get_field_secretor("PDGF")
    
     def step(self, mcs):
         global DEATHCOUNT
         # --- INJURY EVENT ---
         if self.injury:
-            if (mcs == self.injuryTime):
+            if (mcs >= self.injuryTime):
                 # --- ABRASION ---
                 if self.injuryType == 1:
                     cells_to_kill = set()
@@ -736,82 +714,47 @@ class DeathSteppable(SteppableBasePy):
                                             cell.type == self.BASAL or cell.type == self.STEM or 
                                             cell.type == self.MEMB or  cell.type == self.LIMB):
                                             cells_to_kill.add(cell.id)             
-
-                    for cellid in cells_to_kill:                        
-                        cell = self.fetch_cell_by_id(cellid)                        
-                        self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})            
-                        self.delete_cell(cell)
+                    if (mcs == self.injuryTime):
+                        for cellid in cells_to_kill:                        
+                            cell = self.fetch_cell_by_id(cellid)                        
+                            self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})            
+                            self.delete_cell(cell)
                 
                 else:
                     # --- CHEMICAL ---
-                    self.SLS_initialField[self.SLS_X_Center, self.SLS_Y_Center, 0] = self.SLS_Concentration
+                    if (mcs == self.injuryTime):
+                        self.SLS_initialField[self.SLS_X_Center, self.SLS_Y_Center, 0] = self.SLS_Concentration
                     if self.SLS_Injury:
-                        for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM, self.MEMB, self.LIMB, self.BM ): # self.TEAR
-                            
-                            if cell.type == self.MEMB or cell.type == self.LIMB or cell.type == self.BM:
-                                
+                        for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM, self.MEMB, self.LIMB,):                            
+                            if cell.type == self.MEMB or cell.type == self.LIMB:                                
                                 pixel_list = self.get_cell_pixel_list(cell)
-                                for pixel in pixel_list:                    
-                                    # print(f"{self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] = }")
-                                    # print(f"{cell.id = } {cell.type = } {cell.dict['SLS'] = }")
+                                for pixel in pixel_list:
                                     if self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] > 0.1:                            
                                         self.delete_cell(cell)
-                                        
-
                             else:
-
                                 if self.SLS_Threshold_Method:
                                     if (cell.dict['SLS'] > 2):
-                                        # if cell.type == self.TEAR:
-                                        #     continue
-                                        #     # cell.lambdaVolume = 100                    
-                                        # else:
                                         cell.dict['DEATH_MARK'] = True  
                                         cell.targetVolume = 0
                                         cell.lambdaVolume = 20
-
                                         cell.dict['SLS_Uptake'] = abs(self.SLS_Field.uptakeInsideCellTotalCount(cell, 100000.0, (cell.dict['SLS']/cell.volume)).tot_amount)
-
                                         self.event_data.append({'Event Type': 'Threshold_SLS','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-                                    
-                                # elif (cell.dict['SLS'] > 0.1): # need to define threshhold for response, maybe even cell death realease DAMPs which induces inflamation
-                                #     self.IL1_Field.secreteOutsideCellAtBoundary(cell, 1.0)
-                                #     self.PDGF_Field.secreteOutsideCellAtBoundary(cell, 1.0)
-                    
-
-                    # # --- CHEMICAL ---    
-                    # for cellid in cells_to_kill:
-                    #     cell = self.fetch_cell_by_id(cellid)
-                    #     self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})             
-                    #     cell.targetVolume = 0
-                    #     cell.lambdaVolume = 100
-                        
-            # # ---- PRODUCTION OF TEAR ----           
-            # if (mcs > (self.injuryTime + HOURtoMCS * 10)):
-            #     self.get_xml_element('Tear_GlbDiff').cdata = 10                
-         
+                            
         # --- Constant Cell Death Rate --- 
         if self.DeathControl: 
-            if mcs > 10: #[ ] Since differentiation is changed to 1 mcs, we need to change the death rate to 1 mcs  
+            if mcs > HOURtoMCS: # Relaxation Time
                 deathsum = 0            
                 for cell in self.cell_list_by_type(self.SUPER):
                     NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()  
                     if (self.TEAR in NEIGHBOR_DICT.keys()) :
-                            
-                        # cell.targetVolume -= (1/(WEEKtoMCS)) * 25 * (random.random()) # adding a stochastic death rate
-                        # cell.targetVolume -= (1/(WEEKtoMCS)) * self.sloughScalar
-
                         # On average the whole process for cell turnover takes 7-14 days. 
                         # If we assume that the average layer cells are 4 cells underneath the superficial
                         # at the periphery and  it can take between 1.75 days/layer. If that is maintained
                         # and we consider a 8 layer cells in the limbus we still have the 1.75 rate for the 14 days. 
-                        # https://iovs.arvojournals.org/article.aspx?articleid=2123522 -> TODO markov draw for cell death instead of continous volume loss random draw between 0and1 if it is lower than the probability value then cell dies
+                        # https://iovs.arvojournals.org/article.aspx?articleid=2123522 ->
+                        # TODO markov draw for cell death instead of continous volume loss random draw between 0and1 if it is lower than the probability value then cell dies
                         # average of cell death is 3 days
-                        # reviewed with Michael values for 
-
-                        # cell.targetVolume -= ((self.SUPER_TargetVolume/3.00)/(DAYtoMCS)) * self.sloughScalar
-                        # cell.targetSurface -= ((self.SUPER_TargetSurface/3.00)/(DAYtoMCS)) * 0.25 
-
+                        
                         if random.random() <= ((1/3.0)/DAYtoMCS):
                             cell.targetVolume = 0
                             cell.lambdaVolume = 1000

@@ -8,9 +8,16 @@ import sys
 import time
 import pandas as pd
 
+MAX_JOBS = 9999
+WAIT_TIME = 60  # seconds
 
 base_path = '/u/jvanin/'
-csv_file_param = None #TODO Provide file with LHS if desired or None
+sim_version_path = '/u/jvanin/vCornea/Epithelium/HPC/Project/vCornea_v_PaperHPC_version_10'
+output_version_path = '/u/jvanin/vCornea/Output/Output_Version_10'
+run_name = 'Toguchi_L27'
+
+csv_file_param = '/u/jvanin/vCornea/Epithelium/HPC/parameters_data.csv' #None  #TODO Provide file with LHS if desired or None
+
 
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 #                                                               |
@@ -21,7 +28,7 @@ WEEKtoMCS   = 1680
 MONTHtoMCS  = 7300
 YEARtoMCS   = 87600
 
-replicates = 1
+replicates = 2
 
 var_dict = {
 #---STEM---
@@ -31,15 +38,17 @@ var_dict = {
     'InitSTEM_LambdaVolume'     : [2.0],
     'InitSTEM_TargetVolume'     : [25.0],
 
-    'DensitySTEM_HalfMaxValue'  : [100.,],   
-    'EGF_STEM_HalfMaxValue'     : [4.,], 
+    'DensitySTEM_HalfMaxValue'  : [125],   
+    'EGF_STEM_HalfMaxValue'     : [1.0], 
  
-    'STEM_beta_EGF'             : [1.0],  
+    'STEM_beta_EGF'             : [1],  
 
     'InitSTEM_LambdaChemo'      : [100.0],
 # Growth Scalars 
     'EGF_GrowthScalar_STEM'     : [1.0],
     'DensityGrowthScalar_STEM'  : [1.0],
+
+    'SLS_STEMDiffCoef'          : [0.75],
 #---BASAL---
     'InitBASAL_LambdaSurface'   : [2.0],
     'InitBASAL_TargetSurface'   : [20.0],
@@ -50,12 +59,14 @@ var_dict = {
     'InitBASAL_LambdaChemo'     : [100.0],
     'InitBASAL_Division'        : [1000.0],
 
-    'DensityBASAL_HalfMaxValue' : [100.,], 
-    'EGF_BASAL_HalfMaxValue'    : [6.,], 
-    'BASAL_beta_EGF'            : [1.0],  
+    'DensityBASAL_HalfMaxValue' : [125], 
+    'EGF_BASAL_HalfMaxValue'    : [4.5], 
+    'BASAL_beta_EGF'            : [1],      
 # Growth Scalars 
     'EGF_GrowthScalar_BASAL'    : [1.0],
     'DensityGrowthScalar_BASAL' : [1.0],
+
+    'SLS_BASALDiffCoef'         : [0.75],
 #---WING---
     'InitWING_LambdaSurface'    : [5.0],
     'InitWING_TargetSurface'    : [23],
@@ -64,6 +75,7 @@ var_dict = {
     'InitWING_TargetVolume'     : [25.0],
 
     'InitWING_EGFLambdaChemo'   : [1000.0],
+    'SLS_WINGDiffCoef'          : [1.0],
 #---SUPERFICIAL---
     'InitSUPER_LambdaSurface'   : [5.0],
     'InitSUPER_TargetSurface'   : [25.0],
@@ -71,29 +83,46 @@ var_dict = {
     'InitSUPER_LambdaVolume'    : [5.0],
     'InitSUPER_TargetVolume'    : [25.0],
 
-    'EGF_SUPERDiffCoef'         : [2.,], # 1/2048 barrier | 1/1024 barrier | 1/512 barrier  !!
+    'EGF_SUPERDiffCoef'         : [5], 
+    'SLS_SUPERDiffCoef'         : [0.75],
 
     'SloughProbability'         : [0.0],
 # Death Scalars
     'DeathTimeScalar'           : [1],
     'DeathVolumeScalar'         : [1],
     'SloughScalar'              : [1],
+
+    'SLS_MEMBDiffCoef'          : [0.25],
+    'SLS_LIMBDiffCoef'          : [0.25],
+    'SLS_TEARDiffCoef'          : [0.1],
+
 # FIELDS
     'MovementBiasScreteAmount'  : [1],
     'MovementBiasUptake'        : [1],
 
     'EGF_ScreteAmount'          : [2],
 
-    'EGF_FieldUptakeBASAL'      : [0.0, 0.001, 0.01, 0.1, 1.0],
-    'EGF_FieldUptakeSTEM'       : [0.0, 0.001, 0.01, 0.1, 1.0],
-    'EGF_FieldUptakeSuper'      : [0.0, 0.001, 0.01, 0.1, 1.0],
-    'EGF_FieldUptakeWing'       : [0.0, 0.001, 0.01, 0.1, 1.0],
-    'EGF_GlobalDecay'           : [0.0, 0.001, 0.01, 0.1, 1.0, 10.0], 
+    'EGF_FieldUptakeBASAL'      : [0.0],
+    'EGF_FieldUptakeSTEM'       : [0.0],
+    'EGF_FieldUptakeSuper'      : [0.5],
+    'EGF_FieldUptakeWing'       : [1.0],
+    'EGF_GlobalDecay'           : [0],
+
+    'SLS_X_Center'              : [100],     
+    'SLS_Y_Center'              : [75],
+    'SLS_Concentration'         : [100.0],
+
+# LINKS
+    'LINKWALL_lambda_distance'  : [50],
+    'LINKWALL_target_distance'  : [0],
+    'LINKSUPER_lambda_distance' : [50],   
 
 # WOUND
     'InjuryType'                : ["'A'"],
     'IsInjury'                  : [False],
-    'InjuryTime'                : [500],
+    'InjuryTime'                : [1680],
+    'SLS_Injury'                : [True],
+    'SLS_Threshold_Method'      : [True],
 #---INJURY AREA---
     'InjuryX_Center'            : [150],
     'InjuryY_Center'            : [60],
@@ -111,6 +140,7 @@ var_dict = {
     'PressurePlot'              : [False],
     'VolumeTracker'             : [False],
     'EGF_SeenByCell'            : [True],
+    'SLS_SeenByCell'            : [True],
     'CenterBiasPlot'            : [False],
     'CenterBias'                : [False],
     'DivisionTracker'           : [False],
@@ -120,10 +150,12 @@ var_dict = {
     'MitosisPlot'               : [True],   
     'SingleCellPresEGFPlot'     : [True],
     'MassConservationPlot'      : [True],
+    'SurfactantTracking'        : [True],
 
 # TIME OF SIMULATION
-    'SimTime'                   : [605],
+    'SimTime'                   : [10000],
 }
+
 
 #                                                               |
 #||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -230,10 +262,11 @@ def generate_sbatch_string(cc3d_file, node=8, job_name='vCornea', out_file='simu
 #SBATCH -e {err_file}_%j.err
 #SBATCH --mail-user=jvanin@iu.edu
 
+#Xvfb :1 &
 export DISPLAY=:1
 echo $DISPLAY
 srun \
-{base_path}.conda/envs/cc3d_441_310/bin/cc3d_runScript.sh -i {cc3d_file}
+{base_path}.conda/envs/cc3d_450_310/bin/cc3d_runScript.sh -i {cc3d_file}
 
 wait
 
@@ -245,6 +278,14 @@ mail -s "SLURM Job ${{SLURM_JOBID}} Errors" jvanin@iu.edu < "$ERROR_FILE"
     """
     return sbatch_string
 
+def get_total_slurm_job_count():
+    result = subprocess.run('squeue | wc -l', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    output = result.stdout.decode().strip()
+    try:
+        return int(output) - 1  # Subtract one for the header line
+    except ValueError:
+        print("Error parsing job count: ", output)
+        return 0
 # Model inputs to be changed must be in a dictionary format with the same 
 # name as the created BatchTest.py file
 
@@ -262,17 +303,17 @@ out_freq = 120 # VTK frequence in MCS
 
 
 # Define base output directory
-base_output_folder = '/u/jvanin/vCornea/Output/Output_Version_5' #TODO Change the version of the output here
+base_output_folder = output_version_path #TODO Change the version of the output here
 
 # Generate a timestamp
 timestamp = datetime.datetime.now().strftime("%m%d%Y_%H%M")
 
 # Append timestamp to base directory
-sweep_output_folder = os.path.join(base_output_folder, f'Output_version_5_{timestamp}') #TODO Change the version and give especific run description
+sweep_output_folder = os.path.join(base_output_folder, run_name + f'_{timestamp}') #TODO Change the version and give especific run description
 
 
 # TODO - Change this line with your CC3D simulation folder path 
-simulation_folder = Path('/u/jvanin/vCornea/Epithelium/HPC/Project/vCornea_v_PaperHPC_version_5') #TODO Change the simulation model folder for the desired version
+simulation_folder = Path(sim_version_path) #TODO Change the simulation model folder for the desired version
 
 files_toCopy = glob.glob(os.path.join(simulation_folder, "*.cc3d"))
 files_toCopy.extend(glob.glob(os.path.join(simulation_folder, "*.piff")))
@@ -356,9 +397,14 @@ for idx, comb in enumerate(output):
 files_toCall = glob.glob(os.path.join(sweep_output_folder,"**", "BatchCall.sh"),recursive=True)
 print(files_toCall)
 processes = []
-for files in files_toCall:
-    os.chmod(files, 0o777)
-    directory = os.path.dirname(files)
-    p = subprocess.Popen(['sbatch', files], cwd=directory)
+
+for file in files_toCall:
+    while get_total_slurm_job_count() >= MAX_JOBS:
+        print(f"Waiting for available slots in queue... Current job count: {get_total_slurm_job_count()}, Max: {MAX_JOBS}")
+        time.sleep(WAIT_TIME)
+    
+    os.chmod(file, 0o777)
+    directory = os.path.dirname(file)
+    p = subprocess.Popen(['sbatch', file], cwd=directory)
     processes.append(p)
     

@@ -1,4 +1,3 @@
-
 import os
 
 def extract_parameters(content):
