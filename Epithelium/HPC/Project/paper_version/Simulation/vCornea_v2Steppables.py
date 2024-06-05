@@ -37,7 +37,7 @@ pg.set_output_dir(str(output_directory))
 # RANDOM_SEED = random.seed(12)
 
     #---- Time Scales ---
-HOURtoMCS   = 10 # TODO 10 * scale
+HOURtoMCS   = 10 
 DAYtoMCS    = 240
 WEEKtoMCS   = 1680
 MONTHtoMCS  = 7300
@@ -52,70 +52,53 @@ DEATHCOUNT  = 0
 class ConstraintInitializerSteppable(SteppableBasePy):
 
 # Static Parameters for Simulation Initiation
-    current_script_directory = current_script_directory
+    current_script_directory    = current_script_directory
 
 #   CELLS PARMETERS
 #---STEM---
     InitSTEM_LambdaSurface      = InitSTEM_LambdaSurface
     InitSTEM_TargetSurface      = InitSTEM_TargetSurface # 25=pi*r^2 | 5x4 sides
-
     InitSTEM_LambdaVolume       = InitSTEM_LambdaVolume
     InitSTEM_TargetVolume       = InitSTEM_TargetVolume 
-
     DensitySTEM_HalfMaxValue    = DensitySTEM_HalfMaxValue
     EGF_STEM_HalfMaxValue       = EGF_STEM_HalfMaxValue
     STEM_beta_EGF               = STEM_beta_EGF
-
-    InitSTEM_LambdaChemo        = InitSTEM_LambdaChemo  #10000  
-    
+    InitSTEM_LambdaChemo        = InitSTEM_LambdaChemo  #10000
     # Growth Scalars    
     EGF_GrowthScalar_STEM       = EGF_GrowthScalar_STEM #  
     DensityGrowthScalar_STEM    = DensityGrowthScalar_STEM #
-     
-    SLS_STEMDiffCoef           = SLS_STEMDiffCoef
+    SLS_STEMDiffCoef            = SLS_STEMDiffCoef
 
 #---BASAL---
     InitBASAL_LambdaSurface     = InitBASAL_LambdaSurface
     InitBASAL_TargetSurface     = InitBASAL_TargetSurface # 25=pi*r^2 = 18 | 5x4 sides =20
-    
     InitBASAL_LambdaVolume      = InitBASAL_LambdaVolume
     InitBASAL_TargetVolume      = InitBASAL_TargetVolume
-
     InitBASAL_LambdaChemo       = InitBASAL_LambdaChemo #125
     InitBASAL_Division          = InitBASAL_Division
-
     DensityBASAL_HalfMaxValue   = DensityBASAL_HalfMaxValue # 15.3 is very close to the correct value
     EGF_BASAL_HalfMaxValue      = EGF_BASAL_HalfMaxValue
     BASAL_beta_EGF              = BASAL_beta_EGF
-
     # Growth Scalars 
     EGF_GrowthScalar_BASAL      = EGF_GrowthScalar_BASAL  #  
     DensityGrowthScalar_BASAL   = DensityGrowthScalar_BASAL   # 
-
     SLS_BASALDiffCoef           = SLS_BASALDiffCoef
        
 #---WING---    
     InitWING_LambdaSurface      = InitWING_LambdaSurface  
     InitWING_TargetSurface      = InitWING_TargetSurface
-
     InitWING_LambdaVolume       = InitWING_LambdaVolume
     InitWING_TargetVolume       = InitWING_TargetVolume
-
     InitWING_EGFLambdaChemo     = InitWING_EGFLambdaChemo
     SLS_WINGDiffCoef            = SLS_WINGDiffCoef
-        
 
 #---SUPERFICIAL---
     InitSUPER_LambdaSurface     = InitSUPER_LambdaSurface
     InitSUPER_TargetSurface     = InitSUPER_TargetSurface
-
     InitSUPER_LambdaVolume      = InitSUPER_LambdaVolume
     InitSUPER_TargetVolume      = InitSUPER_TargetVolume
-
     EGF_SUPERDiffCoef           = EGF_SUPERDiffCoef 
     SLS_SUPERDiffCoef           = SLS_SUPERDiffCoef
-          
-
     SloughProbability           = SloughProbability
 
     # Death Scalars
@@ -123,6 +106,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
     DeathVolumeScalar           = DeathVolumeScalar
     SloughScalar                = SloughScalar 
 
+#---MEMBRANE; LIMBAL MEMBRANE & TEAR---
     SLS_MEMBDiffCoef            = SLS_MEMBDiffCoef
     SLS_LIMBDiffCoef            = SLS_LIMBDiffCoef
     SLS_TEARDiffCoef            = SLS_TEARDiffCoef
@@ -133,9 +117,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
     MovementBiasUptake          = MovementBiasUptake
 
     EGF_Field                   = object()
-
-    EGF_ScreteAmount            = EGF_ScreteAmount   
-
+    EGF_ScreteAmount            = EGF_ScreteAmount
     EGF_FieldUptakeBASAL        = EGF_FieldUptakeBASAL
     EGF_FieldUptakeSTEM         = EGF_FieldUptakeSTEM
     EGF_FieldUptakeSuper        = EGF_FieldUptakeSuper
@@ -148,14 +130,15 @@ class ConstraintInitializerSteppable(SteppableBasePy):
     SLS_Concentration           = SLS_Concentration
 
 # LINKS
+
     LINKWALL_lambda_distance    = LINKWALL_lambda_distance
     LINKWALL_target_distance    = 8
     LINKWALL_max_distance       = LINKWALL_max_distance
 
 #---SUPER-SUPER---
     LINKSUPER_lambda_distance   = LINKSUPER_lambda_distance
-    LINKSUPER_target_distance    = LINKSUPER_target_distance
-    LINKSUPER_max_distance       = LINKSUPER_max_distance  
+    LINKSUPER_target_distance   = LINKSUPER_target_distance
+    LINKSUPER_max_distance      = LINKSUPER_max_distance  
 
     L_max_links_SS              = L_max_links_SS 
     F_max_links_SS              = F_max_links_SS
@@ -212,6 +195,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
     SimTime                     = SimTime
 
     def __init__(self,frequency=1):
+
         SteppableBasePy.__init__(self,frequency)       
 
         #  Checking for which if anny plot should be displayed
@@ -229,272 +213,169 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             self.track_cell_level_scalar_attribute(field_name='DivisionCount', attribute_name='DivisionCount')
         if self.IL1Tracker:
             self.track_cell_level_scalar_attribute(field_name='IL1_Seen', attribute_name='IL1')
-        
-        # self.MovementBias =self.get_field_secretor("BASALMVBIAS")
-        # self.TearField = self.get_field_secretor("TEAR")
-
+     
     def start(self):         
-       
+        """ Inintializing agents and fields at MCS 0"""  
+        
         # FIELDS
-        self.MovementBias =self.get_field_secretor("BASALMVBIAS")
-        self.EGF_Field = self.get_field_secretor("EGF")
-        self.SLS_Field = self.get_field_secretor("SLS")
-        self.IL1_Field = self.get_field_secretor("IL1")        
-        self.TGFB_Field = self.get_field_secretor("TGFB")
-        self.SLS_Ininial_field = self.field.SLS
-
-        self.SLS_Ininial_field[self.SLS_X_Center, self.SLS_Y_Center, 0] = self.SLS_Concentration
-        
-        # STROMA
-        # size of cell will be 3x3x1
-        # cell = self.cell_field[99:100, 0:1, 0] = self.new_cell(self.STROMA)
-        # cell.targetVolume = 10000
-        # cell.lambdaVolume = 60.0
-        
-        
-        # for cell in self.cell_list_by_type(self.STROMA):
-
-        #     cell.targetVolume = 0
-        #     cell.lambdaVolume = 60.0
-        # self.membrane_height = {}          
-          
-        # MEMBANE    
-        for cell in self.cell_list_by_type(self.MEMB):            
-            
-            cell.targetVolume = 1
-            cell.lambdaVolume = 100000.0
-            cell.lambdaSurface = 1.0
-            cell.targetSurface = 100000.0
-            # if cell.xCOM >= 150 and cell.xCOM < 151:
-            #     self.delete_cell(cell)
-
-        #     x = cell.xCOM  
-        #     y = cell.yCOM
-
-        #     # Check if this x value has been encountered before
-        #     if x in self.membrane_height:
-        #         # If yes, update the y value if the current cell's y is smaller
-        #         if y < self.membrane_height[x]:
-        #             self.membrane_height[x] = y
-        #     else:
-        #         # If this x value has not been encountered, add it to the dictionary
-        #         self.membrane_height[x] = y
-        
-        # print("This is the membrane height", self.membrane_height)
-
-        # LIMB    
-        for cell in self.cell_list_by_type(self.LIMB):            
-            cell.targetVolume = 1
-            cell.lambdaVolume = 100000.0
-            cell.lambdaSurface = 1.0
-            cell.targetSurface = 100000.0
-
-        # KERATO
-        # Creating a uniform distribution of the KERATO cells
-        # possitioning it around the area of 200x200 having a 
-        # Based on the density of the KERATO cells in the Keratocyte
-        # density in confocal cross-sections was greatest immediately
-        # under Bowman's membrane (maximum 800 cells/ mm2)
-         
-        
-        # vertices = np.array([[0, 0], [200, 0], [200, 226],[110, 226], [22, 207], [0,207]])  # Calculated square for the keratocyte
-        # kerato_field = create_hexagonal_packing(vertices, 0.0018)
-        # for cell_pos in kerato_field:
-        #     self.cell_field[int(cell_pos[0]), int(cell_pos[1]), 0] = self.new_cell(self.KERATO)
-        
-        for cell in self.cell_list_by_type(self.KERATO):
-            # (78 to 211 µm^2) cell size where 1 voxel = 2 µm^2
-
-            cell.targetVolume = 50
-            cell.lambdaVolume = 2.0
-            cell.lambdaSurface = 2.0 # [ ] may need to be adjusted
-            cell.targetSurface = 56.0
-            cell.dict["TotalGrowth"] = 0
-
-           
-            ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "TGFB")
-            ChemotaxisData.setLambda(100)
-            ChemotaxisData.assignChemotactTowardsVectorTypes([self.cell_type.Medium])
-            # ChemotaxisData.setSaturationCoef(2.0)
-            ChemotaxisData.setLogScaledCoef(0.01) # [ ] may need to be adjusted Pensar 
-            ChemotaxisData_2 = self.chemotaxisPlugin.addChemotaxisData(cell, "IL1")
-            ChemotaxisData_2.setLambda(100)
-            ChemotaxisData_2.assignChemotactTowardsVectorTypes([self.cell_type.Medium])
-            # ChemotaxisData.setSaturationCoef(2.0)
-            ChemotaxisData_2.setLogScaledCoef(0.01) # [ ] may need to be adjusted Pensar 
-
-
-        # STEM
-        for cell in self.cell_list_by_type(self.STEM):
-
-            cell.targetVolume = self.InitSTEM_TargetVolume
-            cell.lambdaVolume = self.InitSTEM_LambdaVolume
-            cell.lambdaSurface = self.InitSTEM_LambdaSurface
-            cell.targetSurface = self.InitSTEM_TargetSurface
-
-            cell.dict["LambdaChemo"] = self.InitSTEM_LambdaChemo
-            ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")
-            ChemotaxisData.setLambda(cell.dict["LambdaChemo"])           
-           
-        # BASAL          
-        for cell in self.cell_list_by_type(self.BASAL):
-
-            cell.targetVolume = self.InitBASAL_TargetVolume
-            cell.lambdaVolume = self.InitBASAL_LambdaVolume
-            cell.lambdaSurface = self.InitBASAL_LambdaSurface
-            cell.targetSurface = self.InitBASAL_TargetSurface
-
-            # cell.dict['DivisionCount'] = random.randint(0, self.InitBASAL_Division)
-            cell.dict['DivisionCount'] = self.InitBASAL_Division
-
-            cell.dict["LambdaChemo"] = self.InitBASAL_LambdaChemo
-            ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")            
-            ChemotaxisData.setLambda(cell.dict["LambdaChemo"])
-
-        # WING  
-        for cell in self.cell_list_by_type(self.WING):
-
-            cell.targetVolume = self.InitWING_TargetVolume
-            cell.lambdaVolume = self.InitWING_LambdaVolume
-            cell.lambdaSurface = self.InitWING_LambdaSurface
-            cell.targetSurface = self.InitWING_TargetSurface
-
-            cell.dict['EGF_LambdaChemo'] = self.InitWING_EGFLambdaChemo
-            ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "EGF")            
-            ChemotaxisData.setLambda(cell.dict["EGF_LambdaChemo"])
-
-        # SUPERFICIAL
-        for cell in self.cell_list_by_type(self.SUPER):
-            cell.targetVolume = self.InitSUPER_TargetVolume
-            cell.lambdaVolume = self.InitSUPER_LambdaVolume
-
-            cell.lambdaSurface = self.InitSUPER_LambdaSurface
-            cell.targetSurface = self.InitSUPER_TargetSurface
-            cell.dict['Slough'] = self.SloughProbability
-            # [x] Establishing the links between the SUPER-WALL and SUPER-SUPER
-            cell.dict["Link_neighbor_pos"] = {}
-            self.create_links(cell)            
-
+        self.MovementBias = self.get_field_secretor("BASALMVBIAS")
+        self.EGF_Field    = self.get_field_secretor("EGF")
+        self.SLS_Field    = self.get_field_secretor("SLS")
+        self.IL1_Field    = self.get_field_secretor("IL1")        
+        self.TGFB_Field   = self.get_field_secretor("TGFB")
         self.get_xml_element("EGF_Coef_SUPER").cdata = self.EGF_SUPERDiffCoef
         self.get_xml_element("EGF_GlobalDecay").cdata = self.EGF_GlobalDecay
-        
-
         self.get_xml_element("SLS_Coef_SUPER").cdata = self.SLS_SUPERDiffCoef
         self.get_xml_element("SLS_Coef_WING").cdata = self.SLS_WINGDiffCoef
         self.get_xml_element("SLS_Coef_BASAL").cdata = self.SLS_BASALDiffCoef
         self.get_xml_element("SLS_Coef_MEMB").cdata = self.SLS_MEMBDiffCoef
         self.get_xml_element("SLS_Coef_LIMB").cdata = self.SLS_LIMBDiffCoef
         self.get_xml_element("SLS_Coef_TEAR").cdata = self.SLS_TEARDiffCoef
-
-        # TODO put on the information in to the parameters file
-        for cell in self.cell_list_by_type(self.TEAR):
-            
-            cell.targetVolume = 50
-            cell.lambdaVolume = 1 
+        # MEMBANE; LIMB    
+        for cell in self.cell_list_by_type(self.MEMB, self.LIMB):         
+            cell.targetVolume  = 1
+            cell.lambdaVolume  = 100000.0
+            cell.lambdaSurface = 1.0
+            cell.targetSurface = 100.0
+        # STEM
+        for cell in self.cell_list_by_type(self.STEM):
+            cell.targetVolume  = self.InitSTEM_TargetVolume
+            cell.lambdaVolume  = self.InitSTEM_LambdaVolume
+            cell.lambdaSurface = self.InitSTEM_LambdaSurface
+            cell.targetSurface = self.InitSTEM_TargetSurface
+            cell.dict["LambdaChemo"] = self.InitSTEM_LambdaChemo
+            ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")
+            ChemotaxisData.setLambda(cell.dict["LambdaChemo"]) 
+        # BASAL          
+        for cell in self.cell_list_by_type(self.BASAL):
+            cell.targetVolume  = self.InitBASAL_TargetVolume
+            cell.lambdaVolume  = self.InitBASAL_LambdaVolume
+            cell.lambdaSurface = self.InitBASAL_LambdaSurface
+            cell.targetSurface = self.InitBASAL_TargetSurface
+            cell.dict['DivisionCount'] = self.InitBASAL_Division
+            cell.dict["LambdaChemo"]   = self.InitBASAL_LambdaChemo
+            ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")            
+            ChemotaxisData.setLambda(cell.dict["LambdaChemo"])
+        # WING  
+        for cell in self.cell_list_by_type(self.WING):
+            cell.targetVolume  = self.InitWING_TargetVolume
+            cell.lambdaVolume  = self.InitWING_LambdaVolume
+            cell.lambdaSurface = self.InitWING_LambdaSurface
+            cell.targetSurface = self.InitWING_TargetSurface
+            cell.dict['EGF_LambdaChemo'] = self.InitWING_EGFLambdaChemo
+            ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "EGF")            
+            ChemotaxisData.setLambda(cell.dict["EGF_LambdaChemo"])
+        # SUPERFICIAL
+        for cell in self.cell_list_by_type(self.SUPER):
+            cell.targetVolume   = self.InitSUPER_TargetVolume
+            cell.lambdaVolume   = self.InitSUPER_LambdaVolume
+            cell.lambdaSurface  = self.InitSUPER_LambdaSurface
+            cell.targetSurface  = self.InitSUPER_TargetSurface
+            cell.dict['Slough'] = self.SloughProbability
+            self.create_links(cell) 
+        # TEAR
+        for cell in self.cell_list_by_type(self.TEAR):            
+            cell.targetVolume  = 50
+            cell.lambdaVolume  = 1 
             cell.lambdaSurface = 0.1
             cell.targetSurface = 20
             cell.dict["P"] = rd.uniform(-np.pi,np.pi)
-            cell.dict["DEATH_MARK"] = False
 
-        # Leaving it here for DEBUGGING 
-        # for cell in self.cell_list_by_type(self.SUPER):
-        #     self.delete_cell(cell)      
-
-        # for x in range(0,197,5):
-        #     self.cell_field[x:x+5, 55:60, 0] = self.new_cell(self.SUPER)
-    
     def step(self, mcs):
-        
-        # DEBUGGING
-        # for cell in self.cell_list_by_type(self.WING):
-        #     self.delete_cell(cell)
-        # for cell in self.cell_list_by_type(self.SUPER):
-        #     self.delete_cell(cell)
-        # for cell in self.cell_list_by_type(self.WALL):
-        # #    self.TearField.secreteOutsideCellAtBoundaryOnContactWith(cell, 1, [self.MEDIUM])
-
-        #     if cell.yCOM == 79:
-        #         self.TearField.secreteOutsideCellAtBoundaryOnContactWith(cell, 10, [self.MEDIUM])
-
-
+        """ Update function for the simulation called every Monte Carlo Step"""
 
         # ---- CELL PARAMETERS UPDATE ----        
-        for cell in self.cell_list_by_type(self.BASAL, self.STEM, self.WING, self.SUPER, self.KERATO, self.FIBRO, self.MYOF):           
-            cell.dict['Pressure']   = abs(cell.pressure)
-            cell.dict['Volume']     = cell.volume
-            cell.dict['EGF']        = self.EGF_Field.amountSeenByCell(cell)
-            cell.dict['SLS']        = self.SLS_Field.amountSeenByCell(cell)
-            
-            # UPTAKE OF FIELD
-                # BASAL
-            if cell.type == self.BASAL:              
-                cell.dict['Bias_Uptake'] = self.MovementBias.uptakeInsideCellTotalCount(cell, 100000.0, self.MovementBiasUptake).tot_amount            
-                
-                cell.dict['EGF_Uptake'] = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeBASAL).tot_amount)
-                # cell.dict['EGF_Uptake'] = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell,self.EGF_FieldUptakeBASAL, self.EGF_FieldUptakeBASAL).tot_amount)            
-                # self.EGF_Field.uptakeInsideCellAtBoundary(cell, self.EGF_FieldUptakeBASAL, self.EGF_FieldUptakeBASAL)
+        for cell in self.cell_list_by_type(self.BASAL, self.STEM, self.WING, self.SUPER, self.MEMB, self.LIMB, self.TEAR):
+            # MEMBRANE, LIMBAL MEMBRANE, TEAR           
+            if cell.type == self.MEMB or cell.type == self.LIMB or cell.type == self.TEAR:
+                cell.dict['SLS'] = self.SLS_Field.amountSeenByCell(cell)
+            else:
+                cell.dict['Pressure']   = abs(cell.pressure)
+                cell.dict['Volume']     = cell.volume
+                cell.dict['EGF']        = self.EGF_Field.amountSeenByCell(cell)
+                cell.dict['SLS']        = self.SLS_Field.amountSeenByCell(cell)
+                    # BASAL
+                if cell.type == self.BASAL:              
+                    cell.dict['Bias_Uptake'] = self.MovementBias.uptakeInsideCellTotalCount(cell, 100000.0, self.MovementBiasUptake).tot_amount            
+                    cell.dict['EGF_Uptake']  = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeBASAL).tot_amount)
+                    # STEM 
+                elif cell.type == self.STEM:
+                    cell.dict['EGF_Uptake']  = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeSTEM).tot_amount)            
+                    # WING  
+                elif cell.type == self.WING: 
+                    cell.dict['EGF_Uptake']  = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeWing).tot_amount)
+                    # SUPERFICIAL
+                elif cell.type == self.SUPER: 
+                    cell.dict['EGF_Uptake']  = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeSuper).tot_amount)            
+                        # LINKS UPDATE
+                    NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()                
+                    if self.WALL in NEIGHBOR_DICT.keys():                    
+                        self.update_wall_links(cell)
+                    else:
+                        self.update_super_super_links(cell)
 
-                # print(cell.dict['EGF_Uptake'], "BASAL", cell.id)
-             
-                # STEM 
-            elif cell.type == self.STEM:
-                cell.dict['EGF_Uptake'] = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeSTEM).tot_amount)            
-                # cell.dict['EGF_Uptake'] = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell,self.EGF_FieldUptakeSTEM, self.EGF_FieldUptakeSTEM/2).tot_amount)            
+    def create_links(self, cell):
+        """
+        Creates links for the given cell.
 
-                # self.EGF_Field.uptakeInsideCellAtBoundary(cell, self.EGF_FieldUptakeSTEM, self.EGF_FieldUptakeSTEM)               
-               
-                # print(cell.dict['EGF_Uptake'], "STEM", cell.id)
-            elif cell.type == self.SUPER: 
-                cell.dict['EGF_Uptake'] = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeSuper).tot_amount)            
-                NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-                if self.WALL in NEIGHBOR_DICT.keys():
-                    # print(f"Cell {cell.id} x={cell.xCOM} is in contact with the wall")
-                    self.update_wall_links(cell)
-                else:
-                    self.update_super_super_links(cell)                        
-                
-                    
-            elif cell.type == self.WING: 
-                cell.dict['EGF_Uptake'] = abs(self.EGF_Field.uptakeInsideCellTotalCount(cell, 100000.0, self.EGF_FieldUptakeWing).tot_amount)            
-            
-            elif cell.type == self.KERATO or cell.type == self.FIBRO or cell.type == self.MYOF: 
-                cell.dict['IL1'] = self.IL1_Field.amountSeenByCell(cell)
-                cell.dict['PDGF'] = self.PDGF_Field.amountSeenByCell(cell)
-                cell.dict['TGFB'] = self.TGFB_Field.amountSeenByCell(cell)
+        Args:
+            cell: The cell for which links need to be created.
 
-        for cell in self.cell_list_by_type(self.MEMB, self.LIMB, self.TEAR, self.STROMA):
-            cell.dict['SLS']        = self.SLS_Field.amountSeenByCell(cell)
-
-            # if cell.type == self.TEAR:
-            #     NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-            #     if not (self.SUPER in NEIGHBOR_DICT.keys()):
-                    
-
-        # print("--------------------")    
-        # for cell in self.cell_list_by_type(self.MEMB):
-
-        #     self.MovementBias.secreteOutsideCellAtBoundaryOnContactWith(cell, self.MovementBiasValue, [self.MEDIUM, self.WING, self.SUPER])
-    
-    def create_links(self,cell):
-        NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-        # [x] Rule for links for SUPER-WALL cells
+        Returns:
+            None
+        """        
         if cell.type == self.SUPER:
-            if self.WALL in NEIGHBOR_DICT.keys():
-                if cell.xCOM < self.dim.x/2:
+            NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
+            if self.WALL in NEIGHBOR_DICT.keys():                
+                if cell.xCOM < self.dim.x/2:                                        
                     closest_neighbor_WALL = self.cell_field[int(0.5), int(cell.yCOM+0.5), 0]                    
-                else:
+                else:                    
                     closest_neighbor_WALL = self.cell_field[int((self.dim.x)-0.5), int(cell.yCOM+0.5), 0]
-                link = self.new_fpp_link(cell, closest_neighbor_WALL,self.LINKWALL_lambda_distance,
-                                            self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-                if self.AutoAdjustLinks:
+                
+                # Need to check if there is another super cell linked to the wall
+                for neighbor, _ in self.get_cell_neighbor_data_list(cell):
+                    if neighbor and neighbor.type == self.SUPER:
+                        NN_DICT = self.get_cell_neighbor_data_list(neighbor).neighbor_count_by_type()
+                        if self.WALL in NN_DICT.keys():                      
+                            # Visit all links attached to the neighbor cell
+                            for link in self.get_fpp_links_by_cell(neighbor):
+                                if link.getOtherCell(neighbor).type == self.WALL:
+                                    if cell.yCOM > neighbor.yCOM:
+                                        self.delete_fpp_link(link)
+                                        Nlink = self.new_fpp_link(cell, neighbor, self.LINKSUPER_lambda_distance,
+                                            self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
+                                        link = self.new_fpp_link(cell, closest_neighbor_WALL,self.LINKWALL_lambda_distance,
+                                                self.LINKWALL_target_distance, self.LINKWALL_max_distance)
+                                        
+                                        if self.AutoAdjustLinks:
+                                            if self.Lambda_link_adjustment:
+                                                self.link_lambda_update(link)
+                                                self.link_lambda_update(Nlink)
+                                            else:
+                                                self.link_target_distance_update(link)
+                                                self.link_target_distance_update(Nlink)                                                                                
+                                    else:
+                                        self.new_fpp_link(cell, neighbor, self.LINKSUPER_lambda_distance,
+                                            self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)   
+                    
+                                        if self.AutoAdjustLinks:
+                                            if self.Lambda_link_adjustment:
+                                                self.link_lambda_update(link)
+                                            else:
+                                                self.link_target_distance_update(link) 
+                        else:                            
+                            link = self.new_fpp_link(cell, closest_neighbor_WALL,self.LINKWALL_lambda_distance,
+                                    self.LINKWALL_target_distance, self.LINKWALL_max_distance) 
+                            
+                            if self.AutoAdjustLinks:
                                 if self.Lambda_link_adjustment:
                                     self.link_lambda_update(link)
                                 else:
                                     self.link_target_distance_update(link) 
-                
+
+            # No WALL neighbor    
             else:
-                for neighbor, _ in self.get_cell_neighbor_data_list(cell):
-                    # [x] Rule for links for SUPER-SUPER cells
+                for neighbor, _ in self.get_cell_neighbor_data_list(cell):                    
                     if neighbor and neighbor.type == self.SUPER:
                         if not self.get_fpp_link_by_cells(cell, neighbor) and NEIGHBOR_DICT[self.SUPER] < 3 :                    
                             link = self.new_fpp_link(cell,neighbor, self.LINKSUPER_lambda_distance,
@@ -505,301 +386,32 @@ class ConstraintInitializerSteppable(SteppableBasePy):
                                     self.link_lambda_update(link)
                                 else:
                                     self.link_target_distance_update(link)
-                            
-                            # link.setLambdaDistance(((self.Tension_link_SS/2) / (link.length - link.getTargetDistance())))
-    # Let's start by outlining the structure of the optimized function based on the steps discussed.
-
-    def update_wall_links(self, cell):
-        # Step 1: Identify the closest wall to the cell.
+       
+    def update_wall_links(self, cell):        
         if cell.xCOM < self.dim.x / 2:
             closest_neighbor_WALL = self.cell_field[int(0.5), int(cell.yCOM + 0.5), 0]
         else:
             closest_neighbor_WALL = self.cell_field[int(self.dim.x - 0.5), int(cell.yCOM + 0.5), 0]
-
-        # Step 2: Assess existing links and neighbors.
-        existing_link_with_closestWALL = self.get_fpp_link_by_cells(cell, closest_neighbor_WALL)
-        neighbors = self.get_cell_neighbor_data_list(cell)
-        super_neighbors = [neighbor for neighbor, _ in neighbors if neighbor and neighbor.type == self.SUPER]
-        wing_neighbors = [neighbor for neighbor, _ in neighbors if neighbor and neighbor.type == self.WING]
-        print("This is the super neighbors", super_neighbors)
-        # neighborsNcell = []
-        # Initialize a flag to keep track of whether a new wall link is needed.
-        # create_new_wall_link = not existing_link_with_closestWALL
-        super_neighbor_touching_wall = False
-        neighborsNcell = None
-        # super_neighbor_Ncell = [neighbor for neighbor, _ in neighbors if neighbor and neighbor.type == self.SUPER]
-        # super_neighbor_super_neighbors = 0 
-
-        # Step 3: Manage links based on SUPER neighbors.
-        for superNcell in super_neighbors:
-            neighborsNcell=(self.get_cell_neighbor_data_list(superNcell))
-        if neighborsNcell: 
-            for neighbor, _ in neighborsNcell:                
-                if neighbor and neighbor.type == self.WALL: # I have a super neighbor 
-                    super_neighbor_touching_wall = True
-                    # super_neighbor_super_neighbors = NEIGHBOR_DICT[self.SUPER]
-                    # for neighbor_links in self.get_fpp_links_by_cell(neighbor):
-                    #     # if neighbor SUPER have a link with the wall
-                    #     if neighbor_links.getOtherCell(neighbor).type == self.WALL:
-                    #         # check height of the neighbor
-                    #         if cell.yCOM > neighbor.yCOM:                        
-                    #             self.delete_fpp_link(neighbor_links)  # delete the link with the wall (neighbor link)
-                    #             # create a link with the neighbor
-                    #             link = self.new_fpp_link(cell, neighbor, self.LINKSUPER_lambda_distance,
-                    #                             self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
-                    #             if self.AutoAdjustLinks: # if update is on, update the link
-                    #                 if self.Lambda_link_adjustment:
-                    #                     self.link_lambda_update(link)
-                    #                 else:
-                    #                     self.link_target_distance_update(link)
-                    print(f"CellN {neighbor.id} x={neighbor.xCOM} is in contact with the wall")
-                    print(f"Cell {cell.id} x={cell.xCOM} is in contact with the wall")
-            print(super_neighbor_touching_wall , "This is the super neighbor touching wall")
-        # print(f"Cell {cell.id} x={cell.xCOM} is in contact with the wall")
-
-
-        # if super_neighbor_touching_wall:
-            # for neighbor, _ in neighborsNcell:
-            #     if neighbor and neighbor.type == self.WALL and neighbor.id != cell.id:
-            #         if cell.yCOM > neighbor.yCOM:
-            #             # delete neighbor link to wall
-            #             for link in self.get_fpp_links_by_cell(neighbor):
-            #                 if link.getOtherCell(neighbor).type == self.WALL:
-            #                     self.delete_fpp_link(link)
-                        
-            #             # # create a link with the neighbor SUPER 
-            #             # link = self.new_fpp_link(cell, neighbor, self.LINKSUPER_lambda_distance,
-            #             #                 self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
-                        
-            #             if existing_link_with_closestWALL:
-            #                 if self.AutoAdjustLinks:                                
-            #                     if self.Lambda_link_adjustment:
-            #                         self.link_lambda_update(existing_link_with_closestWALL)
-            #                     else:
-            #                         self.link_target_distance_update(existing_link_with_closestWALL)
-            #             else:
-            #                 # create a link with the wall
-            #                 wall_link = self.new_fpp_link(cell, closest_neighbor_WALL, self.LINKWALL_lambda_distance,
-            #                                 self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-                            
-            #                 if self.AutoAdjustLinks: # if update is on, update the link
-            #                     if self.Lambda_link_adjustment:
-            #                         # self.link_lambda_update(link)
-            #                         self.link_lambda_update(wall_link)
-            #                     else:
-            #                         # self.link_target_distance_update(link)
-            #                         self.link_target_distance_update(wall_link)
-                    
-            #         else:
-            #             # # delete neighbor link to super neighbor
-            #             # for link in self.get_fpp_links_by_cell(neighbor):
-            #             #     if link.getOtherCell(neighbor).type == self.SUPER:
-            #             #         self.delete_fpp_link(link)
-            #             # delete cell link to wall
-            #             for link in self.get_fpp_links_by_cell(cell):
-            #                 if link.getOtherCell(cell).type == self.WALL:
-            #                     self.delete_fpp_link(link)
-            #             # create a link with the neighbor
-            #             link = self.new_fpp_link(cell, neighbor, self.LINKSUPER_lambda_distance,
-            #                             self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
-                    
-                    # # Neighbor is higher; ensure the current cell links to the neighbor instead of the wall
-                    # self.adjust_links_for_lower_c
-        # else:
+        existing_link_with_closestWALL = self.get_fpp_link_by_cells(cell, closest_neighbor_WALL)        
         if existing_link_with_closestWALL:
-        # update the forces if so defined
-            
+            if len(self.get_fpp_links_by_cell(cell)) > 2:
+                for link in self.get_fpp_links_by_cell(cell):
+                    if link.getOtherCell(cell).type == self.WALL:
+                        self.delete_fpp_link(link)
+                    
+        # update the forces if so defined            
             if self.AutoAdjustLinks:
                 if self.Lambda_link_adjustment:
                     self.link_lambda_update(existing_link_with_closestWALL)
                 else:
                     self.link_target_distance_update(existing_link_with_closestWALL)
-        
-        else: 
-            #check if there are links with wall
+        else:
             for link in self.get_fpp_links_by_cell(cell):
-                if link.getOtherCell(cell).type == self.WALL:
-                    # [ ] We could have a threshold for the distance between the SUPER and the WALL
-                    # if  link.getTension > SOME_THRESHOLD:
-                    self.delete_fpp_link(link)
-            # create a link with the closest wall 
-            link = self.new_fpp_link(cell, closest_neighbor_WALL, self.LINKWALL_lambda_distance,
-                                    self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-            if self.AutoAdjustLinks:
-                if self.Lambda_link_adjustment:
-                    self.link_lambda_update(link)
-                else:
-                    self.link_target_distance_update(link)
-
-        # elif super_neighbor_touching_wall:
-        #     NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-        #     if super_neighbor_super_neighbors > NEIGHBOR_DICT[self.SUPER]:
-                
-
-
-        # else:
-
-                    # if cell is higher
-                    # if existing_link_with_wall:
-            # if self.get_fpp_link_by_cells(neighbor, closest_neighbor_WALL):
-                # Logic for managing links when a SUPER neighbor is linked to the closest wall.
-                # This might involve rearranging or deleting existing links, depending on the scenario.
-                # pass
-
-        # Step 4: Create or adjust links if necessary.
-        # if create_new_wall_link:
-        #     # Create a link with the closest wall if one doesn't exist.
-        #     link = self.new_fpp_link(cell, closest_neighbor_WALL, self.LINKWALL_lambda_distance,
-        #                              self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-        #     if self.AutoAdjustLinks:
-        #         # Adjust the newly created link if auto-adjust is enabled.
-        #         if self.Lambda_link_adjustment:
-        #             self.link_lambda_update(link)
-        #         else:
-        #             self.link_target_distance_update(link)
-
-    # Note: This is a high-level structure. Detailed logic, especially for managing links based on SUPER neighbors,
-    # needs to be carefully implemented to avoid unnecessary link creation/destruction and to handle all edge cases properly.
-
-# Function calls and method calls are commented out to align with the instructions for development in the PCI.
-                     
-    # def update_wall_links(self, cell):
-    #     # if cell is here it means that it is in contact with the wall
-    #     Super_neighbor_wall_flag = True
-
-    #     # Update rule for SUPER-WALL links (lateral_linking)        
-    #     if cell.xCOM < self.dim.x/2:
-    #         closest_neighbor_WALL = self.cell_field[int(0.5), int(cell.yCOM+0.5), 0]
-    #         # closest_neighbor_WALL = self.cell_field[int(round(0.5)), int(round(cell.yCOM+0.5)), 0]
-    #     else:
-    #         closest_neighbor_WALL = self.cell_field[int((self.dim.x)-0.5), int(cell.yCOM+0.5), 0]
-    #         # closest_neighbor_WALL = self.cell_field[int(round((self.dim.x)-0.5)), int(round(cell.yCOM+0.5)), 0]
-
-    #     if not self.get_fpp_link_by_cells(cell, closest_neighbor_WALL): # not a link with closest wall
-            
-    #         if len(self.get_fpp_links_by_cell(cell)) == 0:# there are no links
-    #             # check if there is a SUPER neighbor
-    #             neighbors = self.get_cell_neighbor_data_list(cell)
-    #             super_neighbors = [neighbor for neighbor, _ in neighbors if neighbor and neighbor.type == self.SUPER]
-    #             for neighbor, _ in super_neighbors:
-    #                 NEIGHBOR_DICT = self.get_cell_neighbor_data_list(neighbor).neighbor_count_by_type()
-    #                 if (self.WALL in NEIGHBOR_DICT.keys()): # if the SUPER_neighbor has a WALL neighbor
-                        
-    #                     Super_neighbor_wall_flag = False                        
-    #                     for link in self.get_fpp_links_by_cell(neighbor):
-    #                         if link.getOtherCell(neighbor).type == self.WALL: # does my neighbor have a link with the wall
-    #                             # check who is higher in the y axis
-    #                             if cell.yCOM > neighbor.yCOM:
-    #                                 self.delete_fpp_link(link) # delete the link with the wall (neighbor link)
-    #                                 # create a link with the neighbor
-    #                                 link = self.new_fpp_link(cell, neighbor, self.LINKSUPER_lambda_distance,
-    #                                     self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
-    #                                 if self.AutoAdjustLinks: # if update is on, update the link
-    #                                     if self.Lambda_link_adjustment:
-    #                                         self.link_lambda_update(link)
-    #                                     else:
-    #                                         self.link_target_distance_update(link)
-    #                                 # create a link with the wall
-    #                                 wall_link =self.new_fpp_link(cell, closest_neighbor_WALL, self.LINKWALL_lambda_distance,
-    #                                     self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-    #                                 if self.AutoAdjustLinks: # if update is on, update the link
-    #                                     if self.Lambda_link_adjustment:
-    #                                         self.link_lambda_update(wall_link)
-    #                                     else:
-    #                                         self.link_target_distance_update(wall_link)
-                
-
-    #             if Super_neighbor_wall_flag:
-    #                 # create a link with the wall
-    #                 link = self.new_fpp_link(cell, closest_neighbor_WALL, self.LINKWALL_lambda_distance,
-    #                                 self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-    #                 if self.AutoAdjustLinks: # if update is on, update the link
-    #                     if self.Lambda_link_adjustment:
-    #                         self.link_lambda_update(link)
-    #                     else:
-    #                         self.link_target_distance_update(link)
-
-    #         elif len(self.get_fpp_links_by_cell(cell)) == 2: # if there is a link with the wall
-
-    #         else:
-    #             for link in self.get_fpp_links_by_cell(cell):
-    #                 if link.getOtherCell(cell).type == self.WALL: # if the link is with the wall but not the closest wall
-    #                     # [ ] We could have a threshold for the distance between the SUPER and the WALL
-    #                     # if  link.getTension > SOME_THRESHOLD:
-    #                     self.delete_fpp_link(link)
-    #                     # link=self.new_fpp_link(cell, closest_neighbor_WALL,self.LINKWALL_lambda_distance,
-    #                     #                     self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-    #                     # if self.AutoAdjustLinks:
-    #                     #             if self.Lambda_link_adjustment:
-    #                     #                 self.link_lambda_update(link)
-    #                     #             else:
-    #                     #                 self.link_target_distance_update(link)
-    #                 elif link.getOtherCell(cell).type == self.SUPER:
-
-
-    #         # # TODO Need to change this since it will keep creating links for any cell tuching the wall adn dont have a link to the wall
-            
-    #         # link=self.new_fpp_link(cell, closest_neighbor_WALL,self.LINKWALL_lambda_distance,
-    #         #                             self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-    #         # if self.AutoAdjustLinks:
-    #         #     if self.Lambda_link_adjustment:
-    #         #         self.link_lambda_update(link)
-    #         #     else:
-    #         #         self.link_target_distance_update(link) 
-
-    #     else: # if I have a link, with closest wall,
-    #         NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type() 
-            
-    #         if (self.SUPER in NEIGHBOR_DICT.keys()):
-    #             neighbors = self.get_cell_neighbor_data_list(cell)
-    #             super_neighbors = [neighbor for neighbor, _ in neighbors if neighbor and neighbor.type == self.SUPER]
-    #             for neighbor, _ in super_neighbors:                    
-    #                 if not self.get_fpp_link_by_cells(cell, neighbor): # no link between the cell and the neighbor
-    #                     # check if neighbor is not already linked to the wall, 
-    #                     # high probability that it is in contact with the wall  
-    #                     for link in self.get_fpp_links_by_cell(neighbor):
-    #                         if link.getOtherCell(neighbor).type == self.WALL: # does my neighbor have a link with the wall
-    #                             # check who is higher in the y axis
-    #                             if cell.yCOM > neighbor.yCOM:
-    #                                 self.delete_fpp_link(link) # delete the link with the wall (neighbor link)
-    #                                 # create a link with the neighbor
-    #                                 link = self.new_fpp_link(cell, neighbor, self.LINKSUPER_lambda_distance,
-    #                                     self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
-    #                                 if self.AutoAdjustLinks: # if update is on, update the link
-    #                                     if self.Lambda_link_adjustment:
-    #                                         self.link_lambda_update(link)
-    #                                     else:
-    #                                         self.link_target_distance_update(link)
-
-    #                             # else: # if the neighbor is higher in the y axis
-    #                             #     # delete the link between the cell and the wall
-    #                             #     cell_link_wall = self.get_fpp_link_by_cells(cell, closest_neighbor_WALL)
-    #                             #     self.delete_fpp_link(cell_link_wall)
-    #                             #     neighbor_link_super = self.get_fpp_link_by_cells(neighbor, (link.getOtherCell(neighbor).type == self.SUPER))                                 
-    #                             #     self.delete_fpp_link(neighbor_link_super) # delete the link with the super (neighbor link)
-                   
-    #                 else: # I do have a link with the super cell
-    #                     for link in self.get_fpp_links_by_cell(neighbor):
-    #                         if link.getOtherCell(neighbor).type == self.WALL: # does my neighbor have a link with the wall
-                                
-    #                     #link = self.get_fpp_link_by_cells(cell, neighbor)
-
-                        
-    #         else: # if there is no SUPER neighbor, just update the link with the wall if update is on
-    #             link=self.get_fpp_link_by_cells(cell, closest_neighbor_WALL)
-    #             if self.AutoAdjustLinks:
-    #                 if self.Lambda_link_adjustment:
-    #                     self.link_lambda_update(link)
-    #                 else:
-    #                     self.link_target_distance_update(link) 
-    #     # elif len(self.get_fpp_links_by_cell(cell)) != 2:
-    #     #     link=self.new_fpp_link(cell, closest_neighbor_WALL,self.LINKWALL_lambda_distance,
-    #     #                                 self.LINKWALL_target_distance, self.LINKWALL_max_distance)
-    #     #     if self.AutoAdjustLinks:
-    #     #                 if self.Lambda_link_adjustment:
-    #     #                     self.link_lambda_update(link)
-    #     #                 else:
-    #     #                     self.link_target_distance_update(link)
+                    if link.getOtherCell(cell).type == self.WALL:
+                        # [ ] We could have a threshold for the distance between the SUPER and the WALL
+                        # if  link.getTension > SOME_THRESHOLD:
+                        self.delete_fpp_link(link)
+            self.create_links(cell)
                     
     def update_super_super_links(self, cell):
         NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
@@ -809,17 +421,9 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             self.create_links(cell)
 
         elif len(self.get_fpp_links_by_cell(cell)) == 2 and NEIGHBOR_DICT[self.SUPER] == 2:
-            # [x] Autoajusment of the links based on constant force
-            if self.AutoAdjustLinks:
-
-                # [x] Constant Tension for the links
-                for link in self.get_fpp_links_by_cell(cell):                    
-                    # if (link.length - link.getTargetDistance()) != 0:
-                    #     link.setLambdaDistance(((self.Tension_link_SS/2) / (link.length - link.getTargetDistance()))) # This is return a 
-                    # else:
-                    #     link.setLambdaDistance(0)
-                    # print(f"{self.AutoAdjustLinks = }")
-                    # print(f"{self.Lambda_link_adjustment = }")
+            
+            if self.AutoAdjustLinks:                
+                for link in self.get_fpp_links_by_cell(cell):
                     if self.Lambda_link_adjustment:
                         self.link_lambda_update(link)                                           
                     else:
@@ -833,16 +437,10 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             neighbors = self.get_cell_neighbor_data_list(cell)            
             super_neighbors = [neighbor for neighbor, _ in neighbors if neighbor and neighbor.type == self.SUPER]
             left_neighbor, right_neighbor = self.find_closest_neighbors(cell, super_neighbors)  
-
+            
             if  left_neighbor:
                 link = self.new_fpp_link(cell,left_neighbor, self.LINKSUPER_lambda_distance,
                                                 self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
-                # if self.Lambda_link_adjustment:
-                #     self.link_lambda_update(link)
-                # #link.setLambdaDistance(((self.Tension_link_SS/2) / (link.length - link.getTargetDistance())))
-                # else:
-                #     self.link_target_distance_update(link)
-                
                 if self.AutoAdjustLinks:
                     if self.Lambda_link_adjustment:
                         self.link_lambda_update(link)
@@ -852,12 +450,6 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             if right_neighbor:
                 link = self.new_fpp_link(cell,right_neighbor, self.LINKSUPER_lambda_distance,
                                                 self.LINKSUPER_target_distance, self.LINKSUPER_max_distance)
-                
-                # if self.Lambda_link_adjustment:
-                #     self.link_lambda_update(link)
-                # #link.setLambdaDistance(((self.Tension_link_SS/2) / (link.length - link.getTargetDistance())))
-                # else:
-                #     self.link_target_distance_update(link)
                 if self.AutoAdjustLinks:
                     if self.Lambda_link_adjustment:
                         self.link_lambda_update(link)
@@ -947,57 +539,32 @@ class GrowthSteppable(SteppableBasePy):
         if self.GrowthControl:
             # ---- BASAL ----
             for cell in self.cell_list_by_type(self.BASAL):
-            
                 # GROWTH THROUGH EGF
                 cell.dict['EGF_Growth'] = (self.BASAL_beta_EGF * 
                                            (cell.dict['EGF']**4/(self.EGF_BASAL_HalfMaxValue**4 + cell.dict['EGF']**4)) + 
-                                           (1 - self.BASAL_beta_EGF)) # Hill Promoter EGF                
-            
+                                           (1 - self.BASAL_beta_EGF)) # Hill Promoter EGF
                 # GROWTH CONTACT INHIBITION  
                 cell.dict['DensityGrowth'] = ((self.DensityBASAL_HalfMaxValue**4/(self.DensityBASAL_HalfMaxValue**4 + cell.dict['Pressure']**4))) # Hill Inhibitor Pressure        
-
                 # TOTAL GROWTH
-                cell.dict['TotalGrowth'] = (self.BASAL_doubling * (cell.dict['DensityGrowth'] * cell.dict['EGF_Growth']))                  
-                
+                cell.dict['TotalGrowth'] = (self.BASAL_doubling * (cell.dict['DensityGrowth'] * cell.dict['EGF_Growth']))
                 cell.targetVolume += cell.dict['TotalGrowth']
-
                 self.event_data.append({'Event Type': 'Basal Growth Vol','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-           
             # ---- STEM ----
             for cell in self.cell_list_by_type(self.STEM):
-                
                 # GROWTH THROUGH TEAR 
                 cell.dict['EGF_Growth'] = (self.STEM_beta_EGF *
                                            (cell.dict['EGF']**4/(self.EGF_STEM_HalfMaxValue**4 + cell.dict['EGF']**4)) +
-                                           (1 - self.STEM_beta_EGF)) # Hill Promoter EGF                
-
+                                           (1 - self.STEM_beta_EGF)) # Hill Promoter EGF 
                 # GROWTH CONTACT INHIBITION 
                 cell.dict['DensityGrowth'] = ((self.DensitySTEM_HalfMaxValue**4/(self.DensitySTEM_HalfMaxValue**4 + cell.dict['Pressure']**4))) # Hill Inhibitor Pressure                        
-                
                 # TOTAL GROWTH
                 cell.dict['TotalGrowth'] = (self.STEM_doubling * (cell.dict['DensityGrowth'] * cell.dict['EGF_Growth']))
-                
                 cell.targetVolume += cell.dict['TotalGrowth']
-                
                 self.event_data.append({'Event Type': 'Stem Growth Vol','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-            
-            # ---- KERATO ----
-            for cell in self.cell_list_by_type(self.KERATO):
-                 # PROLIFERATION THROUGH IL1
-                cell.dict['IL1_Growth'] = cell.dict['IL1']/(cell.dict['IL1']+5) # [ ] Need to be parameterized               
-                cell.dict["TotalGrowth"] = cell.dict['IL1_Growth']
-                # print(f"{cell.dict['TotalGrowth'] = }")
-                cell.targetVolume += cell.dict['TotalGrowth']
-                # print(f"{cell.volume = }")
-
             # New automatic surface auto update
             # TODO: Check if this is working correctly
-            for cell in self.cell_list_by_type(self.SUPER,self.WING,self.BASAL,self.STEM,self.TEAR):
-                # print(cell.surface, "surface")
-                # print(cell.targetSurface, "target surface")
-                # print(cell.lambdaSurface, "lambda surface")
-                # print(cell.type, f"cell type: Basal {self.BASAL}, Stem {self.STEM}, Super {self.SUPER}, Wing {self.WING}, Tear {self.TEAR}")
-                if cell.lambdaSurface == 0:
+            for cell in self.cell_list_by_type(self.SUPER,self.WING,self.BASAL,self.STEM,self.TEAR):                
+                if cell.lambdaSurface == 0: # avoid division by 0
                     print(150*"!")
                     print(cell.surface, "surface")
                     print(cell.volume, "volume")
@@ -1006,14 +573,11 @@ class GrowthSteppable(SteppableBasePy):
                     print(cell.targetSurface, "target surface")
                     print(cell.lambdaSurface, "lambda surface")
                     print(cell.type, f"cell type: Basal {self.BASAL}, Stem {self.STEM}, Super {self.SUPER}, Wing {self.WING}, Tear {self.TEAR}")
-                    print(150*"!")
-                    # print(cell.targetSurface, "new target surface")
+                    print(150*"!")                    
                 else:    
                     cell.targetSurface =  -(1.5/cell.lambdaSurface)+cell.surface
-                # print(cell.targetSurface, "new target surface")
-    
-    def get_cell_data_mass(self):
-        # return self.cell_data_mass
+      
+    def get_cell_data_mass(self):        
         return self.event_data
     
     def clear_cell_data_mass(self):
@@ -1028,11 +592,11 @@ class MitosisSteppable(MitosisSteppableBase):
     event_data = []
 
     def __init__(self,frequency=1):
+
         MitosisSteppableBase.__init__(self,frequency)
         
         self.MitosisControl = ConstraintInitializerSteppable.MitosisControl
-        # self.STEM_to_divide = 0
-        # self.BASAL_to_divide = 0
+        
     def start(self):
         self.intialTEARcount = len(self.cell_list_by_type(self.TEAR))
 
@@ -1044,40 +608,14 @@ class MitosisSteppable(MitosisSteppableBase):
             self.BASAL_to_divide = 0
             cells_to_divide=[]
 
-            #---BASAL---            
+            #---BASAL & STEM---            
             for cell in self.cell_list_by_type(self.BASAL, self.STEM):
                 if cell.volume>50:
-                    cells_to_divide.append(cell)
-            
-            #---STEM---
-            # for cell in self.cell_list_by_type(self.STEM):
-            #     if cell.volume>50:
-            #         cells_to_divide.append(cell)
-
-            # TEAR CREATION RULES
-            # if len(self.cell_list_by_type(self.TEAR)) < self.intialTEARcount: 
-            
-            for cell in self.cell_list_by_type(self.TEAR, self.KERATO):
+                    cells_to_divide.append(cell)            
+            #---TEAR---
+            for cell in self.cell_list_by_type(self.TEAR):
                 if cell.volume>100:
-                    cells_to_divide.append(cell)
-
-                    # NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()  
-
-            #         # print(50*"-")
-            #         # print("TEAR Cell", cell.id)
-            #         # print('Number of neighbor types', len(NEIGHBOR_DICT.keys()))
-            #         # print("types of neighbors", NEIGHBOR_DICT.keys())
-            #         # print("number of TEAR neighbors", NEIGHBOR_DICT[self.TEAR])
-            #         # print("number of TEAR neighbors", NEIGHBOR_DICT[self.TEAR] == 1)
-
-            #         # TODO: TESTing if the division of TEAR might avoid the creation of bloobs of TEAR cells on the corners 
-            #         if (self.WALL in NEIGHBOR_DICT.keys() and self.SUPER in NEIGHBOR_DICT.keys()):
-            # #         if (self.SUPER in NEIGHBOR_DICT.keys() and NEIGHBOR_DICT[self.TEAR] == 1):
-            #             cell.targetVolume += 10
-            #             cell.lambdaVolume = 4
-            #             if cell.volume == 100:
-            #                 cells_to_divide.append(cell)
-            
+                    cells_to_divide.append(cell)            
 
             # Division orientation 
             for cell in cells_to_divide:
@@ -1113,11 +651,6 @@ class MitosisSteppable(MitosisSteppableBase):
                 
                 elif cell.type == self.TEAR :
                     self.divide_cell_orientation_vector_based(cell,1,0,0)
-                
-                elif cell.type == self.KERATO:
-                    self.divide_cell_random_orientation(cell)
-                
-                        
 
             # Append counts to history list
             self.cells_divided_count_history['Basal'].append(self.BASAL_to_divide)
@@ -1139,8 +672,7 @@ class MitosisSteppable(MitosisSteppableBase):
     def update_attributes(self):        
         self.parent_cell.targetVolume /= 2.0 
         self.clone_parent_2_child()
-        # Target_surface=factor*Target_Area^(D-1)/(D)    
-
+        
 class DeathSteppable(SteppableBasePy):
 
     event_data = []
@@ -1170,62 +702,89 @@ class DeathSteppable(SteppableBasePy):
         self.SUPER_TargetVolume = ConstraintInitializerSteppable.InitSUPER_TargetVolume
         self.SUPER_TargetSurface = ConstraintInitializerSteppable.InitSUPER_TargetSurface
 
-        # TODO Fix this reference to the SLS field
+        # SLS
         self.SLS_Injury = ConstraintInitializerSteppable.SLS_Injury
         self.SLS_Threshold_Method = ConstraintInitializerSteppable.SLS_Threshold_Method
-        # self.SLS_Injury = True
-        # self.SLS_Threshold_Method = True
-
+        self.SLS_X_Center = ConstraintInitializerSteppable.SLS_X_Center
+        self.SLS_Y_Center = ConstraintInitializerSteppable.SLS_Y_Center
+        self.SLS_Concentration = ConstraintInitializerSteppable.SLS_Concentration        
+    
     def start(self):
-        self.SLS_Field = self.get_field_secretor("SLS")
-        self.IL1_Field = self.get_field_secretor("IL1")
-        self.PDGF_Field = self.get_field_secretor("PDGF")
+        self.SLS_Field = self.get_field_secretor("SLS")        
+        self.SLS_initialField = self.field.SLS
         self.SLS = self.field.SLS
-
+        # self.IL1_Field = self.get_field_secretor("IL1")
+        # self.PDGF_Field = self.get_field_secretor("PDGF")
+   
     def step(self, mcs):
         global DEATHCOUNT
-
-        # self.SLS_Injury = True
-        # self.Threshold_Method = True
-        # self.SLS_Field = self.get_field_secretor("SLS")
-
-
-        # --- Basal cell death rate ---
+        # --- INJURY EVENT ---
         if self.injury:
+            if (mcs == self.injuryTime):
+                # --- ABRASION ---
+                if self.injuryType == 1:
+                    cells_to_kill = set()
+                    for i in np.arange(-self.radius,  self.radius, 1.0):
+                        y_position = self.y_center + i
+                        if not (self.y_center + i < 0 or self.y_center + i> self.dim.y):
+                            for j in np.arange(-np.sqrt(self.radius**2-i**2), np.sqrt(self.radius**2-i**2),1.0):
+                                x_position = self.x_center + j
+                                if not (self.x_center + j < 0 or self.x_center + j> self.dim.x):
+                                    cell = self.cell_field[x_position, y_position, 0]
+                                    if cell:
+                                        if (cell.type == self.SUPER or cell.type == self.WING or 
+                                            cell.type == self.BASAL or cell.type == self.STEM or 
+                                            cell.type == self.MEMB or  cell.type == self.LIMB):
+                                            cells_to_kill.add(cell.id)             
 
-            # if (mcs > 10 and mcs < 300): # sustained injury         
-            if (mcs == self.injuryTime): 
-
-                # ---- PRODUCTION OF TEAR ----
-                # self.get_xml_element('Tear_GlbDiff').cdata = 60 # GlobalDiffusion change
-
-                cells_to_kill = set()
-                for i in np.arange(-self.radius,  self.radius, 1.0):
-                    y_position = self.y_center + i
-                    if not (self.y_center + i < 0 or self.y_center + i> self.dim.y):
-                        for j in np.arange(-np.sqrt(self.radius**2-i**2), np.sqrt(self.radius**2-i**2),1.0):
-                            x_position = self.x_center + j
-                            if not (self.x_center + j < 0 or self.x_center + j> self.dim.x):
-                                cell = self.cell_field[x_position, y_position, 0]
-                                if cell:
-                                    if (cell.type == self.SUPER) or (cell.type == self.WING) or (cell.type == self.BASAL) or (cell.type == self.STEM):
-                                        cells_to_kill.add(cell.id)
-                # print(cells_to_kill)
-                # print("###############\n", "Cell that will die on injury", len(cells_to_kill))
-
-                if self.injuryType == 'A':
-                    # --- ABRASION ---    
                     for cellid in cells_to_kill:                        
                         cell = self.fetch_cell_by_id(cellid)                        
                         self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})            
                         self.delete_cell(cell)
+                
                 else:
-                    # --- CHEMICAL ---    
-                    for cellid in cells_to_kill:
-                        cell = self.fetch_cell_by_id(cellid)
-                        self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})             
-                        cell.targetVolume = 0
-                        cell.lambdaVolume = 100
+                    # --- CHEMICAL ---
+                    self.SLS_initialField[self.SLS_X_Center, self.SLS_Y_Center, 0] = self.SLS_Concentration
+                    if self.SLS_Injury:
+                        for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM, self.MEMB, self.LIMB, self.BM ): # self.TEAR
+                            
+                            if cell.type == self.MEMB or cell.type == self.LIMB or cell.type == self.BM:
+                                
+                                pixel_list = self.get_cell_pixel_list(cell)
+                                for pixel in pixel_list:                    
+                                    # print(f"{self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] = }")
+                                    # print(f"{cell.id = } {cell.type = } {cell.dict['SLS'] = }")
+                                    if self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] > 0.1:                            
+                                        self.delete_cell(cell)
+                                        
+
+                            else:
+
+                                if self.SLS_Threshold_Method:
+                                    if (cell.dict['SLS'] > 2):
+                                        # if cell.type == self.TEAR:
+                                        #     continue
+                                        #     # cell.lambdaVolume = 100                    
+                                        # else:
+                                        cell.dict['DEATH_MARK'] = True  
+                                        cell.targetVolume = 0
+                                        cell.lambdaVolume = 20
+
+                                        cell.dict['SLS_Uptake'] = abs(self.SLS_Field.uptakeInsideCellTotalCount(cell, 100000.0, (cell.dict['SLS']/cell.volume)).tot_amount)
+
+                                        self.event_data.append({'Event Type': 'Threshold_SLS','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
+                                    
+                                # elif (cell.dict['SLS'] > 0.1): # need to define threshhold for response, maybe even cell death realease DAMPs which induces inflamation
+                                #     self.IL1_Field.secreteOutsideCellAtBoundary(cell, 1.0)
+                                #     self.PDGF_Field.secreteOutsideCellAtBoundary(cell, 1.0)
+                    
+
+                    # # --- CHEMICAL ---    
+                    # for cellid in cells_to_kill:
+                    #     cell = self.fetch_cell_by_id(cellid)
+                    #     self.event_data.append({'Event Type': 'Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})             
+                    #     cell.targetVolume = 0
+                    #     cell.lambdaVolume = 100
                         
             # # ---- PRODUCTION OF TEAR ----           
             # if (mcs > (self.injuryTime + HOURtoMCS * 10)):
@@ -1233,13 +792,10 @@ class DeathSteppable(SteppableBasePy):
          
         # --- Constant Cell Death Rate --- 
         if self.DeathControl: 
-            if mcs > 1: #[ ] Since differentiation is changed to 1 mcs, we need to change the death rate to 1 mcs  
+            if mcs > 10: #[ ] Since differentiation is changed to 1 mcs, we need to change the death rate to 1 mcs  
                 deathsum = 0            
                 for cell in self.cell_list_by_type(self.SUPER):
-                    NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()  # Checking Neighbors                        
-                                    
-                    #  Considering only incontact with MEDIUM
-                    # if (self.MEDIUM in NEIGHBOR_DICT.keys()) : # Only cells at the edge has basal death for now
+                    NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()  
                     if (self.TEAR in NEIGHBOR_DICT.keys()) :
                             
                         # cell.targetVolume -= (1/(WEEKtoMCS)) * 25 * (random.random()) # adding a stochastic death rate
@@ -1259,24 +815,7 @@ class DeathSteppable(SteppableBasePy):
                         if random.random() <= ((1/3.0)/DAYtoMCS):
                             cell.targetVolume = 0
                             cell.lambdaVolume = 1000
-                            # Requires diffusivity by type
-                            # field_name = 'MyField'  Name of the field
-                            # cell_diff = self.reaction_diffusion_solver_fvm.getCellDiffusivityCoefficient(cell, "EGF")
-                            # print(cell_diff, "cell diff")
-                            # self.reaction_diffusion_solver_fvm.setCellDiffusivityCoefficient(cell, "EGF", cell_diff*100)
-                            
-                            
-                            
-                            # print("I died by divine intervention") 
-                        # if cell.targetVolume < 0:
-                        #     cell.targetVolume = 0
-                        #     # cell.lambdaVolume = 1000
-                        #     print("I died by divine intervention") 
-                        # if cell.targetSurface < 0:
-                        #     cell.targetSurface = 0
-                        #     # cell.lambdaVolume = 1000
-                        #     print("I died by divine intervention 2") 
-
+                       
                         self.event_data.append({'Event Type': 'Superficial Loss Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                         
                         if cell.volume < 15: # Minimum Cell Size Before Slough | if no slogh cell will disapear in 672 MCS ~3 days(2.8)
@@ -1287,68 +826,13 @@ class DeathSteppable(SteppableBasePy):
                                 cell.targetVolume = 0
                                 cell.lambdaVolume = 1000                             
                                 self.event_data.append({'Event Type': 'Superficial Slough Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs}) 
-                                # self.delete_cell(cell)
+                                
                 DEATHCOUNT = deathsum
 
-                for cell in self.cell_list_by_type(self.MYOF):
-                    # survival_probability = 1 / (1 + (tgfb_conc / tgfb_threshold)**hill_coefficient)
-                    death_probability = 0.1 / (1 + (cell.dict['TGFB'] / 0.1)**4)
-                    if random.random() > death_probability:
-                        cell.targetVolume = 0
-                        cell.lambdaVolume = 1000
-                        # self.event_data.append({'Event Type': 'Myofibroblast Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-                        # self.delete_cell(cell)
-
-   
-                for cell in self.cell_list_by_type(self.KERATO):
-
-                    if random.random() < (0.003* (cell.dict['IL1']**4/(5**4 + cell.dict['IL1']**4))):
-                        cell.targetVolume = 0
-                        cell.lambdaVolume = 1000
-                        # self.event_data.append({'Event Type': 'Keratocyte Death Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-                        # self.delete_cell(cell)
-
-            for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM):
-                if (cell.volume < 3):                    
-                    self.event_data.append({'Event Type': 'Death Vol','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})                    
-                    self.delete_cell(cell)
-            
-            #((self.DensityBASAL_HalfMaxValue**4/(self.DensityBASAL_HalfMaxValue**4 + cell.dict['Pressure']**4)))
-
-        if self.SLS_Injury:
-
-            for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM, self.MEMB, self.LIMB, self.BM ): # self.TEAR
-                
-                if cell.type == self.MEMB or cell.type == self.LIMB or cell.type == self.BM:
-                    
-                    pixel_list = self.get_cell_pixel_list(cell)
-                    for pixel in pixel_list:                    
-                        # print(f"{self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] = }")
-                        # print(f"{cell.id = } {cell.type = } {cell.dict['SLS'] = }")
-                        if self.SLS[pixel.pixel.x, pixel.pixel.y, pixel.pixel.z] > 0.1:                            
-                            self.delete_cell(cell)
-                            
-
-                else:
-
-                    if self.SLS_Threshold_Method:
-                        if (cell.dict['SLS'] > 2):
-                            # if cell.type == self.TEAR:
-                            #     continue
-                            #     # cell.lambdaVolume = 100                    
-                            # else:
-                            cell.dict['DEATH_MARK'] = True  
-                            cell.targetVolume = 0
-                            cell.lambdaVolume = 20
-
-                            cell.dict['SLS_Uptake'] = abs(self.SLS_Field.uptakeInsideCellTotalCount(cell, 100000.0, (cell.dict['SLS']/cell.volume)).tot_amount)
-
-                            self.event_data.append({'Event Type': 'Threshold_SLS','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-                        
-                        elif (cell.dict['SLS'] > 0.1): # need to define threshhold for response, maybe even cell death realease DAMPs which induces inflamation
-                            self.IL1_Field.secreteOutsideCellAtBoundary(cell, 1.0)
-                            self.PDGF_Field.secreteOutsideCellAtBoundary(cell, 1.0)
-                    
+            # for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM):
+            #     if (cell.volume < 3):                    
+            #         self.event_data.append({'Event Type': 'Death Vol','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})                    
+            #         self.delete_cell(cell)            
 
     def get_cell_data_mass(self):        
         return self.event_data
@@ -1360,7 +844,8 @@ class DifferentiationSteppable(SteppableBasePy):
     
     event_data = []
 
-    def __init__(self, frequency=1):      
+    def __init__(self, frequency=1):  
+
         SteppableBasePy.__init__(self, frequency)  
 
         self.DifferentiationControl = ConstraintInitializerSteppable.DifferentiationControl    
@@ -1373,153 +858,93 @@ class DifferentiationSteppable(SteppableBasePy):
         # self.create_links = ConstraintInitializerSteppable.create_links
           
     def start(self):
+        # For Time based Differentiation
+        # for cell in self.cell_list_by_type(self.WING):
+        #     cell.dict['Differentiantion'] = False
+        #     cell.dict['DifferentiantionTime'] = 0
         pass
        
     def step(self, mcs): 
       
         if self.DifferentiationControl:
-
-            if mcs > 1: #[ ] Need to check for relaxation time
-                # SUPER CELL
-                # for cell in self.cell_list_by_type(self.SUPER):
-                #     # PARAMETERS
-                #     NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-                            
+            if mcs > HOURtoMCS: #[ ] Need to check for relaxation time                            
                 # WING CELL
-                for cell in self.cell_list_by_type(self.WING):
-                    # PARAMETERS
-                    NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-                                
+                for cell in self.cell_list_by_type(self.WING):                    
+                    NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()                                
                     # DIFFERENTIATION RULES
-                    # if (self.MEDIUM in NEIGHBOR_DICT.keys()) and (self.WING in NEIGHBOR_DICT.keys()): # might need to change I have to think
-                    if (self.TEAR in NEIGHBOR_DICT.keys()) and (self.WING in NEIGHBOR_DICT.keys()) and not (self.BASAL in NEIGHBOR_DICT.keys()) and not (self.MEMB in NEIGHBOR_DICT.keys()) and not (self.BM in NEIGHBOR_DICT.keys()): # might need to change I have to think                        
+                    # Possibility for a time dependent differentiation instead of instantanious 6 minutes
+                    # [ ] Litereature says that the differentiation of the wing cells to the superficial cells is x(units) after signal y
+
+                        # Imidiate Differentiation
+                    if ((self.TEAR in NEIGHBOR_DICT.keys()) and 
+                        (self.WING in NEIGHBOR_DICT.keys()) and 
+                        not (self.BASAL in NEIGHBOR_DICT.keys()) and 
+                        not (self.MEMB in NEIGHBOR_DICT.keys())):                        
                         self.event_data.append({'Event Type': 'Wing Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                         cell.type = self.SUPER
                         self.initializeDifferentiatedCell(cell)
-
-                        #[x] Doing the creation of links here since we are looping over the the cells already and the it should be created as soon as the cell type changes
-                        # ConstraintInitializerSteppable.create_links(self,cell=cell)
                         self.event_data.append({'Event Type': 'Superficial After Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
 
-                    # Tear based Differention
-                    # elif (cell.dict['Tear']> 5) and (self.SUPER in NEIGHBOR_DICT.keys()): # Amount seen by cell = cell.dict['Tear']
+                        # Time based Differention                                    
+                    # if ((self.TEAR in NEIGHBOR_DICT.keys()) and 
+                    #     (self.WING in NEIGHBOR_DICT.keys()) and 
+                    #     not (self.BASAL in NEIGHBOR_DICT.keys()) and 
+                    #     not (self.MEMB in NEIGHBOR_DICT.keys()) and
+                    #     cell.dict['Differentiantion'] == False): 
+                    #     cell.dict['Differentiantion'] = True
+                    #     cell.dict['DifferentiantionTime'] = mcs
+                    # if cell.dict['Differentiantion'] and (mcs - cell.dict['DifferentiantionTime'] > HOURtoMCS * 2):
+                    #     self.event_data.append({'Event Type': 'Wing Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                     #     cell.type = self.SUPER
-                    # elif (self.TEAR in NEIGHBOR_DICT.keys()) and (self.WING in NEIGHBOR_DICT.keys()): # Old version
-                        # cell.type = self.SUPER
-                
-                for cell in self.cell_list_by_type(self.MEMB, self.BM):
-                    # PARAMETERS
-                    NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-                    # DIFFERENTIATION RULES
-                    if (self.BASAL in NEIGHBOR_DICT.keys()): 
-                        if cell.type == self.MEMB:
-                            cell.type = self.BM
-                    # else:
-                    #     if cell.type == self.BM :
-                    #         cell.type = self.MEMB    
-                            
+                    #     self.initializeDifferentiatedCell(cell)
                 # BASAL CELL
                 for cell in self.cell_list_by_type(self.BASAL):
                     # Fetch the boundary pixels of the current Basal cell
-                    boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)
-                    
-                    memb_contact_area = 0  # Counter for the area of contact with MEMB cells
-                    
+                    boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)                    
+                    memb_contact_area = 0  # Counter for the area of contact with MEMB cells                    
                     # Iterate through each boundary pixel to check for MEMB neighbors
                     for boundary_pixel_tracker_data in boundary_pixel_list:
                         boundary_pixel = boundary_pixel_tracker_data.pixel
                         for neighbor_pixel in self.get_pixel_neighbors(boundary_pixel):
-                            if neighbor_pixel.type == self.BM:
+                            # if neighbor_pixel.type == self.BM:
+                            if neighbor_pixel.type == self.MEMB:
                                 memb_contact_area += 1  # Increment the counter for every MEMB neighbor pixel
-
-                    # Differentiation Rules: The cell will differentiate if its contact area with MEMB is 2 or less
+                    # Differentiation Rules: The cell will differentiate if its contact area with MEMB is 2 or less pixels
                     if memb_contact_area <= 5:                        
                         self.event_data.append({'Event Type': 'Basal Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                         cell.type = self.WING
                         self.initializeDifferentiatedCell(cell)                        
                         self.event_data.append({'Event Type': 'Wing After Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-                           
                 # STEM CELL
                 for cell in self.cell_list_by_type(self.STEM):
                     # Fetch the boundary pixels of the current Basal cell
-                    boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)
-                    
-                    memb_contact_area = 0  # Counter for the area of contact with MEMB cells
-                    
+                    boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)                    
+                    memb_contact_area = 0  # Counter for the area of contact with MEMB cells                    
                     # Iterate through each boundary pixel to check for MEMB neighbors
                     for boundary_pixel_tracker_data in boundary_pixel_list:
                         boundary_pixel = boundary_pixel_tracker_data.pixel
-                        # print(f"{dir(boundary_pixel) = }")
-
                         for neighbor_pixel in self.get_pixel_neighbors(boundary_pixel):
                             if neighbor_pixel.type == self.LIMB:
                                 memb_contact_area += 1  # Increment the counter for every MEMB neighbor pixel
-
-                    # Differentiation Rules: The cell will differentiate if its contact area with MEMB is 2 or less
+                    # Differentiation Rules: The cell will differentiate if its contact area with MEMB is 2 or less pixels
                     if memb_contact_area <= 5:                        
                         self.event_data.append({'Event Type': 'Stem Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                         cell.type = self.BASAL
                         self.initializeDifferentiatedCell(cell)                        
                         self.event_data.append({'Event Type': 'Basal After Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
-
-                # KERATO CELL                        
-                for cell in self.cell_list_by_type(self.KERATO):
-                    # Random number draw 5% and concentration of PDGF
-                    if random.random() < 0.05 * cell.dict['PDGF']/(cell.dict['PDGF']+5): # Michaelis–Menten
-                        cell.type = self.FIBRO
-                        ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "IL1")
-                        ChemotaxisData.setLambda(300) # Move thrice as faster than kerato
-                        ChemotaxisData.assignChemotactTowardsVectorTypes([self.cell_type.Medium])
-                        # ChemotaxisData.setSaturationCoef(2.0)
-                        ChemotaxisData.setLogScaledCoef(0.01) # [ ] may need adjustment
-                        # self.initializeDifferentiatedCell(cell)
-                
-                # FIBRO CELL
-                for cell in self.cell_list_by_type(self.FIBRO):
-                    # Random number draw 0.01% and concentration of TGFB 
-                    if random.random() < 0.001 * cell.dict['TGFB']/(cell.dict['TGFB']+5): # Michaelis–Menten
-                        cell.type = self.MYOF
-                        ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "IL1")
-                        ChemotaxisData.setLambda(100)
-                        ChemotaxisData.assignChemotactTowardsVectorTypes([self.cell_type.Medium])
-                        # ChemotaxisData.setSaturationCoef(2.0)
-                        ChemotaxisData.setLogScaledCoef(0.01) # [ ] may need adjustment
-                        ChemotaxisData_2 = self.chemotaxisPlugin.addChemotaxisData(cell, "TGFB")
-                        ChemotaxisData_2.setLambda(100)
-                        ChemotaxisData_2.assignChemotactTowardsVectorTypes([self.cell_type.Medium])
-                        # ChemotaxisData.setSaturationCoef(2.0)
-                        ChemotaxisData_2.setLogScaledCoef(0.01) # [ ] may need adjustment
-
-                    # NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-                    # if (self.BASAL in NEIGHBOR_DICT.keys()):
-                    neighbors = self.get_cell_neighbor_data_list(cell)
-                    basal_neighbor = [neighbor for neighbor, _ in neighbors if neighbor and neighbor.type == self.BASAL]
-                    if basal_neighbor:
-                        basal_neighbor = basal_neighbor[0]
-                        # basal_neighbor.type = self.MEMB
-                        boundary_pixel_list = self.get_cell_boundary_pixel_list(basal_neighbor)
-                        for boundary_pixel_tracker_data in boundary_pixel_list:
-                            boundary_pixel = boundary_pixel_tracker_data.pixel
-                            for neighbor_pixel in self.get_pixel_neighbors(boundary_pixel):
-                                if neighbor_pixel.type == self.FIBRO:
-                                    self.cell_field[boundary_pixel.x:boundary_pixel.x+1,boundary_pixel.y:boundary_pixel.y+1,boundary_pixel.z:boundary_pixel.z+1] = self.new_cell(self.MEMB)
-                                    print("I am a fibro and I am touching a basal")
-
+        
     def get_pixel_neighbors(self, pixel):
         # Extracting x, y, z coordinates of the pixel
         x, y, z = pixel.x, pixel.y, pixel.z
-        neighbors = []
-        
+        neighbors = []        
         # Define possible relative coordinates for neighbors in a 2D grid
         # relative_coords = [(-1, -1, 0), (-1, 0, 0), (-1, 1, 0), 
-        #                     (0, -1, 0),              (0, 1, 0), 
+        #                     (0, -1, 0),            (0, 1, 0), 
         #                     (1, -1, 0), (1, 0, 0), (1, 1, 0)]
-
         # Faster version with less neighbors to check (since it is basally constrained)
         relative_coords = [
-                            (0, -1, 0),              (0, 1, 0), 
-                            (1, -1, 0), (1, 0, 0), (1, 1, 0)]
-        
+                            (0, -1, 0),            (0, 1, 0), 
+                            (1, -1, 0), (1, 0, 0), (1, 1, 0)]        
         for dx, dy, dz in relative_coords:
             # Check if the neighboring cell type matches our desired cell type
             neighbor_pixel = self.cellField[x + dx, y + dy, z + dz]
@@ -1534,8 +959,7 @@ class DifferentiationSteppable(SteppableBasePy):
     def clear_cell_data_mass(self):        
         self.event_data = []
 
-    def initializeDifferentiatedCell(self, cell):   
-        
+    def initializeDifferentiatedCell(self, cell):
         # --- BASAL ---
         if cell.type == self.BASAL:
             cell.lambdaSurface = ConstraintInitializerSteppable.InitBASAL_LambdaSurface
@@ -1544,7 +968,6 @@ class DifferentiationSteppable(SteppableBasePy):
             cell.dict['DivisionCount'] = ConstraintInitializerSteppable.InitBASAL_Division
             ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")            
             ChemotaxisData.setLambda(cell.dict["LambdaChemo"])
-
         # --- STEM ---
         elif cell.type == self.STEM:
             cell.lambdaSurface = ConstraintInitializerSteppable.InitSTEM_LambdaSurface
@@ -1552,7 +975,6 @@ class DifferentiationSteppable(SteppableBasePy):
             cell.dict["LambdaChemo"] = ConstraintInitializerSteppable.InitSTEM_LambdaChemo
             ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")            
             ChemotaxisData.setLambda(cell.dict["LambdaChemo"])
-
         # --- WING ---
         elif cell.type == self.WING:
             cell.lambdaSurface = ConstraintInitializerSteppable.InitWING_LambdaSurface
@@ -1560,40 +982,31 @@ class DifferentiationSteppable(SteppableBasePy):
             cell.lamdaVolume = ConstraintInitializerSteppable.InitWING_LambdaVolume
             cell.targetVolume = ConstraintInitializerSteppable.InitWING_TargetVolume
             cell.dict["LambdaChemo"] = 0
-
+            # For Time based Differentiation       
+            #     cell.dict['Differentiantion'] = False
+            #     cell.dict['DifferentiantionTime'] = 0
         # --- SUPER ---
         elif cell.type == self.SUPER:
             cell.lambdaSurface = ConstraintInitializerSteppable.InitSUPER_LambdaSurface
             cell.targetSurface = ConstraintInitializerSteppable.InitSUPER_TargetSurface
             cell.dict["LambdaChemo"] = 0
-            # ConstraintInitializerSteppable.create_links(self,cell=cell)
-            # len(self.get_fpp_links_by_cell(cell))
-            # NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-
-            # print("_"*50)
-            # print("Cell type", cell.type)
-            # print("Cell id", cell.id)
-            # print("Cell X", cell.xCOM, "Cell Y", cell.yCOM)
-            # print("Number of links", len(self.get_fpp_links_by_cell(cell)))
-            # print("Number of neighbors", len(NEIGHBOR_DICT.keys()))
-            # print("Neighbors", NEIGHBOR_DICT.keys())
-            # print("Superficial  neighbors", NEIGHBOR_DICT[self.SUPER])
 
 class SecretionSteppable(SteppableBasePy):
+
     def __init__(self, frequency=1):
+        
         SteppableBasePy.__init__(self, frequency)
 
         self.EGF_SecreteAmount          = ConstraintInitializerSteppable.EGF_ScreteAmount
         self.MovementBiasScreteAmount   = ConstraintInitializerSteppable.MovementBiasScreteAmount
     
     def start(self):
+
         self.MovementBias   = self.get_field_secretor("BASALMVBIAS")
         self.EGF_Field      = self.get_field_secretor("EGF")
         self.SLS_Field      = self.get_field_secretor("SLS")
         self.intialTEARcount= len(self.cell_list_by_type(self.TEAR))
-        self.IL1_Field      = self.get_field_secretor("IL1")
-        self.TGFB_Field      = self.get_field_secretor("TGFB")
-
+     
     def step(self, mcs):
 
         for cell in self.cell_list_by_type(self.MEMB, self.BM):
@@ -1601,71 +1014,43 @@ class SecretionSteppable(SteppableBasePy):
         
         for cell in self.cell_list_by_type(self.TEAR):
             (self.SLS_Field.uptakeInsideCellTotalCount(cell, 0.002, (cell.dict['SLS']/cell.volume)).tot_amount)
-        # for cell in self.cell_list_by_type(self.BASAL, self.STEM, self.WING, self.SUPER):
-             #[ ] Check for witch cell type to secrete IL1 and their respective amounts 
-            # self.IL1_Field.secreteOutsideCellAtBoundary(cell, 1.0)
-                
-# [x] Class for TEAR mechanisms
-            # TODO Add a check for left and right side of the TEAR agent
+
 class TEARSteppable(SteppableBasePy):
+
     def __init__(self, frequency=1):
+
         SteppableBasePy.__init__(self, frequency)
 
     def start(self):
+
         self.intialTEARcount = len(self.cell_list_by_type(self.TEAR))
         self.Force_TEAR = 500000
-        # self.LINKWALL_lambda_distance= 50
-        # self.LINKWALL_target_distance= 0
-        # self.LINKWALL_max_distance= 100
-
+     
     def step(self, mcs):
-        flag = False
 
+        flag = False
         if len(self.cell_list_by_type(self.TEAR)) < self.intialTEARcount:
             flag = True
-
-
         for cell in self.cell_list_by_type(self.TEAR):
             NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-
             if self.SUPER in NEIGHBOR_DICT.keys() and NEIGHBOR_DICT[self.TEAR] == 1:
                 if self.WALL not in NEIGHBOR_DICT.keys():
-                    
                     neighbor_list = self.get_cell_neighbor_data_list(cell)
-                    for neighbor,_ in neighbor_list:                        
-
+                    for neighbor,_ in neighbor_list:                     
                         if neighbor != None and neighbor.type == self.TEAR:
                             # Calculate the vector pointing away from the neighbor's COM
                             direction_vector_x = cell.xCOM - neighbor.xCOM
                             direction_vector_y = cell.yCOM - neighbor.yCOM
-
                             # Calculate the angle from the direction vector
-                            dtheta = np.arctan2(direction_vector_y, direction_vector_x)                        
-
+                            dtheta = np.arctan2(direction_vector_y, direction_vector_x) 
                             # Update the cell's orientation
                             cell.dict["P"] += dtheta
-
                             # Update the force direction
                             cell.lambdaVecX = -self.Force_TEAR * np.cos(cell.dict["P"])
                             cell.lambdaVecY = -self.Force_TEAR * np.sin(cell.dict["P"])
                             if flag and not cell.dict["DEATH_MARK"]:
                                 if cell.targetVolume < 100:
                                     cell.targetVolume+= 10
-                            # print(cell.id, cell.type,"cell id, type")
-                            # print(cell.xCOM, cell.yCOM, 'cell')
-                            # print(neighbor.id, neighbor.type, 'neighbor id, type')
-                            # print(neighbor.xCOM, neighbor.yCOM, 'neighbor')
-
-                            # print(direction_vector_x, 'direction_vector_x')
-                            # print(direction_vector_y, "direction_vector_y")
-                            # print(-self.Force_TEAR * np.cos(cell.dict["P"]), "Force x")
-                            # print(-self.Force_TEAR * np.sin(cell.dict["P"]), "Force y")
-                            # print(50 * "-")
-                # else:
-                    # TODO Compare the y-axis between the TEAR and the WALL
-                    # Pick the WALL that is closest to the TEAR COM and create a link between them
-
-            # elif self.SUPER not in NEIGHBOR_DICT.keys() and NEIGHBOR_DICT[self.TEAR] >= 3:
         
 class PlotSteppable(SteppableBasePy):
 
@@ -1676,9 +1061,7 @@ class PlotSteppable(SteppableBasePy):
         self.mitosis        = MitosisSteppable()
         self.death          = DeathSteppable()
         self.differentiation= DifferentiationSteppable()
-        # self.secretion = SecretionSteppable()
         self.growth         = GrowthSteppable()
-
         self.cellCount      = ConstraintInitializerSteppable.CellCount
         self.xhypTracker    = ConstraintInitializerSteppable.XHypTracker
         self.sloughTracker  = ConstraintInitializerSteppable.SloughTracker
@@ -1692,20 +1075,14 @@ class PlotSteppable(SteppableBasePy):
         self.MassConservationPlot = ConstraintInitializerSteppable.MassConservationPlot
         self.SurfactantTracking = ConstraintInitializerSteppable.SurfactantTracking
         self.SnapShot       = ConstraintInitializerSteppable.SnapShot 
-
         self.EGF_GrowthScalar_STEM  = ConstraintInitializerSteppable.EGF_GrowthScalar_STEM
         self.EGF_DensityScalar_STEM = ConstraintInitializerSteppable.DensityGrowthScalar_STEM
-
         self.EGF_GrowthScalar_BASAL  = ConstraintInitializerSteppable.EGF_GrowthScalar_BASAL
         self.EGF_DensityScalar_BASAL = ConstraintInitializerSteppable.DensityGrowthScalar_BASAL
-
         self.BASAL_to_divide = MitosisSteppable.BASAL_to_divide
         self.STEM_to_divide  = MitosisSteppable.STEM_to_divide
-
         self.current_script_directory = Path(__file__).parent
-
         self.SimTime = ConstraintInitializerSteppable.SimTime
-
         self.data_points =  {
             'cell_count': {
                 "Superficial": [],
@@ -1800,41 +1177,10 @@ class PlotSteppable(SteppableBasePy):
                             }
 
     def start(self):
-
-        #TODO Clean this up
-        # self.surface_plot = self.add_new_plot_window(title='Surface tracking',#
-        #                                             x_axis_title='Time(Hours)',#
-        #                                             y_axis_title='Average Y position',#
-        #                                             x_scale_type='linear', y_scale_type='linear',#
-        #                                             grid=True, config_options={'legend':True})#
-                    
-        # self.surface_plot.add_plot("Average Tear", style='lines', color='Green')#
-        # self.surface_plot.add_plot("Average Basal", style='lines', color='Pink')#
-        # self.surface_plot.add_plot("Average Superficial", style='lines', color='Cyan')#
-        # self.surface_plot.add_plot("Average Wing", style='lines', color='Blue')#
-
-
-        # if self.SurfactantTracking:
-        
-        #     self.SLS_Field = self.get_field_secretor("SLS")
-
-        #     # TODO Take this out of here after dev phase
-        #     self.SLS_plot = self.add_new_plot_window(title='Surfactant available',#
-        #                                             x_axis_title='Time(Hours)',#
-        #                                             y_axis_title='Average Y position',#
-        #                                             x_scale_type='linear', y_scale_type='linear',#
-        #                                             grid=True, config_options={'legend':True})#
-                    
-        #     self.SLS_plot.add_plot("Total Amount", style='lines', color='Blue')#
-        #     self.SLS_plot.add_plot("Tear cells count", style='lines', color='Green')#
-     
         
         if self.CC3D_PLOT:
         # ---- Cell Count Plot ----
-            
-            
-            if self.cellCount:            
-            
+            if self.cellCount:
                 self.plot_cell_count = self.add_new_plot_window(title='Cell Count by Type',
                                                                 x_axis_title='Time (Hours)',
                                                                 y_axis_title='Number of Cells',
@@ -1845,10 +1191,8 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_cell_count.add_plot("Wing", style='Lines', color='blue')
                 self.plot_cell_count.add_plot("Basal", style='Lines', color='pink')
                 self.plot_cell_count.add_plot("Stem", style='Lines', color='red')
-
-            # ---- Slough Tracker Plot ----
+        # ---- Slough Tracker Plot ----
             if self.sloughTracker:
-                
                 self.plot_slough_tracker = self.add_new_plot_window(title='Slough Tracker Tracker',
                                                                 x_axis_title='Time (Hour)',
                                                                 y_axis_title='Volume(Cyan and Red) / # Cells(Green)',
@@ -1859,29 +1203,24 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_slough_tracker.add_plot("Individual Volume", style='Dots', color='Cyan')
                 self.plot_slough_tracker.add_plot("Average Vol", style='lines', color='red')
                 self.plot_slough_tracker.add_plot("Slough Count", style='lines', color='green')
-            
-            # ---- Chemochine Center Movement Bias Plot ----
+        # ---- Chemochine Center Movement Bias Plot ----
             if self.centerBiasPlot:
-                
                 self.plot_center_bias = self.add_new_plot_window(title='Chemochine Center Movement Bias',
                                                                 x_axis_title='Time (Hour)',
                                                                 y_axis_title='Strenth of the Signal',
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
-
                 self.plot_center_bias.add_plot("Wing", style='Dots', color='blue')
                 self.plot_center_bias.add_plot("Individual Volume", style='Dots', color='Cyan')
                 self.plot_center_bias.add_plot("Average Vol", style='lines', color='red')
                 self.plot_center_bias.add_plot("Slough Count", style='lines', color='green')
 
             if self.pressurePlot:
-                
                 self.plot_pressure = self.add_new_plot_window(title='System Pressure',
                                                                 x_axis_title='Time (Hour)',
                                                                 y_axis_title='Pressure',
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
-
                 self.plot_pressure.add_plot("Stem Average", style='lines', color='red')
                 self.plot_pressure.add_plot("Basal Average", style='lines', color='pink')
                 # self.plot_pressure.add_plot("Basal Individual", style='lines', color='green')
@@ -1890,13 +1229,11 @@ class PlotSteppable(SteppableBasePy):
                 # self.plot_pressure.add_plot("Slough Count", style='lines', color='green')
 
             if self.growthPlot:
-                
                 self.plot_growth = self.add_new_plot_window(title='System Growth',
                                                                 x_axis_title='Time (Hour)',
                                                                 y_axis_title='x100',
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
-
                 self.plot_growth.add_plot("Stem Average Total", style='lines', color='red')
                 self.plot_growth.add_plot("Basal Average Total", style='lines', color='pink')
                 self.plot_growth.add_plot("Stem Average EGF", style='lines', color='grey')
@@ -1905,39 +1242,30 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_growth.add_plot("Basal Average Density", style='lines', color='Brown')
                 self.plot_growth.add_plot("Stem Average TargetVolume", style='lines', color='Magenta')
                 self.plot_growth.add_plot("Basal Average TargetVolume", style='lines', color='cyan')
-
                 self.plot_growth.add_plot("Stem Average EGFseen", style='lines', color='green')
                 self.plot_growth.add_plot("Basal Average EGFseen", style='lines', color='teal')
                 self.plot_growth.add_plot("Stem Average Pressure", style='lines', color='Blue')
                 self.plot_growth.add_plot("Basal Average Pressure", style='lines', color='lightblue')
 
-
-                # self.plot_growth.add_plot("Wing Count", style='lines', color='Blue')
-
             if self.thicknessPlot:
-
                 self.plot_thickness = self.add_new_plot_window(title='Wing Thickness',
                                                                 x_axis_title='Time(Hours)',
                                                                 y_axis_title='Average Y position',
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
-                
                 self.plot_thickness.add_plot("Limbus Avg Thickness", style='lines', color='Blue')
                 self.plot_thickness.add_plot("Limbus Left Thickness", style='lines', color='lightblue')
                 self.plot_thickness.add_plot("Limbus Right Thickness", style='lines', color='darkblue')
-
                 self.plot_thickness.add_plot("Periphery Avg Thickness", style='lines', color='red')
                 self.plot_thickness.add_plot("Periphery Left Thickness", style='lines', color='pink')
                 self.plot_thickness.add_plot("Periphery Right Thickness", style='lines', color='purple')
 
             if self.VolumeSurfaceDetailPlot:
-
                 self.plot_volume_surface = self.add_new_plot_window(title='Volume Surface Detail',
                                                                 x_axis_title='Time(Hours)',
                                                                 y_axis_title='Volume Surface',
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
-                
                 self.plot_volume_surface.add_plot('Superficial Volume', style='lines', color='cyan')
                 self.plot_volume_surface.add_plot('Superficial Surface', style='lines', color='blue')
                 self.plot_volume_surface.add_plot('Wing Volume', style='lines', color='pink')
@@ -1948,88 +1276,61 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_volume_surface.add_plot('Stem Surface', style='lines', color='brown')
 
             if self.MitosisPlot:
-
                 self.plot_mitosis = self.add_new_plot_window(title='Mitosis',
                                                                 x_axis_title='Time(Hours)',
                                                                 y_axis_title='Number of Cells',
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
-                
                 self.plot_mitosis.add_plot('BASAL', style='lines', color='cyan')
                 self.plot_mitosis.add_plot('STEM', style='lines', color='blue')
             
             if self.SurfactantTracking:
-
                 self.SLS_Field = self.get_field_secretor("SLS")
-
                 self.SLS_plot = self.add_new_plot_window(title='Surfactant available',
                                                         x_axis_title='Time(Hours)',
                                                         y_axis_title='Average Y position',
                                                         x_scale_type='linear', y_scale_type='linear',
                                                         grid=True, config_options={'legend':True})
-                        
                 self.SLS_plot.add_plot("Total Amount", style='lines', color='Blue')
 
     def step(self, mcs):
         global DEATHCOUNT
         HOURtoMCS_factor = mcs / HOURtoMCS
 
-        # #TODO Clean this up         
-        # self.surface_plot.add_data_point("Average Tear", HOURtoMCS_factor, np.median([cell.surface for cell in self.cell_list_by_type(self.TEAR)]))
-        # self.surface_plot.add_data_point("Average Basal", HOURtoMCS_factor, np.median([cell.surface for cell in self.cell_list_by_type(self.BASAL)]))
-        # self.surface_plot.add_data_point("Average Superficial", HOURtoMCS_factor, np.median([cell.surface for cell in self.cell_list_by_type(self.SUPER)]))
-        # self.surface_plot.add_data_point("Average Wing", HOURtoMCS_factor, np.median([cell.surface for cell in self.cell_list_by_type(self.WING)]))
-
         # ---- End of Simulation ----
         if mcs == (self.SimTime + 1) :
-
             if self.cellCount:                
                 self.write_csv_for_category('cell_count', mcs)
-
             if self.sloughTracker:
                 self.write_csv_for_category('slough_tracker', mcs)
-
             if self.pressurePlot:
                 self.write_csv_for_category('pressure', mcs)
-
             if self.growthPlot:
-                self.write_csv_for_category('growth', mcs)                
-
+                self.write_csv_for_category('growth', mcs)
             if self.thicknessPlot:
                 self.write_csv_for_category('thickness', mcs)
-
             if self.VolumeSurfaceDetailPlot:
                 self.write_csv_for_category('volume_surface', mcs)
-            
             if self.MitosisPlot:
                 self.write_csv_for_category('mitosis', mcs)
-            
             if self.SingleCellPresEGFPlot:
                 # self.write_csv_for_cell_data_with_replicate('single_cell_pres_EGF', mcs)
                 self.write_parquet_for_cell_data_with_replicate('single_cell_pres_EGF', mcs)
-            
             if self.MassConservationPlot:
                 self.write_to_parquet_for_mass_conservation(mcs)
-
             if self.SurfactantTracking:
                 self.write_csv_for_category('surfactant', mcs)
                 # self.write_parquet_for_cell_data_with_replicate('surfactant', mcs)
-
             if self.SnapShot:
                 self.request_screenshot(mcs=mcs, screenshot_label='Cell_Field_CellField_2D_XY_0')
             
             # Save the cell field as an image
-            self.save_visualizations(mcs)  
-               
+            # self.save_visualizations(mcs)  
 
-                
             CompuCellSetup.stop_simulation()
 
         # ---- Plots ----
-            
-        # self.SLS_plot.add_data_point("Amount", HOURtoMCS_factor, self.SLS_Field.totalFieldIntegral())
-
-        if self.cellCount and mcs % 10 == 0:
+        if self.cellCount and mcs % HOURtoMCS == 0:
 
             # CSV
             self.data_points['cell_count']['Superficial'].append(len(self.cell_list_by_type(self.SUPER)))
@@ -2047,7 +1348,7 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_cell_count.add_data_point("Basal", HOURtoMCS_factor, len(self.cell_list_by_type(self.BASAL)))
                 self.plot_cell_count.add_data_point("Stem", HOURtoMCS_factor, len(self.cell_list_by_type(self.STEM)))
             
-        if self.sloughTracker and mcs%10 == 0:
+        if self.sloughTracker and mcs % HOURtoMCS == 0:
             
             listVol = []
             
@@ -2079,7 +1380,7 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_slough_tracker.add_data_point("Average Vol", HOURtoMCS_factor, AvrVol)
                 self.plot_slough_tracker.add_data_point("Slough Count", HOURtoMCS_factor, DEATHCOUNT)
 
-        if self.pressurePlot and mcs % 10 == 0:
+        if self.pressurePlot and mcs % HOURtoMCS == 0:
             BASAL_avg_pressure  = []
             STEM_avg_pressure   = []
             for cell in self.cell_list_by_type(self.BASAL,self.STEM):
@@ -2102,7 +1403,7 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_pressure.add_data_point("Stem Average", HOURtoMCS_factor, np.mean(STEM_avg_pressure))
                 self.plot_pressure.add_data_point("Basal Average", HOURtoMCS_factor, np.mean(BASAL_avg_pressure))
 
-        if self.growthPlot and mcs % 10 == 0:            
+        if self.growthPlot and mcs % HOURtoMCS == 0:            
 
             BASAL_avg_EGF_growth  = []
             BASAL_avg_density_growth  = []
@@ -2167,7 +1468,7 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_growth.add_data_point("Stem Average Pressure", HOURtoMCS_factor, np.mean(STEM_avg_pressure))
                 self.plot_growth.add_data_point("Basal Average Pressure", HOURtoMCS_factor, np.mean(BASAL_avg_pressure))
   
-        if self.thicknessPlot and mcs % 10 == 0:
+        if self.thicknessPlot and mcs % HOURtoMCS == 0:
             
             thickness_dict = self.compute_thickness_for_all_columns(self.WING)
             left_thicknesses = [thickness for x, thickness in thickness_dict.items() if x <= 110]
@@ -2210,7 +1511,7 @@ class PlotSteppable(SteppableBasePy):
                     self.plot_thickness.add_data_point("Periphery Right Thickness", HOURtoMCS_factor, right_thicknesses[-1])
                     self.plot_thickness.add_data_point("Periphery Avg Thickness", HOURtoMCS_factor, np.mean(right_thicknesses))
         
-        if self.VolumeSurfaceDetailPlot and mcs % 10 == 0:
+        if self.VolumeSurfaceDetailPlot and mcs % HOURtoMCS == 0:
 
             SUPER_vol = []
             SUPER_surf = []
@@ -2430,14 +1731,11 @@ class PlotSteppable(SteppableBasePy):
         Writes a Parquet file for cell data.
         The file will be named after the category and saved in the given directory,
         with the replicate number extracted from the directory path.
-        """
-        
+        """        
         # Extract the replicate number from the directory path
-        replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""
-        
+        replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""        
         file_name = f"{category}_rep{replicate}_{mcs}.parquet"
-        file_path = self.current_script_directory.joinpath(file_name)
-        
+        file_path = self.current_script_directory.joinpath(file_name)        
         # Prepare data for Parquet
         rows = []
         for cell_type in ['BASAL', 'STEM']:
@@ -2453,68 +1751,54 @@ class PlotSteppable(SteppableBasePy):
                         'Time': cell_data['Time']
                     }
                     rows.append(row)
-
         # Convert list of dictionaries to DataFrame
-        df = pd.DataFrame(rows)
-        
+        df = pd.DataFrame(rows)        
         # Write to Parquet
         df.to_parquet(file_path, index=False)
     
     def write_to_parquet_for_mass_conservation(self, mcs, directory="."):        
         # Extract the replicate number from the directory path
-        replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""
-        
+        replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""        
         file_name = f"mass_conservation_rep{replicate}_{mcs}.parquet"
         file_path = self.current_script_directory.joinpath(file_name) 
-
         # Flatten the list of lists into a single list of dictionaries
         flattened_events = [event for sublist in self.data_points['mass_conservation'] for event in sublist]
-
         # Convert the list of dictionaries to a DataFrame
         df = pd.DataFrame(flattened_events)
-
         # Write to Parquet
         df.to_parquet(file_path, index=False)
 
-    def save_visualizations(self, mcs, directory="."):       
-        
+    def save_visualizations(self, mcs, directory="."):
         # Prepare arrays
         lattice_dims = (self.dim.x, self.dim.y)
         id_array = np.zeros(lattice_dims, dtype=int)
         type_array = np.zeros(lattice_dims, dtype=int)
-
         # Fill arrays with cell data
         for x, y, z in self.every_pixel():
             cell = self.cell_field[x, y, z]
             if cell:
                 id_array[x, y] = cell.id
                 type_array[x, y] = cell.type
-
         unique_ids = np.unique(id_array)
         print("Number of unique IDs:", unique_ids.size)
-
         # Encode IDs to RGB and rotate image
         rgb_encoded_id_image = self.encode_ids_to_rgb(id_array)
         rgb_encoded_id_image_rotated = rgb_encoded_id_image.rotate(90, expand=True)
-
         # Normalize and rotate type image
         normalized_type_image = self.normalize_and_create_image(type_array)
         type_image_rotated = normalized_type_image.rotate(90, expand=True)
-
         # File paths        
         replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""
         file_base = f"rep{replicate}_{mcs}"        
         file_path_ids = self.current_script_directory.joinpath(f"{file_base}_cell_ids.png")
         file_path_types = self.current_script_directory.joinpath(f"{file_base}_cell_types.png")
         file_path_ids_csv = self.current_script_directory.joinpath(f"{file_base}_cell_ids.csv")
-        file_path_types_csv = self.current_script_directory.joinpath(f"{file_base}_cell_types.csv")
-        
+        file_path_types_csv = self.current_script_directory.joinpath(f"{file_base}_cell_types.csv")        
         # Save images
         rgb_encoded_id_image_rotated.save(file_path_ids)
         print("Saved cell IDs image to", file_path_ids)
         type_image_rotated.save(file_path_types)
         print("Saved cell types image to", file_path_types)
-
         # Save arrays as CSV
         rotated_id_array = np.rot90(id_array)
         rotated_type_array = np.rot90(type_array)

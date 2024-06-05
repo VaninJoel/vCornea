@@ -1,28 +1,16 @@
-<CompuCell3D Revision="0" Version="4.4">
-   
+<CompuCell3D Revision="0" Version="4.5">
    <Metadata>
-      
-      
       <NumberOfProcessors>4</NumberOfProcessors>
       <DebugOutputFrequency>10</DebugOutputFrequency>
-      
    </Metadata>
-   
-    <Potts>
-       
+   <Potts>
        <!-- When Dimentions are changed make sure to change the initial parameters for wall creation -->
        <Dimensions x="200" y="90" z="1" />
        <Steps>100000</Steps>
        <Temperature>10.0</Temperature>
-       <NeighborOrder>4</NeighborOrder>
-       
-         <!-- <MetropolisAlgorithm>bias</MetropolisAlgorithm> -->
-       
+       <NeighborOrder>1</NeighborOrder>
     </Potts>
-   
     <Plugin Name="CellType">
-       
-       
        <CellType TypeId="0" TypeName="Medium" />
        <CellType TypeId="1" TypeName="STEM" />
        <CellType TypeId="2" TypeName="LIMB" />
@@ -37,41 +25,26 @@
        <CellType Freeze="" TypeId="11" TypeName="FIBRO" />
        <CellType Freeze="" TypeId="12" TypeName="MYOF" />
        <CellType Freeze="" TypeId="13" TypeName="BM" />
-    </Plugin>
-   
+   </Plugin>
    <Plugin Name="Volume" />
-
    <Plugin Name="Surface" />
-   
    <Plugin Name="CenterOfMass">
-      
-      
    </Plugin>
-   
    <Plugin Name="NeighborTracker">
-      
-      
    </Plugin>
-
-    
-    <Plugin Name="Contact">
+   <Plugin Name="Contact">
        <!-- Specification of adhesion energies -->
        <Energy Type1="Medium" Type2="Medium">10.0</Energy>
        <Energy Type1="Medium" Type2="STEM">10.0</Energy>
        <Energy Type1="Medium" Type2="LIMB">10.0</Energy>
        <Energy Type1="Medium" Type2="BASAL">20.0</Energy>
        <Energy Type1="Medium" Type2="WING">10.0</Energy>
-       <Energy Type1="Medium" Type2="SUPER">15.0</Energy>
+       <Energy Type1="Medium" Type2="SUPER">10.0</Energy>
        <Energy Type1="Medium" Type2="MEMB">10.0</Energy>
        <Energy Type1="Medium" Type2="STROMA">10.0</Energy>
-       <Energy Type1="Medium" Type2="KERATO">0.0</Energy>
        <Energy Type1="Medium" Type2="WALL">10.0</Energy>
-       <Energy Type1="Medium" Type2="TEAR">1.0</Energy>
-       <Energy Type1="Medium" Type2="FIBRO">0.0</Energy>
-       <Energy Type1="Medium" Type2="MYOF">0.0</Energy>
-       <Energy Type1="Medium" Type2="BM">10.0</Energy>
-     
-       
+       <Energy Type1="Medium" Type2="TEAR">5.0</Energy>
+
        <Energy Type1="STEM" Type2="STEM">10.0</Energy>
        <Energy Type1="STEM" Type2="LIMB">5.0</Energy>
        <Energy Type1="STEM" Type2="BASAL">10.0</Energy>
@@ -79,142 +52,68 @@
        <Energy Type1="STEM" Type2="SUPER">10.0</Energy>
        <Energy Type1="STEM" Type2="MEMB">5.0</Energy>
        <Energy Type1="STEM" Type2="STROMA">5.0</Energy>
-       <Energy Type1="STEM" Type2="KERATO">10.0</Energy>
        <Energy Type1="STEM" Type2="WALL">10.0</Energy>
        <Energy Type1="STEM" Type2="TEAR">10.0</Energy>
-       <Energy Type1="STEM" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="STEM" Type2="MYOF">10.0</Energy>
-       <Energy Type1="STEM" Type2="BM">10.0</Energy>
-   
-       
+              
        <Energy Type1="LIMB" Type2="LIMB">10.0</Energy>
        <Energy Type1="LIMB" Type2="BASAL">10.0</Energy>
        <Energy Type1="LIMB" Type2="WING">10.0</Energy>
        <Energy Type1="LIMB" Type2="SUPER">10.0</Energy>
        <Energy Type1="LIMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="LIMB" Type2="STROMA">10.0</Energy>
-       <Energy Type1="LIMB" Type2="KERATO">10.0</Energy>
        <Energy Type1="LIMB" Type2="WALL">10.0</Energy>
        <Energy Type1="LIMB" Type2="TEAR">10.0</Energy>
-       <Energy Type1="LIMB" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="LIMB" Type2="MYOF">10.0</Energy>
-       <Energy Type1="LIMB" Type2="BM">10.0</Energy>
-      
       
        <Energy Type1="BASAL" Type2="BASAL">10.0</Energy>
        <Energy Type1="BASAL" Type2="WING">10.0</Energy>
        <Energy Type1="BASAL" Type2="SUPER">15.0</Energy>
        <Energy Type1="BASAL" Type2="MEMB">5.0</Energy>
        <Energy Type1="BASAL" Type2="STROMA">5.0</Energy>
-       <Energy Type1="BASAL" Type2="KERATO">10.0</Energy>
        <Energy Type1="BASAL" Type2="WALL">10.0</Energy>
-       <Energy Type1="BASAL" Type2="TEAR">10.0</Energy>
-       <Energy Type1="BASAL" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="BASAL" Type2="MYOF">10.0</Energy>
-       <Energy Type1="BASAL" Type2="BM">5.0</Energy>
-     
+       <Energy Type1="BASAL" Type2="TEAR">10.0</Energy>     
      
        <Energy Type1="WING" Type2="WING">5.0</Energy>
        <Energy Type1="WING" Type2="SUPER">6.0</Energy>
        <Energy Type1="WING" Type2="MEMB">15.0</Energy>
        <Energy Type1="WING" Type2="STROMA">10.0</Energy>
-       <Energy Type1="WING" Type2="KERATO">10.0</Energy>
        <Energy Type1="WING" Type2="WALL">10.0</Energy>
-       <Energy Type1="WING" Type2="TEAR">5.0</Energy>
-       <Energy Type1="WING" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="WING" Type2="MYOF">10.0</Energy>
-       <Energy Type1="WING" Type2="BM">10.0</Energy>
-       
+       <Energy Type1="WING" Type2="TEAR">6.0</Energy>
        
        <Energy Type1="SUPER" Type2="SUPER">3.0</Energy>
        <Energy Type1="SUPER" Type2="MEMB">15.0</Energy>
        <Energy Type1="SUPER" Type2="STROMA">10.0</Energy>
-       <Energy Type1="SUPER" Type2="KERATO">10.0</Energy>
-       <Energy Type1="SUPER" Type2="WALL">5.0</Energy>
-       <Energy Type1="SUPER" Type2="TEAR">4.0</Energy>
-       <Energy Type1="SUPER" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="SUPER" Type2="MYOF">10.0</Energy>
-       <Energy Type1="SUPER" Type2="BM">10.0</Energy>
-       
+       <Energy Type1="SUPER" Type2="WALL">10.0</Energy>
+       <Energy Type1="SUPER" Type2="TEAR">5.0</Energy>
        
        <Energy Type1="MEMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="MEMB" Type2="STROMA">10.0</Energy>
-       <Energy Type1="MEMB" Type2="KERATO">10.0</Energy>
        <Energy Type1="MEMB" Type2="WALL">10.0</Energy>
        <Energy Type1="MEMB" Type2="TEAR">10.0</Energy>
-       <Energy Type1="MEMB" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="MEMB" Type2="MYOF">10.0</Energy>
-       <Energy Type1="MEMB" Type2="BM">10.0</Energy>
-       
        
        <Energy Type1="STROMA" Type2="STROMA">10.0</Energy>
-       <Energy Type1="STROMA" Type2="KERATO">10.0</Energy>
        <Energy Type1="STROMA" Type2="WALL">10.0</Energy>
        <Energy Type1="STROMA" Type2="TEAR">10.0</Energy>
-       <Energy Type1="STROMA" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="STROMA" Type2="MYOF">10.0</Energy>
-       <Energy Type1="STROMA" Type2="BM">10.0</Energy>
-       
-       
-       <Energy Type1="KERATO" Type2="KERATO">20.0</Energy>
-       <Energy Type1="KERATO" Type2="WALL">20.0</Energy>
-       <Energy Type1="KERATO" Type2="TEAR">10.0</Energy>
-       <Energy Type1="KERATO" Type2="FIBRO">20.0</Energy>
-       <Energy Type1="KERATO" Type2="MYOF">20.0</Energy>
-       <Energy Type1="KERATO" Type2="BM">10.0</Energy>
-       
-       
+
        <Energy Type1="WALL" Type2="WALL">10.0</Energy>
        <Energy Type1="WALL" Type2="TEAR">10.0</Energy>
-       <Energy Type1="WALL" Type2="FIBRO">20.0</Energy>
-       <Energy Type1="WALL" Type2="MYOF">20.0</Energy>
-       <Energy Type1="WALL" Type2="BM">10.0</Energy>
        
-       
-       <Energy Type1="TEAR" Type2="TEAR">1.0</Energy>
-       <Energy Type1="TEAR" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="TEAR" Type2="MYOF">10.0</Energy>
-       <Energy Type1="TEAR" Type2="BM">10.0</Energy>
-       
-       <Energy Type1="FIBRO" Type2="FIBRO">10.0</Energy>
-       <Energy Type1="FIBRO" Type2="MYOF">10.0</Energy>
-       <Energy Type1="FIBRO" Type2="BM">10.0</Energy>
-       
-       <Energy Type1="MYOF" Type2="MYOF">10.0</Energy>
-       <Energy Type1="MYOF" Type2="BM">10.0</Energy>
-       
-       <Energy Type1="BM" Type2="BM">10.0</Energy>
-       <NeighborOrder>4</NeighborOrder>
+       <Energy Type1="TEAR" Type2="TEAR">5.0</Energy>
+
+       <NeighborOrder>2</NeighborOrder>
     </Plugin>
 
-
-    
    <Plugin Name="PixelTracker"> 
-       
-        
    </Plugin>
+
    <Plugin Name="BoundaryPixelTracker">
-   
-      
       <NeighborOrder>1</NeighborOrder>
    </Plugin>
-   
-
 
    <Plugin Name="Chemotaxis">
       <ChemicalField Name="BASALMVBIAS">
-
-       </ChemicalField>
-      <ChemicalField Name="IL1">
-      
-       </ChemicalField>
-       <ChemicalField Name="TGFB">
-      
        </ChemicalField>
        <ChemicalField Name="EGF">
-       
        </ChemicalField>
-     
    </Plugin>
 
    <Steppable Type="DiffusionSolverFE">
@@ -283,92 +182,52 @@
       L' ≈ abs(83.5276793581) 83 voxels -->
          <DiffusionData>
             <FieldName>EGF</FieldName>
-            
             <GlobalDiffusionConstant id="EGF_GlbDiff">186</GlobalDiffusionConstant>
-            
             <GlobalDecayConstant id="EGF_GlobalDecay">0.05331901388</GlobalDecayConstant>
-
-                        
-            
-            
             <DiffusionCoefficient CellType="SUPER" id="EGF_Coef_SUPER">0.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="MEMB" id="EGF_Coef_MEMB">20.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="BM" id="EGF_Coef_MEMB">0.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="LIMB">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="WALL" >0.0</DiffusionCoefficient>             
-            
+            <DiffusionCoefficient CellType="WALL" >0.0</DiffusionCoefficient>  
          </DiffusionData>
          <SecretionData>
-            
-            
-            
-            
-            
             <ConstantConcentration Type="TEAR">1.0</ConstantConcentration>
          </SecretionData>
          <BoundaryConditions>
             <Plane Axis="X">
-               
-                              
-                              
                <ConstantDerivative PlanePosition="Min" Value="0.0" />
                <ConstantDerivative PlanePosition="Max" Value="0.0" />
             </Plane>
             <Plane Axis="Y">
                <ConstantValue PlanePosition="Min" Value="0.0" />
-               <ConstantValue PlanePosition="Max" Value="0.0" />               
-                              
-                              
+               <ConstantValue PlanePosition="Max" Value="0.0" /> 
             </Plane>
          </BoundaryConditions>
       </DiffusionField> 
 
-      
       <DiffusionField Name="BASALMVBIAS">
          <DiffusionData>
             <FieldName>BASALMVBIAS</FieldName>
-            
-            
-            
-            
          </DiffusionData>
          <SecretionData>
-            
-            
-            
             <SecretionOnContact id="Basal_bias_xml" SecreteOnContactWith="Medium" Type="Medium">0.0</SecretionOnContact>
-            
          </SecretionData>
          <BoundaryConditions>
             <Plane Axis="X">
-               
                <ConstantDerivative PlanePosition="Min" Value="0.0" />
                <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
             </Plane>
             <Plane Axis="Y">
-               
-                              
                <ConstantDerivative PlanePosition="Min" Value="0.0" />
                <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
             </Plane>
          </BoundaryConditions>
-      </DiffusionField> 
-      
-    
-    <DiffusionField Name="SLS">
+      </DiffusionField>
+
+      <DiffusionField Name="SLS">
          <DiffusionData>
             <FieldName>SLS</FieldName>
-            
             <GlobalDiffusionConstant id="SLS_GlbDiff">5.0</GlobalDiffusionConstant>
-            
             <GlobalDecayConstant id="SLS_GlobalDecay">0.0</GlobalDecayConstant>
-
-            
-            
-            <!-- <InitialConcentrationExpression id="SLS_Location">max(0,13 - ((x-100)^2 + (y-75)^2))</InitialConcentrationExpression> -->
-            
             <DiffusionCoefficient CellType="SUPER" id="SLS_Coef_SUPER">5.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="MEMB" id="SLS_Coef_MEMB">5.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="LIMB" id="SLS_Coef_LIMB">5.0</DiffusionCoefficient>
@@ -377,266 +236,35 @@
             <DiffusionCoefficient CellType="STEM" id="SLS_Coef_STEM">5.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="BASAL" id="SLS_Coef_BASAL">5.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="WING" id="SLS_Coef_WING">5.0</DiffusionCoefficient>
-            
          </DiffusionData>
          <SecretionData>
-            
-            
-            
-            
-            
-            
-            
          </SecretionData>
          <BoundaryConditions>
             <Plane Axis="X">
-               
-                              
-                              
-               
-               
                <ConstantDerivative PlanePosition="Min" Value="0.0" />
                <ConstantDerivative PlanePosition="Max" Value="0.0" />
             </Plane>
             <Plane Axis="Y">
-               
                <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />               
-                              
-                              
-            </Plane>
-         </BoundaryConditions>
-</DiffusionField>         
-
-      <DiffusionField Name="IL1">
-      <!-- 1800μm^2 /min×60 min/hour = 108,000μm^2 /hour.
-      Converting this to voxels/MCS with the given voxel size and time conversion 
-      1 voxel = 2μm^2 and 1 hour = 10 MCS 
-      CC3D diffusion constant = 108,000μm^2 /hour × (1 voxel/2μm^2) × (1 hour/10 MCS) = 540 voxels^2/MCS -->
-      
-         <DiffusionData>
-            <FieldName>IL1</FieldName>
-            <!-- [ ] Need to check for the correct values for the diffusion constants in stroma (Medium in this case) -->
-            <GlobalDiffusionConstant id="IL1_GlbDiff">20.0</GlobalDiffusionConstant> 
-            
-            <GlobalDecayConstant id="IL1_GlobalDecay">0.05</GlobalDecayConstant>
-            
-            <DiffusionCoefficient CellType="MEMB" id="IL1_Coef_MEMB">20.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="BM" id="IL1_Coef_BM">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="LIMB" id="IL1_Coef_LIMB">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="WALL" id="IL1_Coef_WALL">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="TEAR" id="IL1_Coef_TEAR">0.0</DiffusionCoefficient>
-            
-         </DiffusionData>
-         <SecretionData>
-            
-            
-            
-            <!-- <SecretionOnContact id="Basal_bias_xml" SecreteOnContactWith="Medium" Type="Medium">0.0</SecretionOnContact> -->
-            
-         </SecretionData>
-         <BoundaryConditions>
-            <Plane Axis="X">
-               
-               <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
-            </Plane>
-            <Plane Axis="Y">
-               
-                              
-               <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
+               <ConstantDerivative PlanePosition="Max" Value="0.0" /> 
             </Plane>
          </BoundaryConditions>
       </DiffusionField>
-      <DiffusionField Name="PDGF">
-      <!-- 1800μm^2 /min×60 min/hour = 108,000μm^2 /hour.
-      Converting this to voxels/MCS with the given voxel size and time conversion 
-      1 voxel = 2μm^2 and 1 hour = 10 MCS 
-      CC3D diffusion constant = 108,000μm^2 /hour × (1 voxel/2μm^2) × (1 hour/10 MCS) = 540 voxels^2/MCS -->
-      
-         <DiffusionData>
-            <FieldName>PDGF</FieldName>
-            <!-- [ ] Need to check for the correct values for the diffusion constants in stroma (Medium in this case) -->
-            <GlobalDiffusionConstant id="PDGF_GlbDiff">5.0</GlobalDiffusionConstant> 
-            
-            <GlobalDecayConstant id="PDGF_GlobalDecay">0.01</GlobalDecayConstant>
-            
-            <DiffusionCoefficient CellType="MEMB" id="PDGF_Coef_MEMB">5.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="BM" id="PDGF_Coef_BM">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="LIMB" id="PDGF_Coef_LIMB">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="WALL" id="PDGF_Coef_WALL">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="TEAR" id="PDGF_Coef_TEAR">0.0</DiffusionCoefficient>
-            
-         </DiffusionData>
-         <SecretionData>
-            
-            
-            
-            <!-- <SecretionOnContact id="Basal_bias_xml" SecreteOnContactWith="Medium" Type="Medium">0.0</SecretionOnContact> -->
-            
-         </SecretionData>
-         <BoundaryConditions>
-            <Plane Axis="X">
-               
-               <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
-            </Plane>
-            <Plane Axis="Y">
-               
-                              
-               <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
-            </Plane>
-         </BoundaryConditions>
-      </DiffusionField>
-
-      <DiffusionField Name="TGFB">
-      
-      
-         <DiffusionData>
-            <FieldName>TGFB</FieldName>
-            <!-- [ ] Need to check for the correct values for the diffusion constants in stroma (Medium in this case) -->
-            <GlobalDiffusionConstant id="TGFB_GlbDiff">50</GlobalDiffusionConstant>
-            
-            <GlobalDecayConstant id="TGFB_GlobalDecay">0.05331901388</GlobalDecayConstant>
-
-                        
-            
-            
-            <DiffusionCoefficient CellType="SUPER" id="TGFB_Coef_SUPER">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="MEMB" id="TGFB_Coef_MEMB">20.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="BM" id="TGFB_Coef_MEMB">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="LIMB">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="WALL" >0.0</DiffusionCoefficient>             
-            
-         </DiffusionData>
-         <SecretionData>
-            
-            
-            
-            
-            
-            <ConstantConcentration Type="TEAR">1.0</ConstantConcentration>
-         </SecretionData>
-         <BoundaryConditions>
-            <Plane Axis="X">
-               
-                              
-                              
-               <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />
-            </Plane>
-            <Plane Axis="Y">
-               <ConstantValue PlanePosition="Min" Value="0.0" />
-               <ConstantValue PlanePosition="Max" Value="0.0" />               
-                              
-                              
-            </Plane>
-         </BoundaryConditions>
-      </DiffusionField> 
-
-      <DiffusionField Name="DAMP">
-      <!-- 1800μm^2 /min×60 min/hour = 108,000μm^2 /hour.
-      Converting this to voxels/MCS with the given voxel size and time conversion 
-      1 voxel = 2μm^2 and 1 hour = 10 MCS 
-      CC3D diffusion constant = 108,000μm^2 /hour × (1 voxel/2μm^2) × (1 hour/10 MCS) = 540 voxels^2/MCS -->
-      
-         <DiffusionData>
-            <FieldName>DAMP</FieldName>
-            <!-- [ ] Need to check for the correct values for the diffusion constants in stroma (Medium in this case) -->
-            <GlobalDiffusionConstant id="DAMP_GlbDiff">20.0</GlobalDiffusionConstant> 
-            
-            <GlobalDecayConstant id="DAMP_GlobalDecay">0.01</GlobalDecayConstant>
-            
-            <DiffusionCoefficient CellType="MEMB" id="DAMP_Coef_MEMB">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="LIMB" id="DAMP_Coef_LIMB">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="WALL" id="DAMP_Coef_WALL">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="TEAR" id="DAMP_Coef_TEAR">0.0</DiffusionCoefficient>
-            
-         </DiffusionData>
-         <SecretionData>
-            
-            
-            
-            <!-- <SecretionOnContact id="Basal_bias_xml" SecreteOnContactWith="Medium" Type="Medium">0.0</SecretionOnContact> -->
-            
-         </SecretionData>
-         <BoundaryConditions>
-            <Plane Axis="X">
-               
-               <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
-            </Plane>
-            <Plane Axis="Y">
-               
-                              
-               <ConstantDerivative PlanePosition="Min" Value="0.0" />
-               <ConstantDerivative PlanePosition="Max" Value="0.0" />
-                              
-            </Plane>
-         </BoundaryConditions>
-      </DiffusionField>                              
 
    </Steppable>
+
    <Plugin Name="FocalPointPlasticity">
       <Local/>
-      <!-- Specification of focal point junctions -->
-      <!-- We separetely specify links between members of same cluster - InternalParameters and members of different clusters Parameters. When not using compartmental  cells comment out InternalParameters specification -->
-      <!-- To modify FPP links individually for each cell pair uncomment line below -->
-      <!-- <Local/> -->
-      <!-- Note that even though you may manipulate lambdaDistance, targetDistance and maxDistance using Python you still need to set activation energy from XML level -->
-      <!-- See CC3D manual for details on FPP plugin  -->
-      
-      <!-- <Formula>Lambda*(Length-TargetLength)</Formula> TODO -->
-      
-      <!-- <Parameters Type1="CELL" Type2="WALL">
-         <Lambda>10</Lambda>
-         <ActivationEnergy>-50</ActivationEnergy>
-         <TargetDistance>7</TargetDistance>
-         <MaxDistance>20</MaxDistance>
-         <MaxNumberOfJunctions NeighborOrder="1">1</MaxNumberOfJunctions>
-      </Parameters>
-       -->
-       <!-- <LinkConstituentLaw>    The following variables lare defined by default: Lambda,Length,TargetLength    <Variable Name='LambdaExtra' Value='1.0'/>    <Formula>LambdaExtra*Lambda*(Length-TargetLength)</Formula></LinkConstituentLaw> -->
-      
-      
       <NeighborOrder>1</NeighborOrder>
    </Plugin>
 
    <Plugin Name="Secretion">
-   
-   
       <Field Name="SLS">
-      
       </Field>
-      <Field Name="IL1">
-      
-      </Field>
-
-      <Field Name="TGFB">
-      
-      </Field>
-
-      <Field Name="PDGF">
-      
-      </Field> 
-
    </Plugin>
    
     <Steppable Type="PIFInitializer">
-   
-        
         <PIFName>Epithelium.piff</PIFName>
     </Steppable>
-   <Steppable Type="UniformInitializer">
-      
-
-      
-   </Steppable> 
+   
 </CompuCell3D>
