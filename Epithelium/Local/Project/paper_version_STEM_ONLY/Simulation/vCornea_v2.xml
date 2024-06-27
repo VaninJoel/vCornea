@@ -39,7 +39,7 @@
       </rdf:Bag>
    </bqbiol:hasProperty> -->    
    
-   <!-- Created -->
+   <!-- Created -->   
 
    <!-- Modified -->
 
@@ -51,7 +51,6 @@
    </bqbiol:isDescribedBy> -->
    <!-- Notes -->
 <!-- </Annotation> -->
-
 <CompuCell3D Revision="0" Version="4.5">
    <Metadata>
       <NumberOfProcessors>4</NumberOfProcessors>
@@ -67,11 +66,11 @@
     <Plugin Name="CellType">
        <CellType TypeId="0" TypeName="Medium" />
        <CellType TypeId="1" TypeName="STEM" /> #ff007f
-       <CellType TypeId="2" TypeName="LIMB" /> #ffa7f6
+       <CellType Freeze="" TypeId="2" TypeName="LIMB" /> #ffa7f6
        <CellType TypeId="3" TypeName="BASAL" /> #ffbe99
        <CellType TypeId="4" TypeName="WING" /> #0055ff
        <CellType TypeId="5" TypeName="SUPER" /> #55ffff
-       <CellType TypeId="6" TypeName="MEMB" />  #ff00ff       
+       <CellType Freeze="" TypeId="6" TypeName="MEMB" />  #ff00ff      
        <CellType TypeId="7" TypeName="STROMA" /> #c681ff
        <CellType TypeId="8" TypeName="KERATO" /> Reserved for future use
        <CellType TypeId="9" Freeze="" TypeName="WALL" /> #ffffff
@@ -145,7 +144,7 @@
        <Energy Type1="MEMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="MEMB" Type2="STROMA">10.0</Energy>
        <Energy Type1="MEMB" Type2="WALL">10.0</Energy>
-       <Energy Type1="MEMB" Type2="TEAR">10.0</Energy>
+       <Energy Type1="MEMB" Type2="TEAR">15.0</Energy>
        
        <Energy Type1="STROMA" Type2="STROMA">10.0</Energy>
        <Energy Type1="STROMA" Type2="WALL">10.0</Energy>
@@ -242,7 +241,7 @@
             <GlobalDiffusionConstant id="EGF_GlbDiff">186</GlobalDiffusionConstant>
             <GlobalDecayConstant id="EGF_GlobalDecay">0.05331901388</GlobalDecayConstant>
             <DiffusionCoefficient CellType="SUPER" id="EGF_Coef_SUPER">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="MEMB" id="EGF_Coef_MEMB">20.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="MEMB" id="EGF_Coef_MEMB">0.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="LIMB">0.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="WALL" >0.0</DiffusionCoefficient>  
          </DiffusionData>
@@ -321,7 +320,7 @@
    </Plugin>
    
     <Steppable Type="PIFInitializer">
-        <PIFName>Epithelium.piff</PIFName>
+        <PIFName>Epithelium_stem_only.piff</PIFName>
     </Steppable>
    
 </CompuCell3D>

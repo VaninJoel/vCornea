@@ -1,3 +1,56 @@
+<!-- Model level Anotation -->
+<!-- <Annotation> -->
+
+   <!-- Taxonomy -->
+   <!-- <bqbiol:hasTaxon>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/taxonomy/9606">
+      </rdf:Bag>
+   </bqbiol:hasTaxon> -->
+
+   <!-- Tissue -->
+   <!-- <bqbiol:occursIn>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/bto/BTO:0000286">
+      </rdf:Bag>
+   </bqbiol:occursIn> -->
+
+    <!-- Cell Type -->
+
+
+   <!-- Modeling Approach -->
+   <!-- <bqbiol:isPropertyOf>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/mamo/MAMO_0000024">
+      </rdf:Bag>
+   </bqbiol:isPropertyOf> -->
+
+   <!-- Biological Process -->
+   <!-- <bqbiol:hasProperty>
+      <rdf:Bag>
+            <rdf:li rdf:resource="http://identifiers.org/go/GO:0042060">
+      </rdf:Bag>
+   </bqbiol:hasProperty> -->
+
+   <!--  Model Relevance to a Particular Area  -->
+   <!-- <bqbiol:hasProperty>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/ncit/C17206">
+      </rdf:Bag>
+   </bqbiol:hasProperty> -->    
+   
+   <!-- Created -->
+
+   <!-- Modified -->
+
+   <!-- Creators -->
+   <!-- <bqbiol:isDescribedBy>
+      <rdf:Bag>
+         <rdf:li rdf:resource="https://orcid.org/0000-0001-9227-9667?lang=en">         
+      </rdf:Bag>   
+   </bqbiol:isDescribedBy> -->
+   <!-- Notes -->
+<!-- </Annotation> -->
 
 <CompuCell3D Revision="0" Version="4.5">
    <Metadata>
@@ -13,25 +66,28 @@
     </Potts>
     <Plugin Name="CellType">
        <CellType TypeId="0" TypeName="Medium" />
-       <CellType TypeId="1" TypeName="STEM" />
-       <CellType TypeId="2" TypeName="LIMB" />
-       <CellType TypeId="3" TypeName="BASAL" />
-       <CellType TypeId="4" TypeName="WING" />
-       <CellType TypeId="5" TypeName="SUPER" />
-       <CellType TypeId="6" TypeName="MEMB" />       
-       <CellType TypeId="7" TypeName="STROMA" />
-       <CellType TypeId="8" TypeName="KERATO" />
-       <CellType TypeId="9" Freeze="" TypeName="WALL" />
-       <CellType TypeId="10" TypeName="TEAR" />
-       <CellType Freeze="" TypeId="11" TypeName="FIBRO" />
-       <CellType Freeze="" TypeId="12" TypeName="MYOF" />
-       <CellType Freeze="" TypeId="13" TypeName="BM" />
+       <CellType TypeId="1" TypeName="STEM" /> #ff007f
+       <CellType TypeId="2" TypeName="LIMB" /> #ffa7f6
+       <CellType TypeId="3" TypeName="BASAL" /> #ffbe99
+       <CellType TypeId="4" TypeName="WING" /> #0055ff
+       <CellType TypeId="5" TypeName="SUPER" /> #55ffff
+       <CellType TypeId="6" TypeName="MEMB" />  #ff00ff     
+       <CellType TypeId="7" TypeName="STROMA" /> #c681ff
+       <CellType TypeId="8" TypeName="KERATO" /> Reserved for future use
+       <CellType TypeId="9" Freeze="" TypeName="WALL" /> #ffffff
+       <CellType TypeId="10" TypeName="TEAR" /> #55ff00
+       <CellType Freeze="" TypeId="11" TypeName="FIBRO" /> Reserved for future use
+       <CellType Freeze="" TypeId="12" TypeName="MYOF" /> Reserved for future use
+       <CellType Freeze="" TypeId="13" TypeName="BM" /> Reserved for future use
    </Plugin>
    <Plugin Name="Volume" />
    <Plugin Name="Surface" />
    <Plugin Name="CenterOfMass">
    </Plugin>
    <Plugin Name="NeighborTracker">
+   </Plugin>
+   <Plugin Name="ExternalPotential">
+       <Algorithm>PixelBased</Algorithm>
    </Plugin>
    <Plugin Name="Contact">
        <!-- Specification of adhesion energies -->
@@ -44,7 +100,7 @@
        <Energy Type1="Medium" Type2="MEMB">10.0</Energy>
        <Energy Type1="Medium" Type2="STROMA">10.0</Energy>
        <Energy Type1="Medium" Type2="WALL">10.0</Energy>
-       <Energy Type1="Medium" Type2="TEAR">5.0</Energy>
+       <Energy Type1="Medium" Type2="TEAR">10.0</Energy>
 
        <Energy Type1="STEM" Type2="STEM">10.0</Energy>
        <Energy Type1="STEM" Type2="LIMB">5.0</Energy>
@@ -78,13 +134,13 @@
        <Energy Type1="WING" Type2="MEMB">15.0</Energy>
        <Energy Type1="WING" Type2="STROMA">10.0</Energy>
        <Energy Type1="WING" Type2="WALL">10.0</Energy>
-       <Energy Type1="WING" Type2="TEAR">6.0</Energy>
+       <Energy Type1="WING" Type2="TEAR">10.0</Energy>
        
        <Energy Type1="SUPER" Type2="SUPER">3.0</Energy>
        <Energy Type1="SUPER" Type2="MEMB">15.0</Energy>
        <Energy Type1="SUPER" Type2="STROMA">10.0</Energy>
-       <Energy Type1="SUPER" Type2="WALL">10.0</Energy>
-       <Energy Type1="SUPER" Type2="TEAR">5.0</Energy>
+       <Energy Type1="SUPER" Type2="WALL">9.0</Energy>
+       <Energy Type1="SUPER" Type2="TEAR">10.0</Energy>
        
        <Energy Type1="MEMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="MEMB" Type2="STROMA">10.0</Energy>
@@ -96,9 +152,9 @@
        <Energy Type1="STROMA" Type2="TEAR">10.0</Energy>
 
        <Energy Type1="WALL" Type2="WALL">10.0</Energy>
-       <Energy Type1="WALL" Type2="TEAR">10.0</Energy>
+       <Energy Type1="WALL" Type2="TEAR">9.0</Energy>
        
-       <Energy Type1="TEAR" Type2="TEAR">5.0</Energy>
+       <Energy Type1="TEAR" Type2="TEAR">4.0</Energy>
 
        <NeighborOrder>2</NeighborOrder>
     </Plugin>

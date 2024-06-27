@@ -12,9 +12,9 @@ MAX_JOBS = 9999
 WAIT_TIME = 60  # seconds
 
 base_path = '/u/jvanin/'
-sim_version_path = '/u/jvanin/T_vCornea_paper/Epithelium/HPC/Project/paper_version'
+sim_version_path = '/u/jvanin/T_vCornea_paper/Epithelium/HPC/Project/paper_version_STEM_ONLY'
 output_version_path = '/u/jvanin/T_vCornea_paper/Epithelium/HPC/Simulations_Output'
-run_name = 'Injury_C_400_7600mcs'
+run_name = 'STEM_ONLY'
 
 csv_file_param = None #None  #TODO Provide file with LHS if desired or None
 
@@ -108,20 +108,11 @@ var_dict = {
     'EGF_FieldUptakeWing'       : [0.0],
     'EGF_GlobalDecay'           : [0.6],
 
-    'SLS_X_Center'              : [100],     
-    'SLS_Y_Center'              : [75],
-    'SLS_Concentration'         : [1700.0],
-
-# LINKS
-    'LINKWALL_lambda_distance'  : [50],
-    'LINKWALL_target_distance'  : [0],
-    'LINKSUPER_lambda_distance' : [50],   
-
 # WOUND
     'InjuryType'                : [False],
-    'IsInjury'                  : [True],
-    'InjuryTime'                : [400],
-    'SLS_Injury'                : [True],
+    'IsInjury'                  : [False],
+    'InjuryTime'                : [4000000000],
+    'SLS_Injury'                : [False],
     'SLS_Threshold_Method'      : [True],    
 #---INJURY AREA---
     'InjuryX_Center'            : [150],
@@ -130,12 +121,13 @@ var_dict = {
 #---SLS AREA---
     'SLS_X_Center'              : [100],
     'SLS_Y_Center'              : [75],
-    'SLS_Concentration'         : [1400.0, 1500.0, 1600.0, 1700.0],
+    'SLS_Concentration'         : [1700.0],
 #Links
     'LINKWALL_lambda_distance'  : [50],
-    'LINKWALL_target_distance'  : [3],
+    'LINKWALL_target_distance'  : [0],
     'LINKSUPER_lambda_distance' : [50],
     'LINKSUPER_target_distance' : [3],
+
     'LINKWALL_max_distance'     : [1000],
     'LINKSUPER_max_distance'    : [1000],
     'L_max_links_SS'            : [5],
@@ -154,7 +146,7 @@ var_dict = {
     'PressurePlot'              : [False],
     'VolumeTracker'             : [False],
     'EGF_SeenByCell'            : [True],
-    'SLS_SeenByCell'            : [True],
+    'SLS_SeenByCell'            : [False],
     'CenterBiasPlot'            : [False],
     'CenterBias'                : [False],
     'DivisionTracker'           : [False],
@@ -164,11 +156,11 @@ var_dict = {
     'MitosisPlot'               : [True],   
     'SingleCellPresEGFPlot'     : [True],
     'MassConservationPlot'      : [True],
-    'SurfactantTracking'        : [True],
+    'SurfactantTracking'        : [False],
     'SnapShot'                  : [False],
 
 # TIME OF SIMULATION
-    'SimTime'                   : [7600],
+    'SimTime'                   : [43500],
 }
 
 

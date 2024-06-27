@@ -248,6 +248,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             cell.dict["LambdaChemo"]   = self.InitBASAL_LambdaChemo
             ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")            
             ChemotaxisData.setLambda(cell.dict["LambdaChemo"])
+            self.delete_cell(cell)
         # WING  
         for cell in self.cell_list_by_type(self.WING):
             cell.targetVolume  = self.InitWING_TargetVolume
@@ -257,6 +258,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             cell.dict['EGF_LambdaChemo'] = self.InitWING_EGFLambdaChemo
             ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "EGF")            
             ChemotaxisData.setLambda(cell.dict["EGF_LambdaChemo"])
+            self.delete_cell(cell)
         # SUPERFICIAL
         for cell in self.cell_list_by_type(self.SUPER):
             cell.targetVolume   = self.InitSUPER_TargetVolume
@@ -265,6 +267,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             cell.targetSurface  = self.InitSUPER_TargetSurface
             cell.dict['Slough'] = self.SloughProbability
             self.create_links(cell) 
+            self.delete_cell(cell)
         # TEAR
         for cell in self.cell_list_by_type(self.TEAR):            
             cell.targetVolume  = 50

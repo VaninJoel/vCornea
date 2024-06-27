@@ -30,7 +30,7 @@ import time
 current_script_directory = Path(__file__).parent
 
 # Join with a time stamp to avoid overwriting
-output_directory = current_script_directory.joinpath("Output",time.strftime("%m%d%Y_%H%M%S"))
+output_directory = current_script_directory.joinpath("Output")
 pg.set_output_dir(str(output_directory))
 
 # GLOBAL PARAMETERS
@@ -181,9 +181,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
     SingleCellPresEGFPlot       = SingleCellPresEGFPlot
     MassConservationPlot        = MassConservationPlot
     SurfactantTracking          = SurfactantTracking
-    IL1Tracker                  = IL1Tracker
-    PDGFTracker                 = PDGFTracker
-
+    
     SnapShot                    = SnapShot
 
 # TIME OF SIMULATION
@@ -191,7 +189,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
 
     def __init__(self,frequency=1):
 
-        SteppableBasePy.__init__(self,frequency)       
+        SteppableBasePy.__init__(self,frequency)
 
         #  Checking for which if anny plot should be displayed
         if self.PressureTracker:
@@ -606,7 +604,7 @@ class MitosisSteppable(MitosisSteppableBase):
                     self.STEM_to_divide += 1                   
                     self.event_data.append({'Event Type': 'Stem Before Mitosis Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                     self.set_parent_child_position_flag(1)                    
-                    if (self.MEMB in NEIGHBOR_DICT.keys()):
+                    if (self.LIMB in NEIGHBOR_DICT.keys()):
                         self.divide_cell_orientation_vector_based(cell,1,0,0) # Orientation for Stem division (Vertical)                        
                         self.event_data.append({'Event Type': 'Stem After Mitosis Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                     else:
@@ -772,10 +770,10 @@ class DeathSteppable(SteppableBasePy):
                                 
                 DEATHCOUNT = deathsum
 
-            # for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM):
-            #     if (cell.volume < 3):                    
-            #         self.event_data.append({'Event Type': 'Death Vol','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})                    
-            #         self.delete_cell(cell)            
+            for cell in self.cell_list_by_type(self.SUPER, self.WING, self.BASAL, self.STEM):
+                if (cell.volume < 3):                    
+                    self.event_data.append({'Event Type': 'Death Vol','Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})                    
+                    self.delete_cell(cell)            
 
     def get_cell_data_mass(self):        
         return self.event_data
@@ -797,8 +795,7 @@ class DifferentiationSteppable(SteppableBasePy):
         self.LINKWALL_max_distance = ConstraintInitializerSteppable.LINKWALL_max_distance
         self.LINKSUPER_lambda_distance = ConstraintInitializerSteppable.LINKSUPER_lambda_distance
         self.LINKSUPER_target_distance = ConstraintInitializerSteppable.LINKSUPER_target_distance
-        self.LINKSUPER_max_distance = ConstraintInitializerSteppable.LINKSUPER_max_distance
-        # self.create_links = ConstraintInitializerSteppable.create_links
+        self.LINKSUPER_max_distance = ConstraintInitializerSteppable.LINKSUPER_max_distance        
           
     def start(self):
         # For Time based Differentiation
@@ -822,7 +819,8 @@ class DifferentiationSteppable(SteppableBasePy):
                     if ((self.TEAR in NEIGHBOR_DICT.keys()) and 
                         (self.WING in NEIGHBOR_DICT.keys()) and 
                         not (self.BASAL in NEIGHBOR_DICT.keys()) and 
-                        not (self.MEMB in NEIGHBOR_DICT.keys())):                        
+                        not (self.MEMB in NEIGHBOR_DICT.keys())and 
+                        not (self.STEM in NEIGHBOR_DICT.keys())):                        
                         self.event_data.append({'Event Type': 'Wing Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                         cell.type = self.SUPER
                         self.initializeDifferentiatedCell(cell)
@@ -842,6 +840,7 @@ class DifferentiationSteppable(SteppableBasePy):
                     #     self.initializeDifferentiatedCell(cell)
                 # BASAL CELL
                 for cell in self.cell_list_by_type(self.BASAL):
+                    
                     # Fetch the boundary pixels of the current Basal cell
                     boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)                    
                     memb_contact_area = 0  # Counter for the area of contact with MEMB cells                    
@@ -860,17 +859,18 @@ class DifferentiationSteppable(SteppableBasePy):
                         self.event_data.append({'Event Type': 'Wing After Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                 # STEM CELL
                 for cell in self.cell_list_by_type(self.STEM):
+                    NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
                     # Fetch the boundary pixels of the current Basal cell
                     boundary_pixel_list = self.get_cell_boundary_pixel_list(cell)                    
                     memb_contact_area = 0  # Counter for the area of contact with MEMB cells                    
                     # Iterate through each boundary pixel to check for MEMB neighbors
-                    for boundary_pixel_tracker_data in boundary_pixel_list:
-                        boundary_pixel = boundary_pixel_tracker_data.pixel
-                        for neighbor_pixel in self.get_pixel_neighbors(boundary_pixel):
-                            if neighbor_pixel.type == self.LIMB:
-                                memb_contact_area += 1  # Increment the counter for every MEMB neighbor pixel
+                    # for boundary_pixel_tracker_data in boundary_pixel_list:
+                    #     boundary_pixel = boundary_pixel_tracker_data.pixel
+                    #     for neighbor_pixel in self.get_pixel_neighbors(boundary_pixel):
+                    #         if neighbor_pixel.type == self.LIMB:
+                    #             memb_contact_area += 1  # Increment the counter for every MEMB neighbor pixel
                     # Differentiation Rules: The cell will differentiate if its contact area with MEMB is 2 or less pixels
-                    if memb_contact_area <= 5:                        
+                    if not self.LIMB in NEIGHBOR_DICT.keys():                        
                         self.event_data.append({'Event Type': 'Stem Before Differentiation Vol', 'Cell Type': cell.type, 'Cell ID': cell.id, 'Volume':cell.volume, 'Time': mcs})
                         cell.type = self.BASAL
                         self.initializeDifferentiatedCell(cell)                        
@@ -967,7 +967,7 @@ class TEARSteppable(SteppableBasePy):
     def start(self):
 
         self.intialTEARcount = len(self.cell_list_by_type(self.TEAR))
-        self.Force_TEAR = 500000
+        self.Force_TEAR = 30
      
     def step(self, mcs):
 
@@ -976,25 +976,31 @@ class TEARSteppable(SteppableBasePy):
             flag = True
         for cell in self.cell_list_by_type(self.TEAR):
             NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
-            if self.SUPER in NEIGHBOR_DICT.keys() and NEIGHBOR_DICT[self.TEAR] == 1:
-                if self.WALL not in NEIGHBOR_DICT.keys():
-                    neighbor_list = self.get_cell_neighbor_data_list(cell)
-                    for neighbor,_ in neighbor_list:                     
+            neighbor_list = self.get_cell_neighbor_data_list(cell)
+            for neighbor,_ in neighbor_list:
+                if neighbor == None and self.WALL not in NEIGHBOR_DICT.keys() and self.TEAR not in NEIGHBOR_DICT.keys() and self.SUPER not in NEIGHBOR_DICT.keys() and self.WING not in NEIGHBOR_DICT.keys() and self.BASAL not in NEIGHBOR_DICT.keys() and self.STEM not in NEIGHBOR_DICT.keys() and self.MEMB not in NEIGHBOR_DICT.keys() and self.LIMB not in NEIGHBOR_DICT.keys() and self.BM:
+                    cell.lambdaVecX = 0
+                    cell.lambdaVecY = self.Force_TEAR *  100
+                elif NEIGHBOR_DICT[self.TEAR] == 1:
+                    if self.WALL not in NEIGHBOR_DICT.keys():
                         if neighbor != None and neighbor.type == self.TEAR:
                             # Calculate the vector pointing away from the neighbor's COM
-                            direction_vector_x = cell.xCOM - neighbor.xCOM
-                            direction_vector_y = cell.yCOM - neighbor.yCOM
+                            direction_vector_x =  neighbor.xCOM - cell.xCOM
+                            direction_vector_y =  neighbor.yCOM - cell.yCOM
                             # Calculate the angle from the direction vector
                             dtheta = np.arctan2(direction_vector_y, direction_vector_x) 
                             # Update the cell's orientation
-                            cell.dict["P"] += dtheta
+                            cell.dict["P"] = dtheta
                             # Update the force direction
-                            cell.lambdaVecX = -self.Force_TEAR * np.cos(cell.dict["P"])
-                            cell.lambdaVecY = -self.Force_TEAR * np.sin(cell.dict["P"])
-                            if flag and not cell.dict["DEATH_MARK"]:
+                            cell.lambdaVecX = self.Force_TEAR * np.cos(cell.dict["P"])
+                            cell.lambdaVecY = self.Force_TEAR #* np.sin(cell.dict["P"])
+                            if flag :
                                 if cell.targetVolume < 100:
                                     cell.targetVolume+= 10
-        
+                else:
+                    cell.lambdaVecX = 0
+                    cell.lambdaVecY = 0
+
 class PlotSteppable(SteppableBasePy):
 
     def __init__(self, frequency=1):      
@@ -1078,13 +1084,10 @@ class PlotSteppable(SteppableBasePy):
             },
 
             'thickness': {
-                "Limbus Avg Thickness" : [],
-                "Limbus Left Thickness" : [],
-                "Limbus Right Thickness" : [],
-                "Periphery Avg Thickness" : [],
-                "Periphery Left Thickness" : [],
-                "Periphery Right Thickness" : [],
-                "Time": []
+                                
+            },
+            'thickness_raw': {
+                                
             },
 
             'volume_surface': {
@@ -1120,7 +1123,10 @@ class PlotSteppable(SteppableBasePy):
                             }
 
     def start(self):
-        
+        self.bins_number = 5
+        self.bin_size = self.dim.x // self.bins_number        
+        self.bin_indexes = list(range(self.bins_number))
+
         if self.CC3D_PLOT:
         # ---- Cell Count Plot ----
             if self.cellCount:
@@ -1165,11 +1171,7 @@ class PlotSteppable(SteppableBasePy):
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
                 self.plot_pressure.add_plot("Stem Average", style='lines', color='red')
-                self.plot_pressure.add_plot("Basal Average", style='lines', color='pink')
-                # self.plot_pressure.add_plot("Basal Individual", style='lines', color='green')
-                # self.plot_pressure.add_plot("Wings", style='Dots', color='Cyan')
-                # self.plot_pressure.add_plot("Average Vol", style='lines', color='red')
-                # self.plot_pressure.add_plot("Slough Count", style='lines', color='green')
+                self.plot_pressure.add_plot("Basal Average", style='lines', color='pink')                
 
             if self.growthPlot:
                 self.plot_growth = self.add_new_plot_window(title='System Growth',
@@ -1191,18 +1193,15 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_growth.add_plot("Basal Average Pressure", style='lines', color='lightblue')
 
             if self.thicknessPlot:
-                self.plot_thickness = self.add_new_plot_window(title='Wing Thickness',
+                self.plot_thickness = self.add_new_plot_window(title='Tissue Thickness',
                                                                 x_axis_title='Time(Hours)',
                                                                 y_axis_title='Average Y position',
                                                                 x_scale_type='linear', y_scale_type='linear',
                                                                 grid=True, config_options={'legend':True})
-                self.plot_thickness.add_plot("Limbus Avg Thickness", style='lines', color='Blue')
-                self.plot_thickness.add_plot("Limbus Left Thickness", style='lines', color='lightblue')
-                self.plot_thickness.add_plot("Limbus Right Thickness", style='lines', color='darkblue')
-                self.plot_thickness.add_plot("Periphery Avg Thickness", style='lines', color='red')
-                self.plot_thickness.add_plot("Periphery Left Thickness", style='lines', color='pink')
-                self.plot_thickness.add_plot("Periphery Right Thickness", style='lines', color='purple')
-
+                
+                for bin_index in self.bin_indexes:
+                    self.plot_thickness.add_plot(f'X Coord.{bin_index * self.bin_size}-{(bin_index + 1) * self.bin_size}', style='lines')
+                
             if self.VolumeSurfaceDetailPlot:
                 self.plot_volume_surface = self.add_new_plot_window(title='Volume Surface Detail',
                                                                 x_axis_title='Time(Hours)',
@@ -1250,8 +1249,9 @@ class PlotSteppable(SteppableBasePy):
                 self.write_csv_for_category('pressure', mcs)
             if self.growthPlot:
                 self.write_csv_for_category('growth', mcs)
-            if self.thicknessPlot:
-                self.write_csv_for_category('thickness', mcs)
+            if self.thicknessPlot:                
+                self.write_parquet_for_cell_data_with_replicate('thickness', mcs)
+                self.write_parquet_for_cell_data_with_replicate('thickness_raw', mcs)
             if self.VolumeSurfaceDetailPlot:
                 self.write_csv_for_category('volume_surface', mcs)
             if self.MitosisPlot:
@@ -1260,11 +1260,12 @@ class PlotSteppable(SteppableBasePy):
                 # self.write_csv_for_cell_data_with_replicate('single_cell_pres_EGF', mcs)
                 self.write_parquet_for_cell_data_with_replicate('single_cell_pres_EGF', mcs)
             if self.MassConservationPlot:
-                self.write_to_parquet_for_mass_conservation(mcs)
+                # self.write_to_parquet_for_mass_conservation(mcs)
+                self.write_parquet_for_cell_data_with_replicate('mass_conservation', mcs)
             if self.SurfactantTracking:
                 self.write_csv_for_category('surfactant', mcs)
                 # self.write_parquet_for_cell_data_with_replicate('surfactant', mcs)
-            if self.SnapShot:
+            if self.SnapShot:                
                 self.request_screenshot(mcs=mcs, screenshot_label='Cell_Field_CellField_2D_XY_0')
             
             # Save the cell field as an image
@@ -1412,47 +1413,52 @@ class PlotSteppable(SteppableBasePy):
                 self.plot_growth.add_data_point("Basal Average Pressure", HOURtoMCS_factor, np.mean(BASAL_avg_pressure))
   
         if self.thicknessPlot and mcs % HOURtoMCS == 0:
-            
-            thickness_dict = self.compute_thickness_for_all_columns(self.WING)
-            left_thicknesses = [thickness for x, thickness in thickness_dict.items() if x <= 110]
-            right_thicknesses = [thickness for x, thickness in thickness_dict.items() if x > 110]
+            self.data_points['thickness'][HOURtoMCS_factor] = {'Bins': {}}
+            self.data_points['thickness_raw'][HOURtoMCS_factor] = {'Cell Data': []}
+            bins = {index: [] for index in self.bin_indexes}            
+           
+            for cell in self.cell_list_by_type(self.SUPER):
+                # Binning the data
+                bin_index = cell.xCOM // self.bin_size               
+                bins[bin_index].append(cell.yCOM)
 
-            if left_thicknesses:  # Prevent division by zero
-                # CSV
-                self.data_points['thickness']['Limbus Avg Thickness'].append(np.mean(left_thicknesses))
-                self.data_points['thickness']['Limbus Left Thickness'].append(left_thicknesses[0])
-                self.data_points['thickness']['Limbus Right Thickness'].append(left_thicknesses[-1])
-            else:               
-                # CSV
-                self.data_points['thickness']['Periphery Avg Thickness'].append(0)                
-                self.data_points['thickness']['Periphery Left Thickness'].append(0)
-                self.data_points['thickness']['Periphery Right Thickness'].append(0)                
+                self.data_points['thickness_raw'][HOURtoMCS_factor]['Cell Data'].append({
+                    'CellID': cell.id,
+                    'xCOM': cell.xCOM,
+                    'yCOM': cell.yCOM,                    
+                    'Type': cell.type
+                })
 
-            if right_thicknesses:               
-                # CSV
-                self.data_points['thickness']['Periphery Avg Thickness'].append(np.mean(right_thicknesses))
-                self.data_points['thickness']['Periphery Left Thickness'].append(right_thicknesses[0])
-                self.data_points['thickness']['Periphery Right Thickness'].append(right_thicknesses[-1])
-            else:
-                # CSV
-                self.data_points['thickness']['Periphery Avg Thickness'].append(0)
-                self.data_points['thickness']['Periphery Left Thickness'].append(0)
-                self.data_points['thickness']['Periphery Right Thickness'].append(0)
+            # Check for interface cells with the tear or medium
+            for cell in self.cell_list_by_type(self.WING, self.BASAL, self.STEM):
+                NEIGHBOR_DICT = self.get_cell_neighbor_data_list(cell).neighbor_count_by_type()
+                if self.TEAR in NEIGHBOR_DICT.keys() or self.MEDIUM in NEIGHBOR_DICT.keys():
+                    bin_index = cell.xCOM // self.bin_size
+                    if bin_index in bins:
+                        bins[bin_index].append(cell.yCOM)
+                        self.data_points['thickness_raw'][HOURtoMCS_factor]['Cell Data'].append({
+                            'CellID': cell.id,
+                            'xCOM': cell.xCOM,
+                            'yCOM': cell.yCOM,                    
+                            'Type': cell.type
+                        })              
 
-            self.data_points['thickness']['Time'].append(HOURtoMCS_factor)
+            # Calculate mean height of the top cells in each bin
+            for bin_index in self.bin_indexes:
+                cells = bins[bin_index]
+                if not cells:
+                    mean_top_height = 0                           
+                else:
+                    mean_top_height = np.mean(cells)                    
 
+                # Update the 'Bins' dictionary with the mean top height
+                if bin_index not in self.data_points['thickness'][HOURtoMCS_factor]['Bins']:
+                    self.data_points['thickness'][HOURtoMCS_factor]['Bins'][bin_index] = []
+                self.data_points['thickness'][HOURtoMCS_factor]['Bins'][bin_index].append(mean_top_height)
 
             if self.CC3D_PLOT:
-                # for cell_type, count in self.data_points['thickness'].items():
-                #     self.plot_data_point(self.plot_thickness, cell_type, HOURtoMCS_factor, count)
-                if left_thicknesses:
-                    self.plot_thickness.add_data_point("Limbus Avg Thickness", HOURtoMCS_factor, np.mean(left_thicknesses))
-                    self.plot_thickness.add_data_point("Limbus Left Thickness", HOURtoMCS_factor, left_thicknesses[0])
-                    self.plot_thickness.add_data_point("Limbus Right Thickness", HOURtoMCS_factor, left_thicknesses[-1])
-                if right_thicknesses:
-                    self.plot_thickness.add_data_point("Periphery Left Thickness", HOURtoMCS_factor, right_thicknesses[0])
-                    self.plot_thickness.add_data_point("Periphery Right Thickness", HOURtoMCS_factor, right_thicknesses[-1])
-                    self.plot_thickness.add_data_point("Periphery Avg Thickness", HOURtoMCS_factor, np.mean(right_thicknesses))
+                for bin in self.bin_heights_over_time:
+                    self.plot_thickness.add_data_point(f'X Coord.{bin * self.bin_size}-{(bin + 1) * self.bin_size}', HOURtoMCS_factor, self.data_points['thickness'][HOURtoMCS_factor]['Bins'][bin])
         
         if self.VolumeSurfaceDetailPlot and mcs % HOURtoMCS == 0:
 
@@ -1571,46 +1577,14 @@ class PlotSteppable(SteppableBasePy):
                 self.SLS_plot.add_data_point("Total Amount", HOURtoMCS_factor, self.SLS_Field.totalFieldIntegral())
                 #self.SLS_plot.add_data_point("Tear cells count", HOURtoMCS_factor, len(self.cell_list_by_type(self.TEAR)))   
 
-    def compute_thickness_for_all_columns(self, cell_type):
-        thickness_dict = {}
-        x_coords = [round(cell.xCOM) for cell in self.cell_list_by_type(self.WING)]
-        clustered_x_coords = self.cluster_x_coords(x_coords)
-
-        for x_coord in clustered_x_coords:
-            min_y = float('inf')
-            max_y = float('-inf')
-
-            for cell in self.cell_list_by_type(cell_type):
-                com_x = round(cell.xCOM)
-                com_y = cell.yCOM
-
-                if abs(com_x - x_coord) <= 4:
-                    if com_y < min_y:
-                        min_y = com_y
-                    if com_y > max_y:
-                        max_y = com_y
-
-            thickness_dict[x_coord] = max_y - min_y  # Changed to calculate thickness
-
-        return thickness_dict
-
-    def cluster_x_coords(self, x_coords, threshold=1):
-        if not x_coords:
-            return []
-        
-        sorted_coords = sorted(x_coords)
-        clusters = [[sorted_coords[0]]]
-
-        for x in sorted_coords[1:]:
-            # If the current x-coordinate is close to the last x-coordinate in the current cluster
-            if abs(x - clusters[-1][-1]) <= threshold:
-                clusters[-1].append(x)
-            else:
-                clusters.append([x])
-
-        # Return the average x-coordinate for each cluster
-        return [int(sum(cluster) / len(cluster)) for cluster in clusters] 
-   
+        if self.SnapShot and mcs % HOURtoMCS == 0:
+            self.request_screenshot(mcs=mcs, screenshot_label='Cell_Field_CellField_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='EGF_ConField_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='EGF_Seen_ScalarFieldCellLevel_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='Pressure_ScalarFieldCellLevel_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='SLS_ConField_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='SLS_Seen_ScalarFieldCellLevel_2D_XY_0')
+               
     def write_csv_for_category(self, category, mcs):
         """
         Writes a CSV file for the given category from the self.data_points dictionary.
@@ -1680,20 +1654,51 @@ class PlotSteppable(SteppableBasePy):
         file_name = f"{category}_rep{replicate}_{mcs}.parquet"
         file_path = self.current_script_directory.joinpath(file_name)        
         # Prepare data for Parquet
-        rows = []
-        for cell_type in ['BASAL', 'STEM']:
-            for cell_id, cell_data_list in self.data_points[category][cell_type].items():
-                for cell_data in cell_data_list:
-                    row = {
-                        'CellType': cell_type,
-                        'CellID': cell_id,
-                        'pressure': cell_data['pressure'],
-                        'EGF': cell_data['EGF'],
+        
+        if category == 'single_cell_pres_EGF':
+            rows = []
+            for cell_type in ['BASAL', 'STEM']:
+                for cell_id, cell_data_list in self.data_points[category][cell_type].items():
+                    for cell_data in cell_data_list:
+                        row = {
+                            'CellType': cell_type,
+                            'CellID': cell_id,
+                            'pressure': cell_data['pressure'],
+                            'EGF': cell_data['EGF'],
+                            'xCOM': cell_data['xCOM'],
+                            'yCOM': cell_data['yCOM'],
+                            'Time': cell_data['Time']
+                        }
+                        rows.append(row)
+
+        elif category == 'thickness':
+            rows = []
+            for time_step, data in self.data_points[category].items():
+                for bin_key, heights in data['Bins'].items():
+                        for height in heights:
+                            row = {                            
+                                'Time': time_step,
+                                'Bin': bin_key,
+                                'Height': height                            
+                            }
+                            rows.append(row)
+
+        elif category == 'thickness_raw':
+            rows = []
+            for time_step, data in self.data_points[category].items(): 
+                for cell_data in data['Cell Data']:
+                    row = {                        
+                        'Time': time_step,
+                        'CellID': cell_data['CellID'],
                         'xCOM': cell_data['xCOM'],
-                        'yCOM': cell_data['yCOM'],
-                        'Time': cell_data['Time']
+                        'yCOM': cell_data['yCOM'],                        
+                        'CellType': cell_data['Type']
                     }
                     rows.append(row)
+
+        elif category == 'mass_conservation':
+            rows = [event for sublist in self.data_points['mass_conservation'] for event in sublist]
+
         # Convert list of dictionaries to DataFrame
         df = pd.DataFrame(rows)        
         # Write to Parquet

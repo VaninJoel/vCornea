@@ -30,7 +30,7 @@ import time
 current_script_directory = Path(__file__).parent
 
 # Join with a time stamp to avoid overwriting
-output_directory = current_script_directory.joinpath("Output",time.strftime("%m%d%Y_%H%M%S"))
+output_directory = current_script_directory.joinpath("Output")
 pg.set_output_dir(str(output_directory))
 
 # GLOBAL PARAMETERS
@@ -248,6 +248,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             cell.dict["LambdaChemo"]   = self.InitBASAL_LambdaChemo
             ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "BASALMVBIAS")            
             ChemotaxisData.setLambda(cell.dict["LambdaChemo"])
+            self.delete_cell(cell)
         # WING  
         for cell in self.cell_list_by_type(self.WING):
             cell.targetVolume  = self.InitWING_TargetVolume
@@ -257,6 +258,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             cell.dict['EGF_LambdaChemo'] = self.InitWING_EGFLambdaChemo
             ChemotaxisData = self.chemotaxisPlugin.addChemotaxisData(cell, "EGF")            
             ChemotaxisData.setLambda(cell.dict["EGF_LambdaChemo"])
+            self.delete_cell(cell)
         # SUPERFICIAL
         for cell in self.cell_list_by_type(self.SUPER):
             cell.targetVolume   = self.InitSUPER_TargetVolume
@@ -265,6 +267,7 @@ class ConstraintInitializerSteppable(SteppableBasePy):
             cell.targetSurface  = self.InitSUPER_TargetSurface
             cell.dict['Slough'] = self.SloughProbability
             self.create_links(cell) 
+            self.delete_cell(cell)
         # TEAR
         for cell in self.cell_list_by_type(self.TEAR):            
             cell.targetVolume  = 50
@@ -1237,35 +1240,35 @@ class PlotSteppable(SteppableBasePy):
 
     def step(self, mcs):
         global DEATHCOUNT
-        global output_directory
         HOURtoMCS_factor = mcs / HOURtoMCS
-        self.MCS = mcs
 
         # ---- End of Simulation ----
         if mcs == (self.SimTime + 1) :
             if self.cellCount:                
-                self.write_csv_for_category('cell_count', mcs, output_directory)
+                self.write_csv_for_category('cell_count', mcs)
             if self.sloughTracker:
-                self.write_csv_for_category('slough_tracker', mcs, output_directory)
+                self.write_csv_for_category('slough_tracker', mcs)
             if self.pressurePlot:
-                self.write_csv_for_category('pressure', mcs, output_directory)
+                self.write_csv_for_category('pressure', mcs)
             if self.growthPlot:
-                self.write_csv_for_category('growth', mcs, output_directory)
+                self.write_csv_for_category('growth', mcs)
             if self.thicknessPlot:                
-                self.write_parquet_for_cell_data_with_replicate('thickness', mcs, output_directory)            
-                self.write_parquet_for_cell_data_with_replicate('thickness_raw', mcs, output_directory)
+                self.write_parquet_for_cell_data_with_replicate('thickness', mcs)
+                self.write_parquet_for_cell_data_with_replicate('thickness_raw', mcs)
             if self.VolumeSurfaceDetailPlot:
-                self.write_csv_for_category('volume_surface', mcs, output_directory)
+                self.write_csv_for_category('volume_surface', mcs)
             if self.MitosisPlot:
-                self.write_csv_for_category('mitosis', mcs, output_directory)
-            if self.SingleCellPresEGFPlot:                
-                self.write_parquet_for_cell_data_with_replicate('single_cell_pres_EGF', mcs, output_directory)
-            if self.MassConservationPlot:                
-                self.write_parquet_for_cell_data_with_replicate('mass_conservation', mcs, output_directory)
+                self.write_csv_for_category('mitosis', mcs)
+            if self.SingleCellPresEGFPlot:
+                # self.write_csv_for_cell_data_with_replicate('single_cell_pres_EGF', mcs)
+                self.write_parquet_for_cell_data_with_replicate('single_cell_pres_EGF', mcs)
+            if self.MassConservationPlot:
+                # self.write_to_parquet_for_mass_conservation(mcs)
+                self.write_parquet_for_cell_data_with_replicate('mass_conservation', mcs)
             if self.SurfactantTracking:
-                self.write_csv_for_category('surfactant', mcs, output_directory)
+                self.write_csv_for_category('surfactant', mcs)
                 # self.write_parquet_for_cell_data_with_replicate('surfactant', mcs)
-            if self.SnapShot:
+            if self.SnapShot:                
                 self.request_screenshot(mcs=mcs, screenshot_label='Cell_Field_CellField_2D_XY_0')
             
             # Save the cell field as an image
@@ -1577,52 +1580,25 @@ class PlotSteppable(SteppableBasePy):
                 self.SLS_plot.add_data_point("Total Amount", HOURtoMCS_factor, self.SLS_Field.totalFieldIntegral())
                 #self.SLS_plot.add_data_point("Tear cells count", HOURtoMCS_factor, len(self.cell_list_by_type(self.TEAR)))   
 
-    def on_stop(self):  
-        print(f'Called on_stop function in PlotSteppable {self.__class__.__name__}') 
-        mcs = self.MCS     
-        if self.cellCount:                
-            self.write_csv_for_category('cell_count', mcs, output_directory)
-        if self.sloughTracker:
-            self.write_csv_for_category('slough_tracker', mcs, output_directory)
-        if self.pressurePlot:
-            self.write_csv_for_category('pressure', mcs, output_directory)
-        if self.growthPlot:
-            self.write_csv_for_category('growth', mcs, output_directory)
-        if self.thicknessPlot:
-            self.write_parquet_for_cell_data_with_replicate('thickness', mcs, output_directory)           
-            self.write_parquet_for_cell_data_with_replicate('thickness_raw', mcs, output_directory)
-        if self.VolumeSurfaceDetailPlot:
-            self.write_csv_for_category('volume_surface', mcs, output_directory)
-        if self.MitosisPlot:
-            self.write_csv_for_category('mitosis', mcs, output_directory)
-        if self.SingleCellPresEGFPlot:            
-            self.write_parquet_for_cell_data_with_replicate('single_cell_pres_EGF', mcs, output_directory)
-        if self.MassConservationPlot:
-            self.write_parquet_for_cell_data_with_replicate('mass_conservation', mcs, output_directory)            
-        if self.SurfactantTracking:
-            self.write_csv_for_category('surfactant', mcs, output_directory)
-   
-    def write_csv_for_category(self, category, mcs, directory="."):
+        if self.SnapShot and mcs % HOURtoMCS == 0:
+            self.request_screenshot(mcs=mcs, screenshot_label='Cell_Field_CellField_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='EGF_ConField_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='EGF_Seen_ScalarFieldCellLevel_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='Pressure_ScalarFieldCellLevel_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='SLS_ConField_2D_XY_0')
+            self.request_screenshot(mcs=mcs, screenshot_label='SLS_Seen_ScalarFieldCellLevel_2D_XY_0')
+               
+    def write_csv_for_category(self, category, mcs):
         """
         Writes a CSV file for the given category from the self.data_points dictionary.
         The file will be named after the category and saved in the current_script_directory.
         """        
         data = self.data_points[category]
-        # Extract the replicate number from the directory path
-        replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""
+        file_name = f"{category}_{mcs}.csv"
+        file_path = self.current_script_directory.joinpath(file_name)
         
-        file_name = f"{category}_rep{replicate}_{mcs}.csv"
-        if directory == ".":
-            file_path = self.current_script_directory.joinpath(file_name)
-        else:
-            file_path = Path(directory).joinpath(file_name)        
-
         # Assuming all sub-dictionaries have the same length as 'Time'
         num_entries = len(data['Time'])
-        # Ensure all lists have the same length as 'Time'
-        for key in data:
-            if len(data[key]) < num_entries:
-                data[key].extend([0] * (num_entries - len(data[key])))
         
         with open(file_path, 'w', newline='') as csvfile:
             csvwriter = csv.writer(csvfile)
@@ -1647,10 +1623,8 @@ class PlotSteppable(SteppableBasePy):
         replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""
         
         file_name = f"{category}_rep{replicate}_{mcs}.csv"
-        if directory == ".":
-            file_path = self.current_script_directory.joinpath(file_name)
-        else:
-            file_path = Path(directory).joinpath(file_name)        
+        file_path = self.current_script_directory.joinpath(file_name)
+        
         # Prepare data for CSV
         rows = []
         for cell_type in ['BASAL', 'STEM']:
@@ -1681,10 +1655,7 @@ class PlotSteppable(SteppableBasePy):
         # Extract the replicate number from the directory path
         replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""        
         file_name = f"{category}_rep{replicate}_{mcs}.parquet"
-        if directory == ".":
-            file_path = self.current_script_directory.joinpath(file_name)
-        else:
-            file_path = Path(directory).joinpath(file_name)        
+        file_path = self.current_script_directory.joinpath(file_name)        
         # Prepare data for Parquet
         
         if category == 'single_cell_pres_EGF':
@@ -1740,10 +1711,7 @@ class PlotSteppable(SteppableBasePy):
         # Extract the replicate number from the directory path
         replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""        
         file_name = f"mass_conservation_rep{replicate}_{mcs}.parquet"
-        if directory == ".":
-            file_path = self.current_script_directory.joinpath(file_name)
-        else:
-            file_path = Path(directory).joinpath(file_name)
+        file_path = self.current_script_directory.joinpath(file_name) 
         # Flatten the list of lists into a single list of dictionaries
         flattened_events = [event for sublist in self.data_points['mass_conservation'] for event in sublist]
         # Convert the list of dictionaries to a DataFrame
