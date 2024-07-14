@@ -51,6 +51,7 @@
    </bqbiol:isDescribedBy> -->
    <!-- Notes -->
 <!-- </Annotation> -->
+
 <CompuCell3D Revision="0" Version="4.5">
    <Metadata>
       <NumberOfProcessors>4</NumberOfProcessors>
@@ -61,7 +62,7 @@
        <Dimensions x="200" y="90" z="1" />
        <Steps>100000</Steps>
        <Temperature>10.0</Temperature>
-       <NeighborOrder>1</NeighborOrder>
+       <NeighborOrder>2</NeighborOrder>
     </Potts>
     <Plugin Name="CellType">
        <CellType TypeId="0" TypeName="Medium" />
@@ -93,13 +94,13 @@
        <Energy Type1="Medium" Type2="Medium">10.0</Energy>
        <Energy Type1="Medium" Type2="STEM">10.0</Energy>
        <Energy Type1="Medium" Type2="LIMB">10.0</Energy>
-       <Energy Type1="Medium" Type2="BASAL">20.0</Energy>
+       <Energy Type1="Medium" Type2="BASAL">10.0</Energy>
        <Energy Type1="Medium" Type2="WING">10.0</Energy>
        <Energy Type1="Medium" Type2="SUPER">10.0</Energy>
        <Energy Type1="Medium" Type2="MEMB">10.0</Energy>
        <Energy Type1="Medium" Type2="STROMA">10.0</Energy>
-       <Energy Type1="Medium" Type2="WALL">10.0</Energy>
-       <Energy Type1="Medium" Type2="TEAR">10.0</Energy>
+       <Energy Type1="Medium" Type2="WALL">5.0</Energy>
+       <Energy Type1="Medium" Type2="TEAR">5.0</Energy>
 
        <Energy Type1="STEM" Type2="STEM">10.0</Energy>
        <Energy Type1="STEM" Type2="LIMB">5.0</Energy>
@@ -107,9 +108,9 @@
        <Energy Type1="STEM" Type2="WING">10.0</Energy>
        <Energy Type1="STEM" Type2="SUPER">10.0</Energy>
        <Energy Type1="STEM" Type2="MEMB">5.0</Energy>
-       <Energy Type1="STEM" Type2="STROMA">5.0</Energy>
+       <Energy Type1="STEM" Type2="STROMA">20.0</Energy>
        <Energy Type1="STEM" Type2="WALL">10.0</Energy>
-       <Energy Type1="STEM" Type2="TEAR">10.0</Energy>
+       <Energy Type1="STEM" Type2="TEAR">5.0</Energy>
               
        <Energy Type1="LIMB" Type2="LIMB">10.0</Energy>
        <Energy Type1="LIMB" Type2="BASAL">10.0</Energy>
@@ -118,42 +119,42 @@
        <Energy Type1="LIMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="LIMB" Type2="STROMA">10.0</Energy>
        <Energy Type1="LIMB" Type2="WALL">10.0</Energy>
-       <Energy Type1="LIMB" Type2="TEAR">10.0</Energy>
+       <Energy Type1="LIMB" Type2="TEAR">5.0</Energy>
       
        <Energy Type1="BASAL" Type2="BASAL">10.0</Energy>
        <Energy Type1="BASAL" Type2="WING">10.0</Energy>
        <Energy Type1="BASAL" Type2="SUPER">15.0</Energy>
        <Energy Type1="BASAL" Type2="MEMB">5.0</Energy>
-       <Energy Type1="BASAL" Type2="STROMA">5.0</Energy>
+       <Energy Type1="BASAL" Type2="STROMA">20.0</Energy>
        <Energy Type1="BASAL" Type2="WALL">10.0</Energy>
-       <Energy Type1="BASAL" Type2="TEAR">10.0</Energy>     
+       <Energy Type1="BASAL" Type2="TEAR">5.0</Energy>     
      
        <Energy Type1="WING" Type2="WING">5.0</Energy>
        <Energy Type1="WING" Type2="SUPER">6.0</Energy>
        <Energy Type1="WING" Type2="MEMB">15.0</Energy>
        <Energy Type1="WING" Type2="STROMA">10.0</Energy>
        <Energy Type1="WING" Type2="WALL">10.0</Energy>
-       <Energy Type1="WING" Type2="TEAR">10.0</Energy>
+       <Energy Type1="WING" Type2="TEAR">5.0</Energy>
        
-       <Energy Type1="SUPER" Type2="SUPER">3.0</Energy>
+       <Energy Type1="SUPER" Type2="SUPER">2.0</Energy>
        <Energy Type1="SUPER" Type2="MEMB">15.0</Energy>
        <Energy Type1="SUPER" Type2="STROMA">10.0</Energy>
-       <Energy Type1="SUPER" Type2="WALL">9.0</Energy>
-       <Energy Type1="SUPER" Type2="TEAR">10.0</Energy>
+       <Energy Type1="SUPER" Type2="WALL">5.0</Energy>
+       <Energy Type1="SUPER" Type2="TEAR">2.0</Energy>
        
        <Energy Type1="MEMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="MEMB" Type2="STROMA">10.0</Energy>
        <Energy Type1="MEMB" Type2="WALL">10.0</Energy>
-       <Energy Type1="MEMB" Type2="TEAR">15.0</Energy>
+       <Energy Type1="MEMB" Type2="TEAR">2.0</Energy>
        
        <Energy Type1="STROMA" Type2="STROMA">10.0</Energy>
        <Energy Type1="STROMA" Type2="WALL">10.0</Energy>
        <Energy Type1="STROMA" Type2="TEAR">10.0</Energy>
 
        <Energy Type1="WALL" Type2="WALL">10.0</Energy>
-       <Energy Type1="WALL" Type2="TEAR">9.0</Energy>
+       <Energy Type1="WALL" Type2="TEAR">5.0</Energy>
        
-       <Energy Type1="TEAR" Type2="TEAR">4.0</Energy>
+       <Energy Type1="TEAR" Type2="TEAR">0.1</Energy>
 
        <NeighborOrder>2</NeighborOrder>
     </Plugin>

@@ -14,7 +14,7 @@ WAIT_TIME = 60  # seconds
 base_path = '/u/jvanin/'
 sim_version_path = '/u/jvanin/T_vCornea_paper/Epithelium/HPC/Project/paper_version'
 output_version_path = '/u/jvanin/T_vCornea_paper/Epithelium/HPC/Simulations_Output'
-run_name = 'Injury_C_400_7600mcs'
+run_name = 'Injury_C_3000mcs_6Months'
 
 csv_file_param = None #None  #TODO Provide file with LHS if desired or None
 
@@ -39,16 +39,14 @@ var_dict = {
     'InitSTEM_TargetVolume'     : [40.0],
 
     'DensitySTEM_HalfMaxValue'  : [125],   
-    'EGF_STEM_HalfMaxValue'     : [1.5], 
- 
+    'EGF_STEM_HalfMaxValue'     : [4.5], 
     'STEM_beta_EGF'             : [1],  
-
     'InitSTEM_LambdaChemo'      : [100.0],
 # Growth Scalars 
     'EGF_GrowthScalar_STEM'     : [1.0],
     'DensityGrowthScalar_STEM'  : [1.0],
 
-    'SLS_STEMDiffCoef'          : [0.75],
+    'SLS_STEMDiffCoef'          : [5.0],
 #---BASAL---
     'InitBASAL_LambdaSurface'   : [2.0],
     'InitBASAL_TargetSurface'   : [20.0],
@@ -60,13 +58,13 @@ var_dict = {
     'InitBASAL_Division'        : [20000.0],
 
     'DensityBASAL_HalfMaxValue' : [125], 
-    'EGF_BASAL_HalfMaxValue'    : [4.5], 
+    'EGF_BASAL_HalfMaxValue'    : [8.0], 
     'BASAL_beta_EGF'            : [1],      
 # Growth Scalars 
     'EGF_GrowthScalar_BASAL'    : [1.0],
     'DensityGrowthScalar_BASAL' : [1.0],
 
-    'SLS_BASALDiffCoef'         : [0.75],
+    'SLS_BASALDiffCoef'         : [5.0],
 #---WING---
     'InitWING_LambdaSurface'    : [5.0],
     'InitWING_TargetSurface'    : [25],
@@ -74,17 +72,16 @@ var_dict = {
     'InitWING_LambdaVolume'     : [2.0],
     'InitWING_TargetVolume'     : [25.0],
 
-    'InitWING_EGFLambdaChemo'   : [2.0],
-    'SLS_WINGDiffCoef'          : [1.0],
+    'InitWING_EGFLambdaChemo'   : [20.0],
+    'SLS_WINGDiffCoef'          : [5.0],
 #---SUPERFICIAL---
     'InitSUPER_LambdaSurface'   : [5.0],
     'InitSUPER_TargetSurface'   : [25.0],
 
     'InitSUPER_LambdaVolume'    : [5.0],
     'InitSUPER_TargetVolume'    : [25.0],
-
-    'EGF_SUPERDiffCoef'         : [4.0], 
-    'SLS_SUPERDiffCoef'         : [0.75],
+    'EGF_SUPERDiffCoef'         : [10.0], 
+    'SLS_SUPERDiffCoef'         : [5.0],
 
     'SloughProbability'         : [0.0],
 # Death Scalars
@@ -92,9 +89,9 @@ var_dict = {
     'DeathVolumeScalar'         : [1],
     'SloughScalar'              : [1],
 
-    'SLS_MEMBDiffCoef'          : [0.25],
-    'SLS_LIMBDiffCoef'          : [0.25],
-    'SLS_TEARDiffCoef'          : [1.0],
+    'SLS_MEMBDiffCoef'          : [5.0],
+    'SLS_LIMBDiffCoef'          : [5.0],
+    'SLS_TEARDiffCoef'          : [5.0],
 
 # FIELDS
     'MovementBiasScreteAmount'  : [1],
@@ -106,21 +103,12 @@ var_dict = {
     'EGF_FieldUptakeSTEM'       : [0.0],
     'EGF_FieldUptakeSuper'      : [0.0],
     'EGF_FieldUptakeWing'       : [0.0],
-    'EGF_GlobalDecay'           : [0.6],
-
-    'SLS_X_Center'              : [100],     
-    'SLS_Y_Center'              : [75],
-    'SLS_Concentration'         : [1700.0],
-
-# LINKS
-    'LINKWALL_lambda_distance'  : [50],
-    'LINKWALL_target_distance'  : [0],
-    'LINKSUPER_lambda_distance' : [50],   
+    'EGF_GlobalDecay'           : [0.5],
 
 # WOUND
     'InjuryType'                : [False],
     'IsInjury'                  : [True],
-    'InjuryTime'                : [400],
+    'InjuryTime'                : [3000],
     'SLS_Injury'                : [True],
     'SLS_Threshold_Method'      : [True],    
 #---INJURY AREA---
@@ -130,7 +118,8 @@ var_dict = {
 #---SLS AREA---
     'SLS_X_Center'              : [100],
     'SLS_Y_Center'              : [75],
-    'SLS_Concentration'         : [1400.0, 1500.0, 1600.0, 1700.0],
+    'SLS_Concentration'         : [1500.0,  2000.0, 2500.0, 3000.0],
+    'SLS_Gaussian_pulse'        : [True],
 #Links
     'LINKWALL_lambda_distance'  : [50],
     'LINKWALL_target_distance'  : [3],
@@ -157,7 +146,7 @@ var_dict = {
     'SLS_SeenByCell'            : [True],
     'CenterBiasPlot'            : [False],
     'CenterBias'                : [False],
-    'DivisionTracker'           : [False],
+    'DivisionTracker'           : [True],
     'GrowthPlot'                : [False],
     'ThicknessPlot'             : [True],
     'VolumeSurfaceDetail'       : [False],  
@@ -168,7 +157,7 @@ var_dict = {
     'SnapShot'                  : [False],
 
 # TIME OF SIMULATION
-    'SimTime'                   : [7600],
+    'SimTime'                   : [(7200*6 + 3000)],
 }
 
 
