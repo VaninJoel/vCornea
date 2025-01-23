@@ -16,8 +16,12 @@
    </bqbiol:occursIn> -->
 
     <!-- Cell Type -->
-
-
+   <!-- <bqbiol:hasPart>
+      <rdf:Bag>
+         <rdf:li rdf:resource="http://identifiers.org/cl/CL:0000575">
+         https://zfin.org/ZFA:0009264#summary
+      </rdf:Bag>
+   -->
    <!-- Modeling Approach -->
    <!-- <bqbiol:isPropertyOf>
       <rdf:Bag>
@@ -29,6 +33,7 @@
    <!-- <bqbiol:hasProperty>
       <rdf:Bag>
             <rdf:li rdf:resource="http://identifiers.org/go/GO:0042060">
+            
       </rdf:Bag>
    </bqbiol:hasProperty> -->
 
@@ -39,9 +44,13 @@
       </rdf:Bag>
    </bqbiol:hasProperty> -->    
    
-   <!-- Created -->   
-
-   <!-- Modified -->
+   <!-- Created -->
+     <!-- <dc:created>
+        <rdf:Description>
+          <dc:date>2024-08-19T12:00:00Z</dc:date>
+        </rdf:Description>
+      </dc:created> -->
+   
 
    <!-- Creators -->
    <!-- <bqbiol:isDescribedBy>
@@ -51,33 +60,34 @@
    </bqbiol:isDescribedBy> -->
    <!-- Notes -->
 <!-- </Annotation> -->
+
 <CompuCell3D Revision="0" Version="4.5">
    <Metadata>
-      <NumberOfProcessors>4</NumberOfProcessors>
+      <NumberOfProcessors>1</NumberOfProcessors>
       <DebugOutputFrequency>10</DebugOutputFrequency>
    </Metadata>
    <Potts>
        <!-- When Dimentions are changed make sure to change the initial parameters for wall creation -->
        <Dimensions x="200" y="90" z="1" />
        <Steps>100000</Steps>
-       <Temperature>10.0</Temperature>
-       <NeighborOrder>1</NeighborOrder>
+       <Temperature>8.0</Temperature>
+       <NeighborOrder>2</NeighborOrder>
     </Potts>
     <Plugin Name="CellType">
        <CellType TypeId="0" TypeName="Medium" />
-       <CellType TypeId="1" TypeName="STEM" /> #ff007f
-       <CellType Freeze="" TypeId="2" TypeName="LIMB" /> #ffa7f6
-       <CellType TypeId="3" TypeName="BASAL" /> #ffbe99
-       <CellType TypeId="4" TypeName="WING" /> #0055ff
-       <CellType TypeId="5" TypeName="SUPER" /> #55ffff
-       <CellType Freeze="" TypeId="6" TypeName="MEMB" />  #ff00ff      
-       <CellType TypeId="7" TypeName="STROMA" /> #c681ff
-       <CellType TypeId="8" TypeName="KERATO" /> Reserved for future use
-       <CellType TypeId="9" Freeze="" TypeName="WALL" /> #ffffff
-       <CellType TypeId="10" TypeName="TEAR" /> #55ff00
-       <CellType Freeze="" TypeId="11" TypeName="FIBRO" /> Reserved for future use
-       <CellType Freeze="" TypeId="12" TypeName="MYOF" /> Reserved for future use
-       <CellType Freeze="" TypeId="13" TypeName="BM" /> Reserved for future use
+       <CellType TypeId="1" TypeName="STEM" />              #ff007f Rose 
+       <CellType Freeze="" TypeId="2" TypeName="LIMB" />    #ffa7f6 Pink
+       <CellType TypeId="3" TypeName="BASAL" />             #ffbe99 Peach Orange 
+       <CellType TypeId="4" TypeName="WING" />              #0055ff Blue
+       <CellType TypeId="5" TypeName="SUPER" />             #55ffff Cyan
+       <CellType Freeze="" TypeId="6" TypeName="MEMB" />    #ff00ff Magenta       
+       <CellType TypeId="7" TypeName="STROMA" />            #c681ff Heliotrope Purple
+       <CellType TypeId="8" TypeName="KERATO" />            Reserved for future use
+       <CellType TypeId="9" Freeze="" TypeName="WALL" />    #ffffff White
+       <CellType TypeId="10" TypeName="TEAR" />             #55ff00 Bright-Green
+       <CellType Freeze="" TypeId="11" TypeName="FIBRO" />  Reserved for future use
+       <CellType Freeze="" TypeId="12" TypeName="MYOF" />   Reserved for future use
+       <CellType Freeze="" TypeId="13" TypeName="BM" />     Reserved for future use
    </Plugin>
    <Plugin Name="Volume" />
    <Plugin Name="Surface" />
@@ -93,13 +103,13 @@
        <Energy Type1="Medium" Type2="Medium">10.0</Energy>
        <Energy Type1="Medium" Type2="STEM">10.0</Energy>
        <Energy Type1="Medium" Type2="LIMB">10.0</Energy>
-       <Energy Type1="Medium" Type2="BASAL">20.0</Energy>
+       <Energy Type1="Medium" Type2="BASAL">10.0</Energy>
        <Energy Type1="Medium" Type2="WING">10.0</Energy>
        <Energy Type1="Medium" Type2="SUPER">10.0</Energy>
        <Energy Type1="Medium" Type2="MEMB">10.0</Energy>
        <Energy Type1="Medium" Type2="STROMA">10.0</Energy>
-       <Energy Type1="Medium" Type2="WALL">10.0</Energy>
-       <Energy Type1="Medium" Type2="TEAR">10.0</Energy>
+       <Energy Type1="Medium" Type2="WALL">5.0</Energy>
+       <Energy Type1="Medium" Type2="TEAR">5.0</Energy>
 
        <Energy Type1="STEM" Type2="STEM">10.0</Energy>
        <Energy Type1="STEM" Type2="LIMB">5.0</Energy>
@@ -107,9 +117,9 @@
        <Energy Type1="STEM" Type2="WING">10.0</Energy>
        <Energy Type1="STEM" Type2="SUPER">10.0</Energy>
        <Energy Type1="STEM" Type2="MEMB">5.0</Energy>
-       <Energy Type1="STEM" Type2="STROMA">5.0</Energy>
+       <Energy Type1="STEM" Type2="STROMA">20.0</Energy>
        <Energy Type1="STEM" Type2="WALL">10.0</Energy>
-       <Energy Type1="STEM" Type2="TEAR">10.0</Energy>
+       <Energy Type1="STEM" Type2="TEAR">5.0</Energy>
               
        <Energy Type1="LIMB" Type2="LIMB">10.0</Energy>
        <Energy Type1="LIMB" Type2="BASAL">10.0</Energy>
@@ -118,42 +128,42 @@
        <Energy Type1="LIMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="LIMB" Type2="STROMA">10.0</Energy>
        <Energy Type1="LIMB" Type2="WALL">10.0</Energy>
-       <Energy Type1="LIMB" Type2="TEAR">10.0</Energy>
+       <Energy Type1="LIMB" Type2="TEAR">5.0</Energy>
       
        <Energy Type1="BASAL" Type2="BASAL">10.0</Energy>
        <Energy Type1="BASAL" Type2="WING">10.0</Energy>
        <Energy Type1="BASAL" Type2="SUPER">15.0</Energy>
        <Energy Type1="BASAL" Type2="MEMB">5.0</Energy>
-       <Energy Type1="BASAL" Type2="STROMA">5.0</Energy>
+       <Energy Type1="BASAL" Type2="STROMA">20.0</Energy>
        <Energy Type1="BASAL" Type2="WALL">10.0</Energy>
-       <Energy Type1="BASAL" Type2="TEAR">10.0</Energy>     
+       <Energy Type1="BASAL" Type2="TEAR">5.0</Energy>     
      
        <Energy Type1="WING" Type2="WING">5.0</Energy>
        <Energy Type1="WING" Type2="SUPER">6.0</Energy>
        <Energy Type1="WING" Type2="MEMB">15.0</Energy>
        <Energy Type1="WING" Type2="STROMA">10.0</Energy>
        <Energy Type1="WING" Type2="WALL">10.0</Energy>
-       <Energy Type1="WING" Type2="TEAR">10.0</Energy>
+       <Energy Type1="WING" Type2="TEAR">5.0</Energy>
        
-       <Energy Type1="SUPER" Type2="SUPER">3.0</Energy>
+       <Energy Type1="SUPER" Type2="SUPER">2.0</Energy>
        <Energy Type1="SUPER" Type2="MEMB">15.0</Energy>
        <Energy Type1="SUPER" Type2="STROMA">10.0</Energy>
-       <Energy Type1="SUPER" Type2="WALL">9.0</Energy>
-       <Energy Type1="SUPER" Type2="TEAR">10.0</Energy>
+       <Energy Type1="SUPER" Type2="WALL">5.0</Energy>
+       <Energy Type1="SUPER" Type2="TEAR">2.0</Energy>
        
        <Energy Type1="MEMB" Type2="MEMB">10.0</Energy>
        <Energy Type1="MEMB" Type2="STROMA">10.0</Energy>
        <Energy Type1="MEMB" Type2="WALL">10.0</Energy>
-       <Energy Type1="MEMB" Type2="TEAR">15.0</Energy>
+       <Energy Type1="MEMB" Type2="TEAR">2.0</Energy>
        
        <Energy Type1="STROMA" Type2="STROMA">10.0</Energy>
        <Energy Type1="STROMA" Type2="WALL">10.0</Energy>
        <Energy Type1="STROMA" Type2="TEAR">10.0</Energy>
 
        <Energy Type1="WALL" Type2="WALL">10.0</Energy>
-       <Energy Type1="WALL" Type2="TEAR">9.0</Energy>
+       <Energy Type1="WALL" Type2="TEAR">5.0</Energy>
        
-       <Energy Type1="TEAR" Type2="TEAR">4.0</Energy>
+       <Energy Type1="TEAR" Type2="TEAR">0.1</Energy>
 
        <NeighborOrder>2</NeighborOrder>
     </Plugin>
@@ -241,7 +251,7 @@
             <GlobalDiffusionConstant id="EGF_GlbDiff">186</GlobalDiffusionConstant>
             <GlobalDecayConstant id="EGF_GlobalDecay">0.05331901388</GlobalDecayConstant>
             <DiffusionCoefficient CellType="SUPER" id="EGF_Coef_SUPER">0.0</DiffusionCoefficient>
-            <DiffusionCoefficient CellType="MEMB" id="EGF_Coef_MEMB">0.0</DiffusionCoefficient>
+            <DiffusionCoefficient CellType="MEMB" id="EGF_Coef_MEMB">20.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="LIMB">0.0</DiffusionCoefficient>
             <DiffusionCoefficient CellType="WALL" >0.0</DiffusionCoefficient>  
          </DiffusionData>
