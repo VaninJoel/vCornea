@@ -86,6 +86,7 @@ from cc3d.core.PySteppables import *
 
 import numpy as np
 import pandas as pd
+import shutil
 import random
 import csv
 from pathlib import Path
@@ -99,8 +100,9 @@ current_script_directory = Path(__file__).parent
 output_directory = current_script_directory.joinpath("Output",time.strftime("%m%d%Y_%H%M%S"))
 pg.set_output_dir(str(output_directory))
 
-# GLOBAL PARAMETERS
-# RANDOM_SEED = random.seed(12)
+params_source_file = Path(__file__).parent / "Parameters.py"
+simulation_dir = output_directory / "Simulation"
+params_dest_file = simulation_dir / "Parameters.py"
 
 #---- Time Scales ---
 # Time Scales in Monte Carlo Steps (MCS) 
@@ -1097,7 +1099,8 @@ class PlotSteppable(SteppableBasePy):
             if self.SurfactantTracking:
                 self.write_csv_for_category('surfactant', mcs)               
             if self.SnapShot:                
-                self.request_screenshot(mcs=mcs, screenshot_label='Cell_Field_CellField_2D_XY_0')
+                self.request_screenshot(mcs=mcs, screenshot_label='Cell_Field_CellField_2D_XY_0')            
+            shutil.copy2(src=params_source_file, dst=params_dest_file)
             CompuCellSetup.stop_simulation()
 
         # ---- Plots ----
@@ -1175,7 +1178,8 @@ class PlotSteppable(SteppableBasePy):
         """        
         data = self.data_points[category]
         file_name = f"{category}_{mcs}.csv"
-        file_path = self.current_script_directory.joinpath(file_name)
+        file_path = output_directory.joinpath(file_name)
+        #file_path = self.current_script_directory.joinpath(file_name)
         
         # Assuming all sub-dictionaries have the same length as 'Time'
         num_entries = len(data['Time'])
@@ -1194,7 +1198,6 @@ class PlotSteppable(SteppableBasePy):
             
             print(f"CSV file written: {file_path}")
 
-
     def write_parquet_for_cell_data_with_replicate(self, category, mcs, directory="."):
         """
         Writes a Parquet file for cell data.
@@ -1204,9 +1207,10 @@ class PlotSteppable(SteppableBasePy):
         # Extract the replicate number from the directory path
         replicate = Path(directory).parts[-2] if len(Path(directory).parts) > 1 else ""        
         file_name = f"{category}_rep{replicate}_{mcs}.parquet"
-        file_path = self.current_script_directory.joinpath(file_name)        
+        file_path = output_directory.joinpath(file_name)
+        # file_path = self.current_script_directory.joinpath(file_name)        
+        
         # Prepare data for Parquet
-
         if category == 'thickness':
             rows = []
             for time_step, data in self.data_points[category].items():
@@ -1223,4 +1227,5 @@ class PlotSteppable(SteppableBasePy):
         df = pd.DataFrame(rows)        
         # Write to Parquet
         df.to_parquet(file_path, index=False)
+  
    

@@ -3,7 +3,7 @@ import seaborn as sns
 import pandas as pd
 
 # Load the data from the CSV file
-data_path = r"C:\Users\joelv\Documents\GitHub\vCornea\Epithelium\Local\Project\paper_version_STEM_ONLY\Simulation\cell_count_36002.csv"
+data_path = r"C:\Users\jvanin\OneDrive - Indiana University\Documents\GitHub\vCornea\Epithelium\Local\clean_paper_version_STEM_ONLY\Simulation\Output\01232025_190456\cell_count_101.csv"
 data_5m = pd.read_csv(data_path)
 
 color_codes = ['#55ffff','#0055ff', '#ffbe99', '#ff007f',]
