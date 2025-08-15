@@ -76,26 +76,59 @@ You are now ready to run the simulations and generate the plots.
 
 ## Usage
 
-You can run the simulations directly through the CompuCell3D Player or via the command line.
+This project includes two primary simulation configurations located in `Local/Project/` that correspond to the experiments in the manuscript.
+
+### Replicating the Manuscript Results
+
+#### Scenario 1: Tissue Self-Organization (from Stem Cells)
+
+This simulation demonstrates the self-organization of the stratified corneal tissue starting from only limbal epithelial stem cells (LESCs).
+
+1.  Launch the CompuCell3D Player application.
+2.  Go to `File` > `Open` and navigate to the `Local/Project/paper_version_STEM_ONLY/` directory.
+3.  Select the `vCornea_v2.cc3d` project file to load the simulation.
+4.  Run the simulation to observe the tissue developing to a stable, homeostatic state.
+
+#### Scenario 2: Injury Experiments
+
+This simulation starts with a pre-organized, stable tissue, ready for injury experiments. You can replicate the different injury scenarios from the paper by modifying one parameter.
+
+1.  Launch the CompuCell3D Player application.
+2.  Go to `File` > `Open` and navigate to the `Local/Project/paper_version/` directory.
+3.  Select the `vCornea_v2.cc3d` project file.
+4.  Before running, open the `Local/Project/paper_version/Simulation/Parameters.py` file.
+5.  Locate the `SLS_Concentration` variable and set its value according to the desired injury level:
+    * **Slight Injury**: `SLS_Concentration = 750.0`
+    * **Mild Injury**: `SLS_Concentration = 1500.0`
+    * **Moderate Injury**: `SLS_Concentration = 2500.0`
+6.  Save the `Parameters.py` file and run the simulation in the CompuCell3D Player.
+
+### Exploring New Scenarios
+
+You are encouraged to design your own *in silico* experiments. The `Parameters.py` file is the central control panel for the simulation. You can adjust variables such as `InjuryTime`, `InjuryType` (True for chemical, False for ablation), `SLS_Gaussian_pulse` (True for localized - droplet-like or False for uniformly distributed coat-like initial chemical field distribution), and various cell properties to explore different biological questions.
 
 ### Running with CompuCell3D Player
 
-1.  Launch the CompuCell3D Player application.
-2.  Go to `File` > `Open` and navigate to the `vCornea/Simulation` directory.
-3.  Select the `VCornea.cc3d` project file to load the simulation.
-4.  Use the player controls to `Step`, `Run`, and `Pause` the simulation. The graphical window will display the real-time state of the corneal tissue.
+1.  Launch the CompuCell3D Player application inside your active conda environment using:
+```bash
+python -m cc3d.player5
+```     
+2.  Go to `File` > `Open` and navigate to the `vCornea/Local/Project` directory.
+3. And select one of the scenarios mentioned above, `paper_version_STEM_ONLY` for tissue self-organization or `paper_version` for injury and recovery.
+4.  Select the `VCornea.cc3d` project file to load the simulation.
+5.  Use the player controls to `Step`, `Run`, and `Pause` the simulation. The graphical window will display the real-time state of the corneal tissue.
+**Note you might need to resize the window containing the cell_field, and or open new windows to display other fields like EGF and SLS.
 
+
+## Generating Plots
+
+The plots presented in the manuscript can be reproduced using the analysis scripts provided in the repository. The simulation output data is saved in the `Data/Plot Scripts` directory.
 
 ## Usage
 
 You can run the simulations directly through the CompuCell3D Player or via the command line.
 
-### Running with CompuCell3D Player
 
-1.  Launch the CompuCell3D Player application.
-2.  Go to `File` > `Open` and navigate to the `vCornea/Simulation` directory.
-3.  Select the `VCornea.cc3d` project file to load the simulation.
-4.  Use the player controls to `Step`, `Run`, and `Pause` the simulation. The graphical window will display the real-time state of the corneal tissue.
 
 ### Simulation Scenarios
 
