@@ -11,6 +11,9 @@ import pandas as pd
 MAX_JOBS = 9999
 WAIT_TIME = 60  # seconds
 
+ENV_NAME = 'v_cornea'  # TODO YOU ABSOLUTELY NEED TO GIVE THE NAME YOU CREATED FOR YOUR ENV HERE ASSUMING YOU CHANGED FROM THE EXAMPLE 
+                      # Name of the conda environment to use for running the simulations
+
 base_path =  Path(__file__).parent.parent.resolve()
 sim_version_path = base_path / 'HPC/Project/paper_version_STEM_ONLY'
 output_version_path = base_path / 'Simulations_Output'
@@ -277,7 +280,7 @@ trap cleanup EXIT
 
 # Run the simulation in the background
 # xvfb-run -a 
-srun {base_path}.conda/envs/cc3d_46/bin/cc3d_runScript.sh -i {cc3d_file}
+srun {base_path}.conda/envs/{ENV_NAME}/bin/cc3d_runScript.sh -i {cc3d_file}
 
 SIM_PID=$!
 
