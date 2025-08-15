@@ -31,24 +31,60 @@ By integrating these components, V-Cornea bridges the gap between cellular-level
 
 ---
 
-## Getting Started
+## Setup and Installation
 
-### Prerequisites
+### 1. Environment Setup with Conda
 
-To run the V-Cornea simulations, you will need to have **CompuCell3D** (version 4.6.0 or later) installed on your system. You can download it from the official website: [https://compucell3d.org](https://compucell3d.org).
+The most reliable way to set up the required environment is by using Conda. If you don't have it, please install [Anaconda](https://www.anaconda.com/products/distribution) or [Miniconda](https://docs.conda.io/en/latest/miniconda.html).
 
-### Installation
+Once Conda is installed, open the Anaconda Prompt (on Windows) or your terminal (on macOS/Linux) and run the following commands step-by-step:
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/VaninJoel/vCornea.git](https://github.com/VaninJoel/vCornea.git)
-    ```
-2.  **Navigate to the project directory:**
-    ```bash
-    cd vCornea
-    ```
+```bash
+# 1. Create a new conda environment named 'v_cornea' with Python 3.12
+conda create -n v_cornea python=3.12
+
+# 2. Activate the new environment
+conda activate v_cornea
+
+# 3. Install Mamba for faster package installation (recommended)
+conda install -c conda-forge mamba
+
+# 4. Install CompuCell3D using the specified channels
+mamba install -c main -c conda-forge -c compucell3d compucell3d=4.7.0
+```
+
+### 2. Install Additional Libraries
+
+After installing CompuCell3D, you'll need a few more libraries for data analysis and plotting. While still in your `v_cornea` environment, run this command:
+
+```bash
+# Install libraries for plotting and handling Parquet files
+mamba install -c conda-forge pandas fastparquet matplotlib seaborn scipy
+```
+
+### 3. Clone the Repository
+
+Finally, clone this repository to your local machine:
+
+```bash
+git clone [https://github.com/VaninJoel/vCornea.git](https://github.com/VaninJoel/vCornea.git)
+cd vCornea
+```
+You are now ready to run the simulations and generate the plots.
 
 ---
+
+## Usage
+
+You can run the simulations directly through the CompuCell3D Player or via the command line.
+
+### Running with CompuCell3D Player
+
+1.  Launch the CompuCell3D Player application.
+2.  Go to `File` > `Open` and navigate to the `vCornea/Simulation` directory.
+3.  Select the `VCornea.cc3d` project file to load the simulation.
+4.  Use the player controls to `Step`, `Run`, and `Pause` the simulation. The graphical window will display the real-time state of the corneal tissue.
+
 
 ## Usage
 
