@@ -21,34 +21,26 @@ https://doi.org/10.5281/zenodo.16764319
   
   LatticeData/ — CompuCell3D .vtk snapshots for visual inspection or rendering.
 
-📊 Plotting the Results from the Paper
+## 📊 Reproducing the Figures from the Paper
 
-Inside the data folder, you can find a ready-to-use plotting utility, plot_manager.py, that can reproduce several figures from the manuscript using the raw simulation data.
+This repository allows you to either:
 
-Run the Plotter
+1. **Plot the results from the published raw data** (simplest option)  
+2. **Run the simulation yourself** and plot your own outputs  
 
-No path changes are needed — the script is already set up to find the data using relative paths.
+We recommend using a **separate conda environment** so that dependencies for plotting and simulation don’t interfere with other Python projects you may have.
 
-From the Plot , simply run:
+---
 
-python plot_manager.py
+### Option 1 — 📈 Plot from Published Data (No Simulation Required)
 
+If you only want to generate the manuscript figures from the published data, follow these steps:
 
-This will:
+#### 1. Install Miniconda or Anaconda (if you don’t have it already)
+[Miniconda download](https://docs.conda.io/en/latest/miniconda.html) (lightweight option)
 
-Generate longitudinal cell count plots, histograms, and Q-Q plots for replicate variability.
-
-Generate longitudinal and spatial thickness plots for the tissue.
-
-Figures will display interactively; you can save them manually or modify the script to save automatically.
-
-
-Running Your Own Simulations
-
-You can also run the simulations on your local machine or HPC cluster, then replace the data in the Data folder with your own outputs to:
-
-Compare your results with the manuscript data.
-
-Perform your own statistical analyses.
-
-Note: The simulations are stochastic, so results will vary slightly between runs.
+#### 2. Create and activate a plotting environment
+```bash
+conda create -n vcornea_plot python=3.10
+conda activate vcornea_plot
+```
