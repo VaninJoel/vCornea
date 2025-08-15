@@ -189,8 +189,8 @@ If you run new simulations and want to generate plots:
 
 ### Visuals and Customization
 
-* **Generating Images/Videos**: To generate images and videos from your local runs that match the manuscript, please follow the tutorial here: [https://www.youtube.com/watch?v=0ABZP6Vey1I](https://www.youtube.com/watch?v=0ABZP6Vey1I).
-* **Cell Colors**: To match the color scheme used in the manuscript, use the following color codes in the CompuCell3D Player (`Tools` > `Player Settings` > `Cell Colors`):
+* **Generating Images/Videos**: To generate images and videos from your local runs that match the manuscript, please follow the tutorial here: [https://www.youtube.com/watch?v=0ABZP6Vey1I](CompuCell3D: How to Take Screenshots Automatically).
+* **Cell Colors**: To match the color scheme used in the manuscript, use the following color codes in the CompuCell3D Player lower left side panel:
 
 | Type Name  | Color      | Hex Code |
 |------------|------------|----------|
