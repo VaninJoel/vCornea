@@ -76,11 +76,11 @@
     <Plugin Name="CellType">
        <CellType TypeId="0" TypeName="Medium" />
        <CellType TypeId="1" TypeName="STEM" />              #ff007f Rose 
-       <CellType Freeze="" TypeId="2" TypeName="LIMB" />    #ffa7f6 Pink
+       <CellType TypeId="2" TypeName="LIMB" />    #ffa7f6 Pink
        <CellType TypeId="3" TypeName="BASAL" />             #ffbe99 Peach Orange 
        <CellType TypeId="4" TypeName="WING" />              #0055ff Blue
        <CellType TypeId="5" TypeName="SUPER" />             #55ffff Cyan
-       <CellType Freeze="" TypeId="6" TypeName="MEMB" />    #ff00ff Magenta       
+       <CellType TypeId="6" TypeName="MEMB" />    #ff00ff Magenta       
        <CellType TypeId="7" TypeName="STROMA" />            #c681ff Heliotrope Purple
        <CellType TypeId="8" TypeName="KERATO" />            Reserved for future use
        <CellType TypeId="9" Freeze="" TypeName="WALL" />    #ffffff White
