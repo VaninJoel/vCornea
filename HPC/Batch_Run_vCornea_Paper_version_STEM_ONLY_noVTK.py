@@ -112,7 +112,8 @@ var_dict = {
     'IsInjury'                  : [False],
     'InjuryTime'                : [4000000000],
     'SLS_Injury'                : [False],
-    'SLS_Threshold_Method'      : [True],    
+    'SLS_Threshold_Method'      : [True],
+    'SLS_Threshold'             : [2.0],
 #---INJURY AREA---
     'InjuryX_Center'            : [150],
     'InjuryY_Center'            : [60],
